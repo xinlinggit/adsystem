@@ -1,0 +1,72 @@
+{extend name="/common@body" /}{block name="main"}
+<?php
+echo widget('common/filter/formWithoutId', [/*参数数组*/
+	[/*第一个参数*/
+		widget('common/filter/input', ['用户', 'username'])
+	]
+]);
+?>
+<div class="js_super_table">
+	<div class="mt-20">
+		<div class="dataTables_wrapper">
+			<?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+			<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+				<thead>
+				<tr class="text-c">
+					<th>流水号</th>
+					<th>记录类型</th>
+					<th>用户</th>
+					<th>操作人员</th>
+					<th>金额</th>
+					<th>创建时间</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				foreach($list as $k => $row){
+					?>
+					<tr class="text-c" >
+						<td>{$row['no']}</td>
+						<td>
+                        {switch name='row.type'}
+                            {case value='1'}充值{/case}
+                            {case value='2'}退款{/case}
+                        {/switch}
+						</td>
+                        <td>{$row['username']}</td>
+                        {if condition="$row['pid'] eq 0"}
+						<td>(运营){$row['real_name']}</td>
+						{else/}
+						<td>(代理商){$row['username_agent']}</td>
+						{/if}
+						<td>{$row['money']}</td>
+						<td>{$row['create_time']}</td>
+					</tr>
+					<?php
+				}
+				?>
+				</tbody>
+			</table>
+			<?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+		</div>
+	</div>
+</div>
+{/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

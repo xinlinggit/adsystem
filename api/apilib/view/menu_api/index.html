@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <title>主页</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+
+  <link rel="shortcut icon" href="favicon.ico">
+  <link href="__STATIC__/hadmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+  <link href="__STATIC__/hadmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+  <link href="__STATIC__/hadmin/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+  <link href="__STATIC__/hadmin/css/animate.css" rel="stylesheet">
+  <!--markdown-->
+  <link rel="stylesheet" type="text/css" href="__STATIC__/hadmin/css/plugins/markdown/bootstrap-markdown.min.css"/>
+  <!--markdown-->
+  <style>
+    .markdown p img {
+      max-width: 100%;
+    }
+  </style>
+
+  <link href="__STATIC__/hadmin/css/style.css?v=4.1.0" rel="stylesheet">
+
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+  <div class="row">
+
+    <div class="ibox-content  ">
+      <div class="text-center ">
+        <h2 class="">API列表</h2>
+      </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+
+  </div>
+  <div class="ibox-content collapse in">
+    <div class="row row-lg">
+      <div class="col-sm-12">
+            <div class="btn-group hidden-xs" id="tool_bar" role="group">
+              <button type="button" class="btn btn-outline btn-default js_add_api">
+                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="btn btn-outline btn-default">
+                <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="btn btn-outline btn-default">
+                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <table class="js_table" data-mobile-responsive="true">
+                <thead>
+                  <tr>
+                    {foreach name="field" item="data" key="datak" }
+                    <th data-field="{$datak}">{$data}</th>
+                    {/foreach}
+                  </tr>
+                </thead>
+            </table>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+<div class="js_add_content" style="display: none;">
+
+  <form class="form-horizontal m-t" id="add_from" action="{:url('add_api')}" method="post">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">标题：</label>
+      <div class="col-sm-9">
+        <input type="text" name="" class="form-control" placeholder="请输入文本" required="" aria-required="true"> <span class="help-block m-b-none">接口标题</span>
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">控制器：</label>
+      <div class="col-sm-9">
+        <input type="text" name="" class="form-control" placeholder="请输入文本"> <span class="help-block m-b-none">接口所属控制器</span>
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">md文件：</label>
+      <div class="col-sm-9">
+        <input type="text" name="" class="form-control" placeholder="请输入文本"> <span class="help-block m-b-none">md文件路径</span>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">模块：</label>
+      <div class="col-sm-9">
+        <input type="text" name="" class="form-control" placeholder="请输入文本"> <span class="help-block m-b-none">接口所属模块</span>
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">父级：</label>
+      <div class="col-sm-9">
+        <select class="form-control" name=""></select>
+        <option value="">顶级</option>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-3">
+        <button class="btn btn-primary" type="submit">提交</button>
+      </div>
+    </div>
+  </div>
+    </form>
+</div>
+<div class="modal inmodal" id="edit_api" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+        </button>
+        <i class="fa fa-laptop modal-icon"></i>
+        <h4 class="modal-title">窗口标题</h4>
+        <small class="font-bold">这里可以显示副标题。
+        </small></div><small class="font-bold">
+        <div class="modal-body">
+          <p><strong>H+</strong> 是一个完全响应式，基于Bootstrap3.3.6最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术，她提供了诸多的强大的可以重新组合的UI组件，并集成了最新的jQuery版本(v2.1.1)，当然，也集成了很多功能强大，用途广泛的jQuery插件，她可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA等等，当然，您也可以对她进行深度定制，以做出更强系统。</p>
+          <div class="form-group"><label>Email</label> <input type="email" placeholder="请输入您的Email" class="form-control"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary">保存</button>
+        </div>
+      </small></div><small class="font-bold">
+    </small></div><small class="font-bold">
+  </small>
+</div>
+<!-- 全局js -->
+<script src="__STATIC__/hadmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__STATIC__/hadmin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<!-- Bootstrap table -->
+<script src="__STATIC__/hadmin/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="__STATIC__/hadmin/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="__STATIC__/hadmin/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- simditor -->
+
+<script type="text/javascript" src="__STATIC__/hadmin/js/plugins/markdown/markdown.js"></script>
+<script type="text/javascript" src="__STATIC__/hadmin/js/plugins/markdown/to-markdown.js"></script>
+<script type="text/javascript" src="__STATIC__/hadmin/js/plugins/markdown/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="__STATIC__/hadmin/js/plugins/markdown/bootstrap-markdown.zh.js"></script>
+
+
+<script>
+  (function (document, window, $) {
+    'use strict';
+
+
+    (function () {
+      $('.js_table').bootstrapTable({
+        url:dataTableUrl,
+        search: true,
+        showRefresh: true,
+        showToggle: true,
+        showColumns: true,
+        toolbar: '#tool_bar',
+        iconSize: 'outline',
+        icons: {
+          refresh: 'glyphicon-repeat',
+          toggle: 'glyphicon-list-alt',
+          columns: 'glyphicon-list'
+        }
+      });
+      $('.js_add_api').on('click',function() {
+        parent.layer.open({
+          title: '添加API',
+          type: 1,
+          skin: 'layui-layer-rim', //加上边框
+          area: ['800px','400px'], //宽高
+          content: $('.js_add_content').html()
+        });
+      });
+
+    })();
+
+
+  })(document, window, jQuery);
+</script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<div class="HuiTab js_tab">
+	<div class="tabBar clearfix">
+		<span>用户详情</span>
+	</div>
+	<form class="form form-horizontal js_super_form" method="post" action="<?= url('operate_audit') ?>" autocomplete="off" enctype="multipart/form-data">
+
+		<input type="hidden" name="id" value="<?= $info['id'] ?>" />
+		<div class="tabCon">
+			<div class="modal-body">
+				<div class="row cl">
+					<label class="col-xs-2 col-sm-2 text-r">编号：</label>
+					<div class="col-xs-2 col-sm-1">
+						<?= $info['id']; ?>
+					</div>
+					<label class=" col-xs-2 col-sm-2 text-r">手机号：</label>
+					<div class="col-xs-2 col-sm-2">
+						<?= $info['tel']; ?>
+					</div>
+					<label class=" col-xs-2 col-sm-2 text-r">昵称：</label>
+					<div class="col-xs-2 col-sm-2">
+						<?= $info['nickname']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="col-xs-2 col-sm-2 text-r">可用฿：</label>
+					<div class="col-xs-2 col-sm-1">
+						<?= $info['userinfo']['account']; ?>
+					</div>
+					<label class=" col-xs-2 col-sm-2 text-r">冻结中฿：</label>
+					<div class="col-xs-2 col-sm-2">
+						<?= $info['userinfo']['freezing_account']; ?>
+					</div>
+					<label class=" col-xs-2 col-sm-2 text-r">资产฿：</label>
+					<div class="col-xs-2 col-sm-2">
+						<?= $info['userinfo']['account']+$info['userinfo']['freezing_account']; ?>
+					</div>
+				</div>
+				
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">活动时间：</label>
+					<div class="col-xs col-sm">
+						<?= date('Y-m-d H:i:s',strtotime($info['last_login_time'])) ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">状态：</label>
+					<div class="col-xs-2 col-sm-2">
+						<?= $info['status'] == 1 ? '锁定':'正常'; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>
+<script>
+	$('.js_tab').Huitab({tabEvent: "mousemove", index: 0});
+	//调用示例
+	layer.photos({
+		offset: $(top.document).scrollTop(),
+		photos: '.layer-photos',
+		shade: 0.1,
+		area:'1000px',
+		anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+	});
+</script>
+<style>
+	.layui-layer-photos .layui-layer-content{overflow: auto}
+</style>

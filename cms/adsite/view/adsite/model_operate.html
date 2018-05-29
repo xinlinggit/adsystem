@@ -1,0 +1,44 @@
+<form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">站点名称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['sitename']?>" placeholder=""  name="sitename" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">平台：</label>
+				<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="platform" class="select" title="平台">
+					<option data-level="0" data-parent="0" value="1">PC</option>
+					<option data-level="0" data-parent="0" value="2">App</option>
+					<option data-level="0" data-parent="0" value="3">Web</option>
+				</select>
+				</span>
+				</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">描述：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<textarea name="description" cols="" rows="" class="textarea"  placeholder="" required="true"><?=$info['description']?></textarea>
+			</div>
+		</div>
+		<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">状态：</label>
+				<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="status" class="select" title="状态">
+					<option data-level="0" data-parent="0" value="1" <?=$info['status']==1?'selected="selected"':'';?>>正常</option>
+					<option data-level="0" data-parent="0" value="0" <?=$info['status']==0?'selected="selected"':'';?>>锁定</option>
+				</select>
+				</span>
+				</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default js_close_layer" >取消</button>
+		<button type="submit" class="btn btn-primary">保存</button>
+	</div>
+</form>

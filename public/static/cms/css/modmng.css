@@ -1,0 +1,43 @@
+@charset "utf-8";
+.DWS{width:250px;}/*small dialog*/
+.DWL{width:750px;}/*large dialog*/
+.DWTil{text-align:center;}
+
+label{padding:3px 0;}
+label i{
+    width:80px;
+    text-align:right;
+    display:inline-block;
+    vertical-align:middle;}
+label.NoTil{padding-left:80px;}
+.InpL{width:170px;}
+.InpS{width:60px;}
+.AreaL,.AreaS{width:625px;height:355px;}
+.AreaS{height:150px;}
+.DiaWin .LabSlc ul{z-index:2;}
+
+.MulWrp{
+    float:left;
+    width:245px;
+    margin:0 40px;
+    text-align:center;}
+.MulWrp p{
+    height:350px;
+    margin:5px 0;
+    padding:3px 0;
+    text-align:left;
+    border:1px solid #bbb;
+    background:#fff;}
+.MulWrp p em{
+    height:26px;
+    line-height:26px;
+    padding:0 10px;
+    display:block;}
+.MulWrp p em:hover,.MulWrp p em:hover a{
+    color:#fff;
+    background:#1a67b0;}
+
+.ArwWrp{
+    float:left;
+    width:54px;
+    margin-top:180px;}

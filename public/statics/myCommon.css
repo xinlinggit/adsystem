@@ -1,0 +1,92 @@
+/* Powered by hudy@cnfo.net*/
+.layui-form-pane .layui-form-label {width:200px;}
+.my_input {
+    height: 38px;
+    width:200px;
+    line-height: 1.3;
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border: 1px #e6e6e6 solid !important;
+}
+.my_color {
+    height: 38px;
+    width:40px;
+    line-height: 1.3;
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border: 1px #e6e6e6 solid !important;
+}
+.my_text_center{
+    diplay:inline-block;
+    padding: 8px 15px;
+    /*width:30px;*/
+    height: 38px;
+    line-height: 20px;
+    /*text-align: center;*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+/*自定义宽度*/
+.my_wd30 {
+    width: 30px;
+}
+.my_wd50 {
+    width: 50px;
+}
+.my_wd80{
+    width: 80px;
+}
+.my_wd200 {
+    width: 200px;
+}
+.my_wd400 {
+    width: 400px;
+}
+.my_wd800 {
+    width: 800px;
+}
+
+/*文字对其方式*/
+.my_l {
+    text-align: left;
+}
+.my_c {
+    text-align: center;
+}
+.my_r {
+    text-align: right;
+}
+
+/*文件上传按钮*/
+.my_fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;
+}
+.my_fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.my_select {
+    height: 38px;
+    line-height: 1.3;
+    line-height: 38px\9;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #fff;
+    border-radius: 2px;
+}

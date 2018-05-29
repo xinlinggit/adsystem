@@ -1,0 +1,242 @@
+<form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+	
+	<strong>基本设置</strong>
+		<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">广告站点：</label>
+				<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="adsite" class="select" title="广告站点" onChange="SiteSlt(this)">
+					<?php
+						foreach($tag as $v){
+					?>
+						<option rel="<?=$v->platform?>" data-level="0" data-parent="0" value="<?=$v->id?>" <?=$v->id==$info['adsite']?'selected="selected"':'';?> ><?=$v->sitename?> </option>
+					<?php
+						}
+					?>
+				</select>
+				</span>
+				</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">广告位名称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['sensename']?>" placeholder=""  name="sensename" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">投放形式：</label>
+			<div class="formControls col-xs-2 col-sm-2">
+				<span class="select-box">
+				<select name="materialmodel" id="materialmodel" class="select" title="素材类型" onChange="SiteSlt2(this)">
+					<option value="1" <?=$info['materialmodel'] == '1' || !$info['sensetype']?'selected':'';?>>文字</option>
+					<option value="2" <?=$info['materialmodel'] == '2'?'selected':'';?>>图片(或flash)</option>
+					<option value="3" <?=$info['materialmodel'] == '3'?'selected':'';?>>信息流</option>
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2 text-r">广告位模式：</label>
+			<div class="col-xs-10 col-sm-5">
+				<div class="radio-box">
+					<input type="radio" id="radio-1" name="sensemodel" value="1" <?=$info['sensemodel'] == '1'?'checked="checked"':'';?> >
+					<label for="radio-1">包时段</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="radio-2" name="sensemodel" value="2" <?=$info['sensemodel'] == '2'|| !$info['sensemodel']?'checked="checked"':'';?> >
+					<label for="radio-2">竞价</label>(如果投放形式为信息流请选择竞价,不要选错)
+
+				</div>
+				<!-- <div class="radio-box">
+					<input type="radio" id="radio-3" name="sensemodel" value="3" disabled="disabled" <?=$info['sensemodel'] == '3'?'checked="checked"':'';?> >
+					<label for="radio-3">广告联盟</label>
+				</div> -->
+				<!-- <div class="radio-box">
+					<input type="radio" id="radio-4" name="sensemodel" value="4"  <?=$info['sensemodel'] == '4'?'checked="checked"':'';?> >
+					<label for="radio-4">内部广告</label>
+				</div> -->
+			</div>
+		</div>
+		<!--<div class="row cl">-->
+			<!--<label class="form-label col-xs-2 col-sm-2 text-r">可使用素材类型：</label>-->
+			<!--<div class="col-xs-10 col-sm-5">-->
+				<!--<div class="radio-box">-->
+					<!--<input type="radio" id="radio-10" class="onchange11" name="materialmodel" value="1" <?=$info['materialmodel'] == '1'|| !$info['materialmodel']?'checked="checked"':'';?>  onChange="alert(1);">-->
+					<!--<label for="radio-10">文字</label>-->
+				<!--</div>-->
+				<!--<div class="radio-box">-->
+					<!--<input type="radio" id="radio-11" class="onchange11"  name="materialmodel" value="2" <?=$info['materialmodel'] == '2'?'checked="checked"':'';?>  onChange="alert(2);" >-->
+					<!--<label for="radio-11">图片(或flash)</label>-->
+				<!--</div>-->
+				<!--&lt;!&ndash; <div class="radio-box">-->
+					<!--<input type="radio" id="radio-10" name="materialmodel" value="3" <?=$info['materialmodel'] == '3'?'checked="checked"':'';?> >-->
+					<!--<label for="radio-10">flash</label>-->
+				<!--</div> &ndash;&gt;-->
+			<!--</div>-->
+		<!--</div>-->
+
+		<div class="row cl SiteShow2">
+			<label class="form-label col-xs-2 col-sm-2 text-r">广告位类型：</label>
+			<div class="col-xs-10 col-sm-5">
+				<div class="radio-box">
+					<input type="radio" id="radio-5" name="sensetype" value="5" <?=$info['sensetype'] == '5' || !$info['sensetype']?'checked="checked"':'';?> >
+					<label for="radio-5">信息流</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="radio-6" name="sensetype" value="6" <?=$info['sensetype'] == '6'?'checked="checked"':'';?> >
+					<label for="radio-6">轮播图</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="radio-7" name="sensetype" value="7" <?=$info['sensetype'] == '7'?'checked="checked"':'';?> >
+					<label for="radio-7">视频</label>
+				</div>
+			</div>
+		</div>
+
+<!-- 		<div class="row cl SiteShow">
+	<label class="form-label col-xs-2 col-sm-2">广告位投放地址：</label>
+	<div class="formControls col-xs-5 col-sm-5">
+		<input type="text" class="input-text" value="<?=$info['targetsite']?>" placeholder=""  name="targetsite" required="true">
+	</div>
+</div> -->
+		<div class="row cl SiteShow">
+				<label class="form-label col-xs-2 col-sm-2">广告位类型：</label>
+				<div class="formControls col-xs-5 col-sm-2">
+					<span class="select-box">
+					<select name="sensetype" class="select" title="广告位类型">
+						<option value="1" <?=$info['sensetype'] == '1' || !$info['sensetype']?'selected="selected"':'';?> >固定</option>
+						<option value="2" <?=$info['sensetype'] == '2'?'selected="selected"':'';?> >漂浮</option>
+						<option value="3" <?=$info['sensetype'] == '3'?'selected="selected"':'';?> >弹窗</option>
+						<!-- <option value="41" <?=$info['sensetype'] == '41'?'selected="selected"':'';?> >对联</option> -->
+					</select>
+					</span>
+				</div>
+				(如果投放形式为信息流请选择固定,不要选错)
+		</div>
+		<div class="row cl SiteShow">
+			<label class="form-label col-xs-2 col-sm-2">广告位尺寸：</label>
+			<div class="formControls col-xs-1 col-sm-1" style="width:120px;">
+				<input type="number" class="input-text" value="<?=$info['width']?>" placeholder=""  name="width" required="true" style="width:90px;">宽*
+			</div>
+			<div class="formControls col-xs-1 col-sm-1" style="width:140px;">
+				<input type="number" class="input-text" value="<?=$info['height']?>" placeholder=""  name="height" required="true" style="width:90px;">高 (px)
+			</div>
+			(如果投放形式为信息流,该尺寸对应图片尺寸)
+		</div>
+
+	<strong>广告位空闲设置</strong>
+
+		<!-- <div class="row cl">
+			<div class="col-xs-10 col-sm-5">
+				<div class="radio-box">
+					<input type="radio" id="radio-8" name="freetype" value="1" <?=$info['freetype'] == '1' || !$info['freetype']?'checked="checked"':'';?> >
+					<label for="radio-8">显示该广告位最后一条投放完成的广告</label>
+				</div>
+			</div>
+		</div> -->
+		<div class="row cl">
+			<div class="col-xs-10 col-sm-5">
+				<div class="radio-box">
+					<input type="radio" id="radio-12" name="freetype" value="3" <?=$info['freetype'] == '3' || !$info['freetype']?'checked="checked"':'';?> >
+					<label for="radio-12">隐藏该广告位</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-10 col-sm-10">
+				<div class="radio-box">
+					<input type="radio" id="radio-9" name="freetype" value="2" <?=$info['freetype'] == '2'?'checked="checked"':'';?> >
+
+					<div id="my_text">
+					<label for="radio-9">显示空闲文字</label>
+						<span class="btn-upload form-group">
+						<input class="input-text upload-url radius" class = "radio_text" type="text" name="text" value="<?=$info['text']?>" >
+						(请保证占位文字符合该广告位)
+						</span>
+					</div>
+
+					<div id="my_img" style="display: none">
+					<label for="radio-9">显示空闲图片</label>
+						<span class="btn-upload form-group">
+							<input class="input-text upload-url radius" class="radio_img" type="text" name="imgurl" value="<?=$info['imgurl']?>" id="uploadfile-1" readonly>
+							<input type="button" class="btn btn-success radius ml-20" name="file" id="file" value="选择图片">
+							(请保证占位图片符合该广告位)
+						</span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default js_close_layer" >取消</button>
+		<button type="submit" class="btn btn-primary">保存</button>
+	</div>
+</form>
+<script>
+SiteSlt('select[name=adsite]');
+function SiteSlt(t){
+	var ts=$(t),res=ts.find('option:selected').attr('rel');
+	if(res==2){
+		$('.SiteShow').hide();
+		$('.SiteShow2').show();
+	}else{
+		$('.SiteShow').show();
+		$('.SiteShow2').hide();
+	}
+}
+
+// 广告位空闲设置区
+SiteSlt2();
+function SiteSlt2(t){
+    var materialmodel = $("#materialmodel").val();
+	if(materialmodel == 2){
+    	$("#my_img").show();
+        $("#my_text").hide();
+    }else if(materialmodel == 3){
+    	$("#my_text").show();
+    	$("#my_img").show();
+    }else{
+    	$("#my_img").hide();
+        $("#my_text").show();
+    }
+/*    if(materialmodel == 2){
+        $("#my_img").show();
+        $("#my_text").hide();
+	} else {
+        $("#my_img").hide();
+        $("#my_text").show();
+	}*/
+}
+
+ //调用封装好的sendfile插件进行上传,该函数需要一个json对象的实参
+    sendfile.up({
+        id:'file',
+        num:'one',
+        name:'image',
+        url:'<?= url("upload"); ?>',
+        beforeup:function(obj){
+
+        },
+        doingup:function(obj){
+            $('#file').val('正在上传...');
+            var img = "<img src='/static/h-ui/images/loading/loading.gif'>";
+            $('#file').parent().append(img);
+        },
+        afterup:function(msg){
+            msg = JSON.parse(msg);
+            if (msg.flag){
+                $('#file').val("重新上传");
+                $('#file').parent().find('img').remove();
+                $("input[name='imgurl']").val(msg.data);
+            } else {
+                $('#file').val('上传失败');
+                $('#file').parent().find('imgurl').remove();
+                $('#file').parent().next('div').append("<span class='Validform_checktip Validform_wrong'>"+  msg.data+"</span>");
+            }
+        }
+    });
+</script>

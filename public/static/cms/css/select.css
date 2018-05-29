@@ -1,0 +1,72 @@
+label.LabSlc{
+    *position:relative;
+    z-index:2;}
+.SlcWrp{/**=====显示框效果=======**/
+    height:22px;
+    overflow:hidden;
+    line-height:22px;
+    display:inline-block;
+    vertical-align:middle;
+    padding-left:2px;
+    margin-left:-1px;
+    _margin-left:0px;
+    border:1px solid #dfe6f0;
+    cursor:pointer;}
+.SlLBtn,.SlSBtn,.SlMBtn{/**=====下拉按钮样式=======**/
+    width:17px;
+    height:22px;
+    margin:0 0 2px -20px;
+    display:inline-block;
+    vertical-align:middle;
+    cursor:pointer;
+    background:url(http://hs.cnfol.com/ui/Imgs/CloudCom/CldCmIco.gif) 0 2px no-repeat;}
+.SlLSub,.SlSSub,.SlMSub{/**======子项外框效果======**/
+    position:absolute;
+    z-index:2;
+    padding:0 1px 1px;
+    border:#a0cce8 1px solid;
+    border-top:0;
+    margin-top:-2px;
+    display:inline-block;
+    visibility:hidden;
+    background:#fff;
+    text-align:left;}
+.SlLSub li,.SlSSub li,.SlMSub li{/**====单个子项正常效果====**/
+    padding:3px; /*建议保留样式：cursor:pointer;*/
+    cursor:pointer;
+    line-height:20px;}
+.SlLSub .Cur,.SlLSub li:hover,.SlSSub .Cur,.SlSSub li:hover,.SlMSub .Cur,.SlMSub li:hover{/**====子项鼠标滑过效果======**/
+    background:#ddeef9;}
+.SlLSub .Slcted,.SlSSub .Slcted,.SlMSub .Slcted{/**====子项选中效果=====**/
+    color:#1d6cb7;
+    background:#a7e2f4;}
+
+.SlLW{width:120px;}/**======Lage select======**/
+.SlLSub{width:121px;}
+
+.SlSW{width:80px;}/**=====Small select=======**/
+.SlSSub{width:81px;}
+
+.SlMW{width:48px;}/**=====Min select=======**/
+.SlMSub{width:49px;}
+
+/*--------------------以下为多选框样式---------------------------*/
+.SlMWrp{/**=====显示框效果=======**/
+    width:130px;
+    height:120px;
+    display:inline-block;
+    vertical-align:top;
+    overflow-y:auto;
+    border:2px outset #CCC;
+    cursor:pointer;}
+.SlMWrp li{/**====单个子项正常效果====**/
+    padding:3px;
+    cursor:pointer;
+    line-height:18px;
+    border-bottom:1px solid #fff;}
+.SlMWrp li.Cur,.SlMWrp li:hover{/**====子项鼠标滑过效果======**/
+    color:#F30;
+    background:#e0ecf7;}
+.SlMWrp li.Slcted {/**====子项选中效果=====**/
+    color:#1d6cb7;
+    background:#a7e2f4;}

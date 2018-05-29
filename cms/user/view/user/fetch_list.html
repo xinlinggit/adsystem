@@ -1,0 +1,81 @@
+{extend name="/common@body" /}{block name="main"}
+<?php
+echo widget('common/filter/form', [/*参数数组*/
+[/*第一个参数*/
+widget('common/filter/input', ['手机号', 'tel']),
+widget('common/filter/input', ['用户昵称', 'nickname']),
+widget('common/filter/select', ['状态', 'status', $status]),
+]
+]);
+?>
+
+<div class="js_super_table">
+	<div class="mt-20">
+		<div class="dataTables_wrapper">
+			<?= widget('common/page/render', ['page' => $page, 'param' => $param]); ?>
+			<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+				<thead>
+				<tr class="text-c">
+					<th class="th_check_id">
+						<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0" /></label>
+					</th>
+					<th class="th_id <?=$thead['id']['class'];?>" data-url="<?=$thead['id']['url'];?>">编号</th>
+					<th class="">手机号</th>
+					<th class="">用户昵称</th>
+					<th class=" <?=$thead['account']['class'];?>" data-url="<?=$thead['account']['url'];?>">可用฿</th>
+					<th class=" <?=$thead['freezing_account']['class'];?>" data-url="<?=$thead['freezing_account']['url'];?>">冻结中฿</th>
+					<th >交易记录</th>
+					<th >操作</th>
+					<th class=" ">状态</th>
+					<th class=" <?=$thead['last_login_time']['class'];?>" data-url="<?=$thead['last_login_time']['url'];?>">最后一次登录时间</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				foreach ($list as $row) {
+				?>
+				<tr class="text-c">
+					<td>
+						<label for="info_<?= $row->id ?>"><input id="info_<?= $row->id ?>" type="checkbox" class="js_checkbox" data-type="child" value="<?= $row->id ?>"></label>
+					</td>
+					<td><?= $row->id; ?></td>
+					<td>
+						<?= encode_tel($row->tel); ?>
+					</td>
+					<td>
+						<?= $row->nickname; ?>
+					</td>
+					<td><?= $row->account ?></td>
+					<td><?= $row->freezing_account ?></td>
+					<td>
+						<button data-url="<?= url('order_view'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI radius btn-secondary-outline js_operate" data-callback="layer_model" data-title="交易记录" title="查看">
+							<i class=" Hui-iconfont Hui-iconfont-yanjing"></i>
+						</button>
+					</td>
+					<td>
+						<button data-url="<?= url('model_view'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI radius btn-secondary-outline js_operate" data-callback="layer_model" data-title="详情" title="详情">
+							<i class=" Hui-iconfont Hui-iconfont-yanjing"></i>
+						</button>
+						{if condition="$row['status'] == 0"}
+						<button data-url="<?= url('model_lock'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI js_operate btn-success-outline" title="锁定" data-title="锁定"  data-callback="layer_confirm">
+							<i class=" Hui-iconfont Hui-iconfont-close"></i>
+						</button>
+						{else/}
+						<button data-url="<?= url('model_open'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI js_operate btn-warning-outline "  title="解锁" data-title="解锁"  data-callback="layer_confirm">
+							<i class=" Hui-iconfont Hui-iconfont-xuanze"></i>
+						</button>
+						{/if}
+					</td>
+					<td><?php echo $row->status == 1 ? '锁定':'正常'; ?></td>
+					<td><?= date('Y-m-d H:i',strtotime($row->last_login_time)) ?></td>
+				</tr>
+				<?php
+				}
+				?>
+				</tbody>
+			</table>
+			<?= widget('common/page/render', ['page' => $page, 'param' => $param]); ?>
+		</div>
+	</div>
+</div>{/block}
+

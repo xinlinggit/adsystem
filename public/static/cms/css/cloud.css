@@ -1,0 +1,577 @@
+@charset "utf-8";
+a:hover{color:#f60;}
+input, select, textarea {
+    font-size: 12px;
+    color:#444;
+    padding-left:2px;
+    margin:0 2px;
+    border:1px solid #d5dfec;}
+textarea{resize:none;}
+input,select{vertical-align: middle;}
+input{
+    height:22px;
+    line-height:22px;}
+input.InpRd,input.Chk{/*Checkbox and radio*/
+    width:12px !important;
+    height:12px !important;
+    border:none;}
+input.InpDate{background:url(http://hs.cnfol.com/ui/Imgs/Clouds/AcceIco.gif) 98% -125px no-repeat #FFFFFF;}
+input.InpCPick{width:143px;background:#fff url(http://hs.cnfol.com/ui/Imgs/Clouds/ConMngIco.gif) 128px -158px no-repeat;}
+select{
+    height:19px;
+    line-height:19px;}
+label{/*'height:25px;' Avoid height-change bug in ie6*/
+    height:auto !important;
+    min-height:25px;
+    height:25px;
+    display:block;}
+label.LabInL{/*lable inline*/
+    padding-right:5px;
+    display:inline-block;
+    vertical-align:middle;}
+
+img{
+    border:0;
+    vertical-align:middle;}
+.Hid20151112{
+    display: none;
+}
+/*Common color*/
+.CoRed{color:#fe0000 !important;}
+.CoBlu{color:#1d6cb7 !important;}
+.CoGry{color:#999 !important;}
+.CoBlack{color:#333 !important;}
+a.CoBlu{color:#1d6cb7;}
+a.CoBlu:hover{color:#f60 !important;}
+
+/*Common buttons*/
+.BtnAdd,.BtnDel,.BtnRfr,.BtnSGry,.BtnGryR,.BtnY,.BtnN,.BtnSrch,.BtnSbm,.BtnCncl,.BtnBluEdt,.BtnFobid,.BrnFbidB{
+    cursor: pointer;
+    color: #333;
+    margin:2px 3px;
+    padding:0 10px;
+    display:inline-block;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    background:url(http://hs.cnfol.com/ui/Imgs/CloudCom/CldCmHBg.gif) 0 0 repeat-x;}
+.BtnAdd{
+    width:48px;
+    height:23px;
+    line-height:23px;
+    margin:10px 0 0;
+    padding:0 0 0 10px;
+    font-size:14px;
+    border:#d6d6d6 solid 1px;
+    border-bottom:0;
+    background:url(http://hs.cnfol.com/ua/imgs/cloud/clouMbg.gif) -52px -29px no-repeat;}
+.BtnAdd:hover{color: #333;}
+.BtnDel{
+    color:#fff !important;
+    font:normal 14px/22px '' !important;
+    border:1px solid #2871a9;
+    border-radius:3px;
+    background-position:0 -84px;}
+.BtnRfr{
+    height:22px;
+    color:#333;
+    font:normal 12px/22px '';
+    border:1px solid #3c7fb1;
+    border-radius:3px;
+    background-position:0 -40px;}
+.BtnRfr:hover{color:#333 !important; }
+.BtnSGry,.BtnGryR{
+    height:18px;
+    line-height:18px;
+    padding:0 5px;
+    border:1px solid #ababab;
+    background-position:0 0;}
+.BtnGryR{border-radius:3px;}
+.BtnGryR:hover{
+    color:#333;
+    background-position:0 -106px;}
+.BtnSGry:hover{color:#555;}
+.BtnY{
+    height:22px;
+    padding:0 12px;
+    color:#fff !important;
+    font:bold 12px/22px '' !important;
+    border:1px solid #2871a9;
+    border-radius:3px;
+    background-position:0 -84px;}
+.BtnN{
+    height:22px;
+    line-height:22px !important;
+    padding:0 12px;
+    border:1px solid #ccc;
+    border-radius:3px;
+    background-position:0 -18px;}
+.BtnY:hover {color:#fff !important;}
+.BtnN:hover {color:#353535;}
+.BtnSrch{
+    height:22px;
+    font: normal 14px/22px '';
+    color:#3179c3 !important;
+    border:1px solid #a4d3f7;
+    border-radius:3px;
+    background-position:0 -62px;}
+.BtnSrch:hover{color:#2463a4;}
+/*width fixed*/
+.BtnSbm,.BtnCncl{
+    width:56px;
+    height:25px;
+    line-height:25px;
+    padding:0;
+    background:url(http://hs.cnfol.com/ua/imgs/cloud/clouMbg.gif) -52px 0 no-repeat;}
+.BtnSbm{
+    color:#fff !important;
+    font-weight:bold;}
+.BtnCncl{
+    color:#333;
+    background-position:-164px 0;}
+.BtnBluEdt{
+    height:21px;
+    line-height:22px;
+    background:#baddf9;
+    border:1px solid #0e6fbe;
+    border-left:0;
+    border-top:0;}
+.BtnSbm:hover{color:#fff;}
+.BtnCncl:hover{color:#333;}
+.BtnAdd:hover,.BtnDel:hover,.BtnRfr:hover,.BtnY:hover,.BtnN:hover,.BtnSrch:hover,.BtnSbm:hover,.BtnCncl:hover,.BtnSGry:hover{
+    filter:alpha(opacity=82);
+    opacity:0.82;}
+.BtnFobid,.BrnFbidB{
+    height:18px;
+    line-height:18px;
+    padding:0 5px;
+    color:#999 !important;
+    border:1px solid #ababab;
+    background:#e1e1e1;}
+.BrnFbidB{
+    height:22px;
+    line-height:22px;
+    border-radius:5px;}
+
+/*Common icons*/
+.BtnCls,.SlpArw{
+    display:inline-block;
+    vertical-align:middle;
+    overflow:hidden;
+    margin:0 2px;
+    background:url(http://hs.cnfol.com/ua/imgs/cloud/clouIco.gif) 0 -417px no-repeat;}
+.BtnCls{
+    width:19px;
+    height:19px;}
+.SlpArw{
+    width:12px;
+    height:6px;
+    vertical-align:bottom;
+    line-height:6px !important;
+    background:url(http://hs.cnfol.com/ub/Images/Specialist/ExBIco.gif) no-repeat 0 -322px;}
+.IcoPen,.IcoCls,.IcoClsGray,.IcoDbPapr,.IcoNwItm,.IcoPrdc,.IcoAdit,.IcoTorBar,.IcoMov,.IcoPic,.IcoSlc,.IcoPblis,.IcoZom,.IcoChk,.IcoRstr,.IcoCmpr,.IcoFrsh,.IcoZomS,.IcoLog,.IcoExt,.IcoAudit,.IcoAuditSmrt,.IcoNtThrgh,.IcoNtTrhGry,.IcoRetrn,.IcoDownLd,.IcoCAJ,.IcoIE,.IcoPDF,.IcoTXT,.IcoCancl,.IcoKey,.IcoRcvr,.IcoRcmd,.IcoUnRcmd,.IcoShw,.IcoPrvw,.IcoArwLft,.IcoArwRgt,.IcoSet,.IcoFrbid,.IcoOpen,.IcoLock,.IcoWritBck,.IcoStick,.IcoUnStick,.IcoChek,.IcoUnChek,.IcoCmDwnGry,.IcoCmUpGry,.IcoCmDwnGrn,.IcoCmUpRed,.IcoCmChart,.IcoCmHgs{
+    display:inline-block;
+    vertical-align:middle;
+    overflow:hidden;
+    margin:0 2px;
+    line-height:5px;
+    background:url(http://hs.cnfol.com/ui/Imgs/CloudCom/CldCmIco.gif) no-repeat;}
+.IcoPen{
+    height:14px;
+    width:14px;
+    line-height:14px;
+    background-position:0 -66px;}
+.IcoCls,.IcoClsGray{
+    height:11px;
+    width:11px;
+    line-height:11px;
+    background-position:0 -85px;}
+.IcoClsGray{
+    background-position:0 -1016px;
+}
+a.IcoClsGray:hover{
+    background-position:0 -85px;
+}
+.IcoDbPapr{
+    width:13px;
+    height:15px;
+    background-position:0 -98px;}
+.IcoNwItm{
+    width:15px;
+    height:15px;
+    background-position:0 -121px;}
+.IcoPrdc{
+    width:15px;
+    height:16px;
+    background-position:0 -141px;}
+.IcoAdit{
+    width:16px;
+    height:16px;
+    background-position:0 -162px;}
+.IcoTorBar{
+    width:20px;
+    height:17px;
+    background-position:0 -184px;}
+.IcoMov{
+    width:42px;
+    height:31px;
+    background-position:0 -206px;}
+.IcoMov:hover{background-position:0 -241px;}
+.IcoPic{
+    width:16px;
+    height:13px;
+    background-position:0 -278px;}
+.IcoSlc{
+    width:15px;
+    height:14px;
+    background-position:0 -298px;}
+.IcoPblis{
+    width:14px;
+    height:14px;
+    background-position:0 -315px;}
+.IcoZom{
+    width:21px;
+    height:21px;
+    background-position:0 -333px;}
+.IcoChk{
+    width:17px;
+    height:15px;
+    background-position:0 -358px;}
+.IcoRstr{
+    width:14px;
+    height:12px;
+    background-position:0 -377px;}
+.IcoCmpr{
+    width:14px;
+    height:17px;
+    background-position:0 -392px;}
+.IcoFrsh{
+    width:16px;
+    height:11px;
+    background-position:0 -433px;}
+.IcoZomS{
+    width:14px;
+    height:15px;
+    background-position:0 -413px;}
+.IcoLog{
+    width:16px;
+    height:15px;
+    background-position:0 -448px;}
+.IcoExt{
+    width:16px;
+    height:15px;
+    background-position:0 -468px;}
+.IcoAudit,.IcoAuditSmrt{
+    width:15px;
+    height:15px;
+    background-position:0 -773px;}
+/*.IcoAudit:hover,*/.IcoAuditSmrt{background-position:0 -487px;}
+.IcoNtThrgh,.IcoNtTrhGry{
+    width:16px;
+    height:17px;
+    background-position:0 -507px;}
+.IcoNtTrhGry{background-position:0 -837px;}
+.IcoRetrn{
+    width:16px;
+    height:16px;
+    background-position:0 -530px;}
+.IcoDownLd{
+    width:16px;
+    height:16px;
+    background-position:0 -551px;}
+.IcoCAJ{
+    width:17px;
+    height:17px;
+    background-position:0 -573px;}
+.IcoIE{
+    width:19px;
+    height:20px;
+    background-position:0 -597px;}
+.IcoPDF{
+    width:19px;
+    height:20px;
+    background-position:0 -624px;}
+.IcoTXT{
+    width:19px;
+    height:20px;
+    background-position:0 -649px;}
+.IcoCancl{
+    width:14px;
+    height:14px;
+    background-position:0 -754px;}
+.IcoKey{
+    width:15px;
+    height:15px;
+    background-position:0 -791px;}
+.IcoRcvr{
+    width:13px;
+    height:16px;
+    background-position:0 -817px;}
+.IcoRcmd,.IcoShw{
+    width:16px;
+    height:16px;
+    background-position:0 -883px;}
+.IcoUnRcmd{
+    width:16px;
+    height:17px;
+    background-position:0 -859px;}
+.IcoShw{background-position:0 -907px;}
+.IcoPrvw{
+    width:14px;
+    height:16px;
+    background-position:0 -930px;}
+.IcoArwLft,.IcoArwRgt{
+    width:9px;
+    height:13px;
+    background-position:0 -954px;}
+.IcoArwRgt{background-position:0 -971px;}
+.IcoSet{
+    width:16px;
+    height:16px;
+    background-position:0 -992px;}
+.IcoFrbid{
+    width:17px;
+    height:17px;
+    background-position:0 -1034px;}
+.IcoOpen{
+    width:14px;
+    height:16px;
+    background-position:0 -1059px;}
+.IcoLock{
+    width:15px;
+    height:16px;
+    background-position:0 -1082px;}
+.IcoWritBck{
+    width:17px;
+    height:18px;
+    background-position:0 -1104px;}
+.IcoStick{
+    width:14px;
+    height:16px;
+    background-position:0 -1131px;}
+.IcoUnStick{
+    width:14px;
+    height:16px;
+    background-position:0 -1157px;}
+.IcoChek,.IcoUnChek{
+    width:15px;
+    height:15px;
+    background-position:0 -1180px;}
+.IcoUnChek{background-position:0 -1202px;}
+.IcoCmDwnGry,.IcoCmUpGry,.IcoCmDwnGrn,.IcoCmUpRed{
+    width:8px;
+    height:12px;}
+.IcoCmDwnGry{background-position:0 -1224px;}
+.IcoCmUpGry{background-position:0 -1246px;}
+.IcoCmUpRed{background-position:0 -1268px;}
+.IcoCmDwnGrn{background-position:0 -1291px;}
+.IcoCmChart{
+    width:19px;
+    height:19px;
+    background-position:0 -1313px;}
+
+/*Common tables. Notice:width set must be in line one*/
+.ComTabl{
+    table-layout:fixed;
+    border-top: #d6d6d6 solid 1px;
+    border-left: #d6d6d6 solid 1px;}
+.ComTabl td, .ComTabl th {
+    height:30px;
+    line-height:30px;
+    color:#6c6c6c;
+    text-align:center;
+    border-bottom:#d6d6d6 solid 1px;
+    border-right:#d6d6d6 solid 1px;}
+.ComTabl th{
+    color:#333;
+    font-weight:normal;
+    background:#f7f7f7;}
+.ComTabl label.Ca{padding:0;min-height:10px;}
+.ComTabl .SRTil,.RsltTil{
+    color:#333;
+    font:bold 14px/28px '';
+    text-align:left;
+    padding-left:10px;
+    background:url(http://hs.cnfol.com/ua/imgs/cloud/clouIco.gif) left -1369px repeat-x;}
+.RsltTil{/*using outside the table*/
+    height:31px;
+    padding-top:2px;
+    overflow:hidden;
+    border:1px solid #ccc;
+    border-bottom:0;}
+.RsltTil .BtnRfr{font-size:14px;}
+.ComTabl .BtnDel,.ComTabl .BtnRfr,.RsltTil .BtnDel,.RsltTil .BtnRfr{text-indent:0;}
+.ComTabl .BtnDel{color:#fff;}
+.ComTabl .BtnDel,.ComTabl .BtnRfr{text-indent:0;}
+.ComTabl tr.Even{background: #eff8fe; }
+.ComTabl a.Nrp{
+    width:98%;
+    display:block;
+    padding-left:5px;}
+.ComTabl .Nrp{padding-left:5px;}
+.Ocl td { background: #e7ffe8 !important;}
+.Ccl td { background: #F9E6D8 !important;}
+.LnHgtShrt td{ line-height:22px;}
+/*Table divided by percent*/
+.TbPre{width:100%;}
+.ColPrXXL{width:25%;}
+.ColPrXL{width:20%;}
+.ColPrL{width:15%;}
+.ColPrM{width:12%;}
+.ColPrS{width:10%;}
+.ColPrXS{width:8%;}
+.ColPrXXS{width:5%;}
+/*Table divided by fixed width*/
+.ColnXXS{width:40px;}
+.ColnXS{width:50px;}
+.ColnS{width:75px;}
+.ColnM{width:105px;}
+.ColnL{width:110px;}
+.ColnXL{width:125px;}
+.ColnXXL{width:175px;}
+
+.Ok,.No {
+    height:16px;
+    line-height:16px !important;
+    display:inline-block;
+    overflow:hidden;
+    visibility:visible;
+    vertical-align:middle;
+    margin:0 2px;
+    background:url(http://hs.cnfol.com/ua/imgs/cloud/clouIco.gif) no-repeat;}
+.Ok{
+    width:16px;
+    background-position:0 -950px;}
+.No{
+    font-style:normal;
+    color:#F00;
+    padding-left:18px;
+    background-position:0 -999px;}
+
+/*page*/
+.Page{
+    height: 22px;
+    line-height:17px;
+    padding: 13px 30px 29px;
+    clear: both;
+    text-align:right;}
+.Page select{height:20px;line-height:20px;_vertical-align:auto !important;}
+.Page a{
+    padding: 0 5px;
+    height: 17px;
+    line-height: 17px;
+    text-align: center;
+    color: #333;
+    border: #a3a3a3 solid 1px;
+    margin-right: 5px;
+    display: inline-block;
+    background: url(http://hs.cnfol.com/ua/imgs/cloud/clouIco.gif) 0 -389px no-repeat;}
+.Page a.NoNm{
+    display:inline;
+    vertical-align:auto;
+    width:auto;
+    text-align: left;
+    border:0;
+    background: none;
+    padding:0;}
+.Page a.Cur{
+    background: #2298f0;
+    border: #0d6bb0 solid 1px;
+    color: #fff;}
+.Page a.NoNm:hover,.Page a:hover{color: #f60; }
+.Page .Fl a {
+    display:inline;
+    font-weight:bold;
+    background:none;
+    border:none;
+    padding:0;
+    margin:0;
+    text-decoration:underline;}
+.Page label{
+    display:inline-block;
+    padding:0;}
+/*Dialog*/
+iframe.WiF {
+    width: 100%;
+    height: 1000px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    background:#000;
+    filter:alpha(opacity=0);
+    z-index:-1;}
+.DWBg{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width:100%;
+    height:100%;
+    background: #000;
+    filter: alpha(opacity=20);
+    opacity: 0.20;}
+.DiaWin{
+    position:absolute;
+    display:none;
+    background:#fff;
+    border:1px solid #CFE3F7;}
+.DWTil{
+    height:26px;
+    line-height:26px;
+    padding-left:10px;
+    font-size:14px;
+    font-weight:bold;
+    border-bottom:1px solid #CFE3F7;}
+.DWTil .BtnCls{
+    margin:3px;}
+.DWCon{
+    margin:2px;
+    padding:10px;
+    background:#d9e9f9;}
+.DWConWte{background-color:#fff}
+.DWS{width:250px;}/*small dialog*/
+
+/*Title of column*/
+.ColTil, .PopTil{
+    height:28px;
+    display:block;
+    color:#276fa3;
+    padding-left:23px;
+    margin-bottom:1px;
+    font:bold 14px/28px '';
+    background:#e3f1fd url(http://hs.cnfol.com/ua/imgs/cloud/clouIco.gif) 10px -712px no-repeat;}
+.PopTil{
+    background:url("http://hs.cnfol.com/ua/imgs/cloud/clouIco.gif") no-repeat scroll 10px -712px #FFF;
+    padding-left:21px;
+    height:26px;
+}
+/*search form*/
+.ComWrp{
+    border:#bbdbf9 solid 1px;
+    background:#eff8fe;
+    padding:12px 10px;}
+.ComWrpWte{
+    padding: 12px 10px;
+    text-align: left;
+}
+.FmSrch label{
+    padding:0 10px;
+    display:inline-block;}
+.FmSrch label.LabSlc{display:inline;}
+
+/*detailed information following mouse*/
+.PsiR{position:relative;line-height:0px;}
+.FlwWrp{
+    position:absolute;
+    z-index:9;}
+.FlwWrp .SlpArw{margin-left:15px;}
+.FlwWrp .Con{
+    line-height:24px;
+    padding:1px;
+    border:1px solid #65b2ec;
+    background:#fff;}
+
+/*for word break*/
+.WdBkAl{
+    word-break:break-all;}
+.IcoCmHgs{width:14px;height:16px;background:url(http://hs.cnfol.com/ue/Imgs/Cloud/Hourglass.png) no-repeat 0 0 !important;}

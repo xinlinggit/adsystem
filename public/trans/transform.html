@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>简繁转换词汇列表</title>
+    <link rel="stylesheet" href="http://quotestest.cnfol.com/new/doc/v2quotesapi/css/semantic.min.css">
+    <link rel="stylesheet" href="http://quotestest.cnfol.com/new/doc/v2quotesapi/css/table.min.css">
+    <link rel="stylesheet" href="http://quotestest.cnfol.com/new/doc/v2quotesapi/css/container.min.css">
+    <link rel="stylesheet" href="http://quotestest.cnfol.com/new/doc/v2quotesapi/css/message.min.css">
+    <script src="http://hs.cnfol.com/Cm/Js/Jquery16.js"></script>
+</head>
+<body>
+<br />
+<div class="ui text container" style="max-width: none !important;">
+    <div class="ui floating message">
+        <h1 class="ui header" style="float: left;">简繁转换词汇列表</h1>
+        <div style="float:right;">
+            简体：<input type="text" name="sm">
+            繁体：<input type="text" name="tc">
+            <input type="button" value="添加" onclick="add();">
+        </div>
+        <table class="ui green celled striped table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>简体</th>
+                <th>繁体</th>
+                <th><a style="cursor: pointer;" title="倒序显示" href="/shell/hkarticle/transform.html?order=desc" target="_self">添加时间</a></th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>中金在线</td>
+                <td>中金在线</td>
+                <td>2017.11.27</td>
+                <td><a onclick="del(1,'中金在线');" style="cursor: pointer;">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    var order = 'asc';
+    if (-1 !== window.location.href.indexOf('order')){
+        order = 'desc';
+        $('th:eq(3) a').attr('href','/shell/hkarticle/transform.html').attr('title','正序排列');
+    }
+    $.getJSON('/shell/hkarticle/transform.json?_='+(new Date()).getTime(),function(data){
+        var tr_str = '';
+        data = eval(data);
+        if (order == 'asc'){
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                tr_str += '<tr><td>'+(i+1)+'</td><td>'+item.sm+'</td><td>'+ item.tc +'</td><td>'+item.addtime+'</td><td><a style="cursor: pointer;" onclick="del('+i+',\''+item.sm+'\')">删除</a></td></tr>';
+            }
+        } else {
+            for (var i = data.length-1; i >= 0; i--) {
+                var item = data[i];
+                tr_str += '<tr><td>'+(i+1)+'</td><td>'+item.sm+'</td><td>'+ item.tc +'</td><td>'+item.addtime+'</td><td><a style="cursor: pointer;" onclick="del('+i+',\''+item.sm+'\')">删除</a></td></tr>';
+            }
+        }
+        $('tbody').html(tr_str);
+    });
+    function del(id,sm){
+        if (window.confirm('确认删除"'+ sm +'"吗？')) {
+            $.ajax({
+                type:'post',
+                url:'/shell/hkarticle/transform.php?m=del',
+                data:{id:id,sm:sm},
+                dataType:"json",
+                success:function(ret){
+                    if (ret.code == 0){
+                        alert('删除成功！');
+                        window.location.reload();
+                    }else{
+                        alert(ret.msg);
+                    }
+                },
+                error:function (ret) {
+                    console.log(ret.responseText);
+                    alert('请求出错！');
+                }
+            });
+        }
+    }
+    function add(){
+        var sm = $('input[name=sm]').val();
+        var tc = $('input[name=tc]').val();
+        if (!sm || !tc){
+            return false;
+        }
+        $.ajax({
+            type:'POST',
+            url:'/shell/hkarticle/transform.php?m=add',
+            data:{sm:sm,tc:tc},
+            dataType:"json",
+            success:function(ret){
+                if (ret.code == 0){
+                    alert('添加成功！');
+                    window.location.reload();
+                }else{
+                    alert(ret.msg);
+                }
+            },
+            error:function (ret) {
+                console.log(ret.responseText);
+                alert('请求出错！');
+            }
+        });
+    }
+
+</script>
+</html>

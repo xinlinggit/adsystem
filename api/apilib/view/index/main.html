@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__STATIC__/hadmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__STATIC__/hadmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__STATIC__/hadmin/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="__STATIC__/hadmin/css/animate.css" rel="stylesheet">
+    <!--markdown-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/hadmin/css/plugins/markdown/bootstrap-markdown.min.css" />
+    <!--markdown-->
+    <style>
+        .markdown p img {
+            max-width: 100%;
+        }
+    </style>
+
+    <link href="__STATIC__/hadmin/css/style.css?v=4.1.0" rel="stylesheet">
+
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+
+        <div class="ibox-content  ">
+            <div class="text-center ">
+                <h2 class="">API列表</h2>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+    </div>
+    <div class="ibox-content collapse in">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <div class="btn-group hidden-xs" id="tool_bar" role="group">
+                    <button type="button" class="btn btn-outline btn-default js_add_api">
+                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    </button>
+                    <!--<button type="button" class="btn btn-outline btn-default">
+                        <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
+                    </button>-->
+                    <button type="button" class="btn btn-outline btn-default js_delete_all_api">
+                        <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <table class="js_table" data-mobile-responsive="true" data-sort-name="title" data-idField="id" data-sort-order="desc">
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true"></th>
+                        <th data-field="pid_title" data-sortable="true">父级</th>
+                        <th data-field="title" data-sortable="true" data-editable="true">标题</th>
+                        <th data-field="module" data-sortable="true">模型</th>
+                        <th data-field="controller" data-sortable="true">控制器</th>
+                        <th data-field="readme" data-sortable="true">文档</th>
+                        <th data-field="state" data-sortable="true">状态</th>
+                        <th data-field="update_time" data-align="center" data-sortable="true">更新时间</th>
+                        <th data-field="opt" data-formatter="optFormatter"
+                        =>操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<!-- 全局js -->
+<script src="__STATIC__/hadmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__STATIC__/hadmin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<!-- Bootstrap table -->
+<script src="__STATIC__/hadmin/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="__STATIC__/hadmin/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="__STATIC__/hadmin/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="__STATIC__/hadmin/js/plugins/layer/layer.min.js"></script>
+
+<script>
+    /**
+     * 生成操作按钮
+     * @param value 当前值
+     * @param row 整行数据
+     * @param index 行号
+     * @returns {string}
+     */
+    function optFormatter(value, row, index) {
+        var s = '';
+        //添加操作权限，0->无，1->添加，2->修改，-1->删除，3->查看
+        var btn = {
+            '0': '',
+            '1': '',
+            '2': '<button type="button" class="btn btn-outline btn-default js_edit_api" data-id="' + row.id + '"><i class="glyphicon glyphicon-pencil"></i></button>',
+            '-1': '<button type="button" class="btn btn-outline btn-default js_delete_api" data-id="' + row.id + '"><i class="glyphicon glyphicon-trash"></i></button>',
+            '3': '<button type="button" class="btn btn-outline btn-default js_read_api" data-id="' + row.id + '"><i class="glyphicon glyphicon-search"></i></button>',
+        };
+        $.each(value.split(','), function (i, o) {
+            s += btn[o].replace('%id', row.id);
+        });
+
+        return s;
+    }
+    (function (document, window, $) {
+        'use strict';
+
+        (function () {
+            var test = "<?=url('apilib/MenuApi/read', ['id' => 1])?>";
+            var dataTableUrl = "<?=url('apilib/MenuApi/index')?>";
+            $('.js_table').bootstrapTable({
+                url: dataTableUrl,
+                uniqueId: "id",
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                pagination: true,
+                //clickToSelect: true,
+                silentSort: false,//设置为 false 将在点击分页按钮时，自动记住排序项。仅在 sidePagination设置为 server时生效.
+                toolbar: '#tool_bar',
+                iconSize: 'outline',
+
+                icons: {
+                    refresh: 'glyphicon-repeat',
+                    toggle: 'glyphicon-list-alt',
+                    columns: 'glyphicon-list'
+                }
+            }).on('click', '.js_edit_api', function () {
+                var _this = $(this);
+                $.ajax({
+                    url: "<?=url('apilib/MenuApi/edit', ['id' => 0])?>".replace('0', _this.data('id')),
+                    type: 'get',
+                    success: function (response) {
+                        parent.layer.open({
+                            title: '修改API',
+                            type: 1,
+                            skin: 'layui-layer-rim', //加上边框
+                            area: ['800px', '400px'], //宽高
+                            content: response
+                        });
+                    }
+                });
+                return false;
+            }).on('click', '.js_read_api', function () {
+                var _this = $(this);
+                $.ajax({
+                    url: "<?=url('apilib/MenuApi/read', ['id' => 0])?>".replace('0', _this.data('id')),
+                    type: 'get',
+                    success: function (response) {
+                        parent.layer.open({
+                            title: '查看API',
+                            type: 1,
+                            skin: 'layui-layer-rim', //加上边框
+                            area: ['800px', '400px'], //宽高
+                            content: response
+                        });
+                    }
+                });
+                return false;
+            }).on('click', '.js_delete_api', function () {
+                var _this = $(this);
+                parent.layer.confirm('确定要删除吗？', {
+                    btn: ['确定', '取消'], //按钮
+                    shade: false //不显示遮罩
+                }, function () {
+                    $.ajax({
+                        url: "<?=url('apilib/MenuApi/delete', ['id' => 0])?>".replace('0', _this.data('id')),
+                        type: 'delete',
+                        beforeSend:function() {
+                                parent.layer.load(1, {
+                                    shade: [0.5, '#000'] //透明度，颜色
+                                });
+                        },
+
+                        success: function (response) {
+                            if (response.flag == '10000') {
+                                parent.toastr['success']('', response.msg);
+                                //document.getElementById('J_iframe').contentWindow.location.reload(true);
+                                location.href = location.href;
+                                parent.layer.closeAll();
+                            }
+                            else {
+                                parent.toastr['error']('', response.msg);
+                            }
+                            //parent.layer.msg('删除成功', {icon: 1});
+                        }
+                    })
+                    ;
+                }, function () {
+                    //parent.layer.msg('奇葩么么哒', {shift: 6});
+                });
+                return false;
+            });
+
+            $('.js_add_api').on('click', function () {
+                $.ajax({
+                    url: "<?=url('apilib/MenuApi/create')?>",
+                    type: 'get',
+                    data: {
+                        opt: 'getAddForm'
+                    },
+                    success: function (response) {
+                        parent.layer.open({
+                            title: '添加API',
+                            type: 1,
+                            skin: 'layui-layer-rim', //加上边框
+                            area: ['800px', '400px'], //宽高
+                            content: response
+                        });
+                    }
+                });
+            });
+
+            $('.js_delete_all_api').on('click', function () {
+                var _this = $(this);
+                var ids = $.map($('.js_table').bootstrapTable('getSelections'), function (row) {
+                    return row.id
+                });
+                if(!ids.length){
+                    parent.layer.msg('请选择数据');
+                    return false;
+                }
+                parent.layer.confirm('确定要删除吗？', {
+                    btn: ['确定', '取消'], //按钮
+                    shade: false //不显示遮罩
+                }, function () {
+                    $.ajax({
+                        url: "<?=url('apilib/MenuApi/delete', ['id' => 0])?>".replace('0', ids.join(',')),
+                        type: 'delete',
+                        beforeSend:function() {
+                            parent.layer.load(1, {
+                                shade: [0.5, '#000'] //透明度，颜色
+                            });
+                        },
+
+                        success: function (response) {
+                            if (response.flag == '10000') {
+                                parent.toastr['success']('', response.msg);
+                                //document.getElementById('J_iframe').contentWindow.location.reload(true);
+                                location.href = location.href;
+                                parent.layer.closeAll();
+                            }
+                            else {
+                                parent.toastr['error']('', response.msg);
+                            }
+                            //parent.layer.msg('删除成功', {icon: 1});
+                        }
+                    })
+                    ;
+                }, function () {
+                    //parent.layer.msg('奇葩么么哒', {shift: 6});
+                });
+                return false;
+            });
+
+        })();
+
+
+    })(document, window, jQuery);
+</script>
+
+
+</body>
+
+</html>

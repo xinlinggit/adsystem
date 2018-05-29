@@ -1,0 +1,82 @@
+<form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">广告素材名称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['material_title']?>" placeholder=""  name="material_title" required="true" disabled="disabled">
+			</div>
+		</div>
+		<!-- <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">所属广告主：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['userid']?>" placeholder="" disabled="disabled">
+			</div>
+		</div> -->
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">素材尺寸：</label>
+			<div class="formControls col-xs-1 col-sm-1" style="width:120px;">
+				<input type="number" class="input-text" value="<?=$info['width']?>" placeholder=""  name="width" required="true" style="width:90px;" disabled="disabled">宽*
+			</div>
+			<div class="formControls col-xs-1 col-sm-1" style="width:140px;">
+				<input type="number" class="input-text" value="<?=$info['height']?>" placeholder=""  name="height" required="true" style="width:90px;" disabled="disabled">高 (px)
+			</div>
+		</div>
+		<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">素材类型：</label>
+				<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="material_type" class="select" title="素材类型" disabled="disabled">
+					<option data-level="0" data-parent="0" value="1" <?=$info['material_type']==1?'selected="selected"':'';?>>文字广告</option>
+					<option data-level="0" data-parent="0" value="2" <?=$info['material_type']==2?'selected="selected"':'';?>>图片广告</option>
+					<option data-level="0" data-parent="0" value="3" <?=$info['material_type']==3?'selected="selected"':'';?>>flash广告</option>
+					<option data-level="0" data-parent="0" value="4" <?=$info['material_type']==4?'selected="selected"':'';?>>对联广告</option>
+				</select>
+				</span>
+				</div>
+		</div>
+		<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">状态：</label>
+				<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select id=reasonSel name="status" class="select" title="状态" onchange="reasonTogg();" >
+					<option  data-level="0" data-parent="0" value="0" <?=$info['status']==0?'selected="selected"':'';?>>等待提交审核</option>
+					<option  data-level="0" data-parent="0" value="3" <?=$info['status']==3?'selected="selected"':'';?>>审核已通过</option>
+					<option  data-level="0" data-parent="0" value="4" <?=$info['status']==4?'selected="selected"':'';?>>审核未通过</option>
+					<option  data-level="0" data-parent="0" value="5" <?=$info['status']==5?'selected="selected"':'';?>>待审核</option>
+				</select>
+				</span>
+				</div>
+		</div>
+		<div id="reasonBox" class="row cl SiteShow" >
+			<label class="form-label col-xs-2 col-sm-2">理由：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<textarea name="remark" cols="" rows="" class="textarea"  placeholder="请填写理由"><?=$info['remark']?></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default js_close_layer" >取消</button>
+		<button type="submit" class="btn btn-primary">保存</button>
+	</div>
+</form>
+<script>
+$(function(){
+	reasonTogg();
+	function reasonTogg(){
+	var reason=$("#reasonSel").val();
+		console.log(reason);
+		if(reason=="2"||reason=="4"){
+
+			$("#reasonBox").show();
+		}else{
+			$("#reasonBox").hide();
+
+		}
+
+
+	}
+
+})
+
+</script>

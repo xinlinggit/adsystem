@@ -1,0 +1,42 @@
+<div class="js_super_table">
+	<div class="mt-20">
+		<div class="dataTables_wrapper">
+			<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+				<thead>
+				<tr class="text-c">
+					<th>编号</th>
+					<th>订单号</th>
+					<th >交易价格</th>
+					<th>交易量</th>
+					<th>交易金额</th>
+					<th>手续费</th>
+					<th >总计</th>
+					<th>交易时间</th>
+					<th>交易状态</th>	
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+
+				foreach ($list as $row) {
+				?>
+				<tr class="text-c">
+				<td><?= $row['id']; ?></td>
+				<td><?= $row['deal_no']; ?></td>
+				<td><?= $row['unit_money']; ?></td>
+				<td><?= $row['num']; ?></td>
+				<td><?= $row['money']; ?></td>
+				<td><?= $row['fee']; ?></td>
+				<td><?= $row['total']; ?></td>
+				<td><?= date('Y.m.d H:i',strtotime($row['create_time'])); ?></td>
+				<td>已完成</td>
+				</tr>
+				<?php
+				}
+				?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+

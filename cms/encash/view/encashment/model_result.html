@@ -1,0 +1,65 @@
+<div class="HuiTab js_tab">
+	<div class="tabBar clearfix">
+		<span>提现申请</span>
+		<span>拒绝理由</span>
+	</div>
+	<form class="form form-horizontal js_super_form" method="post" action="<?= url('operate_result') ?>" autocomplete="off" enctype="multipart/form-data">
+
+		<input type="hidden" name="result_user" value="<?= $userid ?>" />
+		<input type="hidden" name="id" value="<?= $info['id'] ?>" />
+		<div class="tabCon">
+			<div class="modal-body">
+				<div class="row cl">
+					<label class="form-label col-xs-2 col-sm-2">转账结果截图：</label>
+					<div class="formControls col-xs-4 col-sm-4">
+						<input type="file" class="file input-filename" value="" name="result_image">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default js_close_layer">关闭</button>
+				<button type="submit" class="btn btn-primary">通过</button>
+			</div>
+		</div>
+	</form>
+	<form class="form form-horizontal js_super_form" method="post" action="<?= url('operate_refuse') ?>" autocomplete="off" enctype="multipart/form-data">
+
+		<input type="hidden" name="deal_user" value="<?= $userid ?>" />
+		<input type="hidden" name="id" value="<?= $info['id'] ?>" />
+		<div class="tabCon">
+			<div class="modal-body">
+				<div class="row cl">
+					<label class="form-label col-xs-2 col-sm-2">转账结果截图：</label>
+					<div class="formControls col-xs-4 col-sm-4">
+						<input type="file" class="file input-filename" value="" name="result_image">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-2 col-sm-2">拒绝理由：</label>
+					<div class="formControls col-xs-10 col-sm-10">
+						<textarea class="textarea" placeholder="拒绝理由" rows="" cols="" name="remarks"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default js_close_layer">取消</button>
+				<button type="submit" class="btn btn-primary">拒绝</button>
+			</div>
+		</div>
+	</form>
+
+</div>
+<script>
+	$('.js_tab').Huitab({tabEvent: "mousemove", index: 0});
+	//调用示例
+	layer.photos({
+		offset: $(top.document).scrollTop(),
+		photos: '.layer-photos',
+		shade: 0.1,
+		area:'1000px',
+		anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+	});
+</script>
+<style>
+	.layui-layer-photos .layui-layer-content{overflow: auto}
+</style>

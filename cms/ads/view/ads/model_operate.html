@@ -1,0 +1,141 @@
+<form class="form form-horizontal js_super_form" id="ads_form" method="post" action="<?=$action?>" autocomplete="off" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">广告名称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['title']?>" placeholder=""  name="title" required="true" >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">选择站点：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="adsiteid" id="adsiteid" class="select" title="选择站点" onchange="loadAdPosition()">
+					<option></option>
+					<?php
+						foreach($adsite as $k => $v){
+					?>
+					<option value="<?= $v['id'] ?>" <?= ($v['id'] == $info['adsiteid'] ? 'selected' : '') ?>><?= $v['sitename'] ?></option>
+					<?php } ?>
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">选择广告位:</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="adsenseid" id="adsenseid" type="select" class="select field-adsenseid" title="选择广告位" >
+					<option></option>
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">投放模式：</label>
+			<div class="col-xs-10 col-sm-5">
+				<div class="radio-box">
+					<input type="radio" id="radio-1" name="sensemodel" value="1" <?=$info['spending'] == '1' ?'checked="checked"':'';?> >
+					<label for="radio-1">包时段</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="radio-2" name="sensemodel" value="2" <?=$info['spending'] == '2'?'checked="checked"':'';?> >
+					<label for="radio-2">竞价</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">竞价出价：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="number" class="input-text" value="<?=$info['price'] ?>" placeholder=""  name="price">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">CPM单次投放金额上限：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="number" class="input-text" value="<?=$info['pricelimit'] ?>" placeholder=""  name="pricelimit" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">竞价时段：</label>
+			<div class="formControls col-xs-2 col-sm-2" style="padding-right: 5px;">
+				<input type="text" class="input-text" value="<?=$info['btime'] ?>" placeholder="开始时间" />
+			</div>
+			<div class="formControls col-xs-2 col-sm-2">
+				<input type="text" class="input-text" value="<?=$info['etime'] ?>" placeholder="结束时间" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">广告定向：</label>
+            <div class="radio-box">
+                <input type="radio" id="orientation" name="orientation" value="1" <?=$info['orientation'] == '1' ?'checked="checked"':'';?> >
+                <label for="radio-1">默认全地段</label>
+            </div>
+		</div>
+	</div>
+	<div class="modal-footer">
+        <input type="hidden" name="sensetype"  id="sensetype" value="<?=$info['sensetype'] ?>"/>
+		<button type="reset" class="btn btn-default" >重置</button>
+		<a type="button" id="ajax_btn" class="btn btn-primary" class="" data-mid="">下一步</a>
+	</div>
+</form>
+<script>
+
+    $("#ajax_btn").click(function(){
+        var i = layer.open({
+            type: 2,
+            id:'material_pop_window',
+            offset: "0px",
+            scrollbar: false,
+            area: ['1434px', '1533px'],
+            content: '<?= $action ?>', //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+
+        $("#ajax_btn").attr('data-mid', i);
+    })
+
+    // 加载所有广告位
+    function loadAdPosition()
+    {
+        var adsite = $("#adsiteid").val();
+        // 清零
+		$('#adsenseid').html("");
+        $("#adsenseid").append($("<option>"));
+
+        $.ajax({
+            method: "POST",
+            url: "{:url('ads/getAdPosition')}",
+            data: {adsiteid: adsite}
+        }).done(function(data){
+            eval("var data=" + data + "");
+            var options = '';
+            $.each(data, function(i, item){
+                var option = $("<option>").val(item.id).text(item.sensename);
+                $('#adsenseid').append(option);
+                // form.render('select');
+            })
+        })
+    }
+
+    var formData = <?php echo json_encode($info) ?>;
+        /* 修改模式下表单自动赋值 */
+        if (formData) {
+            for (var i in formData) {
+                switch ($('.field-' + i).attr('type')) {
+                    case 'select':
+                        if (i == 'adsenseid') {
+                            var options = '';
+                            $.each(formData.adPositions, function (ii, item) {
+                                var option = $("<option>").val(item.id).text(item.sensename);
+                                $('#adsenseid').append(option);
+                                // form.render('select');
+                            })
+                        }
+                        input = $('.field-' + i).find('option[value="' + formData[i] + '"]');
+                        input.prop("selected", true);
+                        break;
+                }
+            }
+        }
+</script>

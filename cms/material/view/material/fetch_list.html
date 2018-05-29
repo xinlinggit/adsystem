@@ -1,0 +1,108 @@
+{extend name="/common@body" /}{block name="main"}
+<?php
+echo widget('common/filter/form', [/*参数数组*/
+[/*第一个参数*/
+widget('common/filter/input', ['广告素材名称', 'material_title']),
+widget('common/filter/select', ['素材类型', 'material_type', $material_type]),
+widget('common/filter/select', ['状态', 'status', $status]),
+]
+]);
+?>
+<div class="js_super_table">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<button class="btn btn-success js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量审核通过" data-title="批量审核通过" data-url="<?= url('operate_status_3') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量审核通过</button>
+			<button class="btn btn-warning js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量审核不通过" data-title="批量审核不通过" data-url="<?= url('operate_status_4') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量审核不通过</button>
+			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+		</span>
+	</div>
+<div class="mt-20">
+	<div class="dataTables_wrapper">
+	<?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+		<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+			<thead>
+			<tr class="text-c">
+				<th width="15px;">
+					<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0"/></label>
+				</th>
+				<th class="th_id <?=$thead['id']['class'];?>" data-url="<?=$thead['id']['url'];?>">编号</th>
+				<th>适配广告位</th>
+				<th>广告素材名称</th>
+				<th>所属广告主</th>
+				<th>素材尺寸</th>
+				<th>素材类型</th>
+				<th class=" <?=$thead['create_time']['class'];?>" data-url="<?=$thead['create_time']['url'];?>">创建时间</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach($list as $row){
+			?>
+			<tr class="text-c" >
+				<td>
+					<label for="info_<?=$row->id;?>"><input id="info_<?=$row->id;?>" type="checkbox" class="js_checkbox" data-type="child" value="<?=$row->id;?>"></label>
+				</td>
+				<td><?=$row->id;?></td>
+				<td><?=$row->sensename?: '无' ?></td>
+				<td><?=$row->material_title;?></td>
+				<td><?=$row->username;?></td>
+				<td><?=$row->width;?>*<?=$row->height;?></td>
+				{if condition="$row['material_type'] == 1"}
+				<td>文字广告</td>
+				{elseif condition="$row['material_type'] == 2"}
+				<td>图片广告</td>
+				{elseif condition="$row['material_type'] == 3"}
+				<td>flash广告</td>
+				{else/}
+				<td>信息流广告</td>
+				{/if}
+				<td><?= date('Y-m-d H:i',strtotime($row->create_time)) ?></td>
+				{if condition="$row['status'] == 0"}
+				<td>等待提交审核</td>
+				{elseif condition="$row['status'] == 3"}
+				<td>审核已通过</td>
+				{elseif condition="$row['status'] == 4"}
+				<td>审核未通过<i class="Hui-iconfont Hui-iconfont-shenhe-weitongguo" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<?=$row->remark;?>"></i></td>
+				{else/}
+				<td>待审核</td>
+				{/if}
+				<td>
+					<a class="btn size-MINI radius btn-secondary-outline" title="预览" href="http://as.cnfol.com/index/index/preview?material_id=<?= $row['id'] ?>" target="_blank">
+						预览
+					</a>
+					<button data-url="<?= url('model_edit') ?>" data-id="<?= $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="编辑" title="编辑">
+						<i class=" Hui-iconfont Hui-iconfont-edit"></i></button>
+					<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
+						<i class="Hui-iconfont Hui-iconfont-del3"></i></button>
+				</td>
+			</tr>
+				<?php
+			}
+			?>
+			</tbody>
+		</table>
+		<?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+	</div>
+</div>
+</div>
+<script>
+$(function(){
+	reasonTogg();
+})
+function reasonTogg(){
+	var reason=$("#reasonSel").val();
+		console.log(reason);
+		if(reason=="2"||reason=="4"){
+
+			$("#reasonBox").show();
+		}else{
+			$("#reasonBox").hide();
+
+		}
+	}
+</script>
+
+
+{/block}

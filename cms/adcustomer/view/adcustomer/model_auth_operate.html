@@ -1,0 +1,76 @@
+<form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" id="auth_form" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">用户名：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['username']?>" placeholder=""  name="" readonly>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">昵称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['nick']?>" placeholder=""  name="" readonly>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">联系邮箱：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="email" class="input-text" value="<?=$info['email']?>" placeholder=""  name="" readonly>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">请输入手机号码：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="mobile" class="input-text" value="<?=$info['mobile']?>" placeholder=""  name="" readonly>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">操作理由：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<textarea name="remark" id="remark"><?=$info['remark']?></textarea>
+			</div>
+		</div>
+
+		<div id="layer-auth-photos" class="layer-photos-demo">
+		<label class="form-label col-xs-2 col-sm-2">认证资料：</label>
+            <div class="row cl">
+			    <img layer-src="<?php echo $info['ID_card_front_url'] ?>" src="<?php echo $info['ID_card_front_url'] ?>" alt="身份证（正）" width="100" height="100"  />
+			    <img layer-src="<?php echo $info['ID_card_end_url'] ?>" src="<?php echo $info['ID_card_end_url'] ?>" alt="身份证（反）" width="100" height="100" />
+			    <img layer-src="<?php echo $info['business_license_front_url'] ?>" src="<?php echo $info['business_license_front_url'] ?>" alt="营业执照"  width="100" height="100"/>
+            </div>
+            <!-- <div class="row cl" style="display:none">
+                <img layer-src="<?php echo $info['ID_card_end_url'] ?>" src="<?php echo $info['ID_card_end_url'] ?>" alt="身份证（反）"  />
+            			    <img layer-src="<?php echo $info['business_license_front_url'] ?>" src="<?php echo $info['business_license_front_url'] ?>" alt="营业执照"  />
+            </div> -->
+		</div>
+	</div>
+	<div class="modal-footer">
+		<input type="hidden" name="status" id="auth_status" />
+		<button type="button" class="btn btn-primary" onclick="checkform(1)">认证通过</button>
+		<button type="button" class="btn btn-primary btn-danger" onclick="checkform(-1)">认证不通过</button>
+	</div>
+</form>
+
+<script>
+    //调用示例
+    layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+        layer.photos({
+            photos: '#layer-auth-photos'
+            ,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+        });
+    });
+
+        function checkform(status)
+        {
+            var remark = $("#remark").val();
+            if((status == -1) && (remark == ''))
+			{
+                layer.msg('请填写认证不通过的理由', {icon: 5});
+                return false;
+			} else {
+                $("#auth_status").val(status);
+                $("#auth_form").submit();
+			}
+        }
+</script>

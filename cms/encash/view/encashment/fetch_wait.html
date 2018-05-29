@@ -1,0 +1,76 @@
+{extend name="/common@body" /}{block name="main"}
+<?php
+echo widget('common/filter/form', [/*参数数组*/
+[/*第一个参数*/
+widget('common/filter/input', ['用户昵称', 'nickname']),
+widget('common/filter/date_range', ['申请时间', 'create']),
+widget('common/filter/input', ['银行卡号', 'bank_card']),
+widget('common/filter/input', ['银行卡姓名', 'name']),
+]
+]);
+?>
+<div class="js_super_table">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+	</div>
+	<div class="mt-20">
+		<div class="dataTables_wrapper">
+			<?= widget('common/page/render', ['page' => $page, 'param' => $param]); ?>
+			<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+				<thead>
+				<tr class="text-c">
+					<th class="th_check_id">
+						<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0" /></label>
+					</th>
+					<th class="th_id <?=$thead['id']['class'];?>" data-url="<?=$thead['id']['url'];?>">编号</th>
+					<th class="">用户昵称</th>
+					<th class="">提现金额</th>
+					<th class="">提现银行卡号</th>
+					<th class="">银行卡开户行</th>
+					<th class="">银行卡账户名</th>
+					<th class=" <?=$thead['create_time']['class'];?>" data-url="<?=$thead['create_time']['url'];?>">申请时间</th>
+					<th class="">提现状态</th>
+					<th >操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				foreach ($list as $row) {
+				?>
+				<tr class="text-c">
+					<td>
+						<label for="info_<?= $row->id ?>"><input id="info_<?= $row->id ?>" type="checkbox" class="js_checkbox" data-type="child" value="<?= $row->id ?>"></label>
+					</td>
+					<td><?= $row->id ?></td>
+					<td>
+						<?= $row['user']['nickname']; ?>
+					</td>
+					<td>
+						<?= $row->money; ?>
+					</td>
+					<td>
+						<?= $row->bank_card; ?>
+					</td>
+					<td>
+						<?= $row->open_bank; ?>
+					</td>
+					<td>
+						<?= $row->name; ?>
+					</td>
+					<td><?= date('Y.m.d H:i',strtotime($row->create_time)) ?></td>
+					<td>待处理</td>
+					<td>
+						<button data-url="<?= url('model_deal'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI js_operate btn-success-outline" data-callback="layer_model" data-title="处理" title="处理">
+							<i class=" Hui-iconfont Hui-iconfont-manage"></i>
+						</button>
+					</td>
+				</tr>
+				<?php
+				}
+				?>
+				</tbody>
+			</table>
+			<?= widget('common/page/render', ['page' => $page, 'param' => $param]); ?>
+		</div>
+	</div>
+</div>{/block}
+

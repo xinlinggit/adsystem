@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>广告系统后台</title>
+	<!--
+		<link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/bootstrap-datepicker/css/bootstrap-datepicker3.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/bootstrap-table/css/bootstrap-table.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/cms/css/basis.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/cms/css/cloud.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/cms/css/cloud.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/cms/css/inner.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/calendar/css/calendar.css"/>-->
+	<!--
+    <script src="/js/jquery.form.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/box.js"></script>
+    -->
+	<link type="text/css" rel="stylesheet" href="/static/h-ui/css/H-ui.css" />
+	<link type="text/css" rel="stylesheet" href="/static/h-ui/css/H-ui.admin.css" />
+	<link type="text/css" rel="stylesheet" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link type="text/css" rel="stylesheet" href="/lib/My97DatePicker/4.8/skin/WdatePicker.css" />
+	<link type="text/css" rel="stylesheet" href="/static/Validform_v5.3.2/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="/lib/lightbox2/2.8.1/css/lightbox.css">
+	<link type="text/css" rel="stylesheet" href="/static/cms/css/fixed.css?<?=time();?>">
+	<link type="text/css" rel="stylesheet" href="/static/cms/css/calendar.css?<?=time();?>">
+
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="Lib/html5shi.js"></script>
+	<script type="text/javascript" src="Lib/respond.min.js"></script>
+	<script type="text/javascript" src="Lib/PIE_IE678.js"></script>	<![endif]-->
+
+	<!--[if IE 6]>
+	<script type="text/javascript" src="Lib/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>DD_belatedPNG.fix('.pngfix,.icon');</script>	<![endif]-->
+
+	<script type="text/javascript" src="/static/cms/js/jquery-3.2.1.min.js"></script>
+</head>
+<body style="min-height: 800px;">
+<script charset="utf-8" type="text/javascript">
+	document.domain = "cnfol.com";
+	//最小高度800
+	//parent.document.getElementsByTagName('iframe').length && (parent.document.getElementsByTagName('iframe')[0].style.height < 800) && (parent.document.getElementsByTagName('iframe')[0].style.height = 800);
+	//嵌套Iframe兼容
+	if (parent.document.getElementsByTagName('section').length) {
+		if(parent.document.getElementsByTagName('iframe')[0].style.marginTop != '40px'){
+			//parent.document.getElementsByTagName('iframe')[0].scrolling = 'yes';
+			parent.document.getElementsByTagName('section')[0].style.overflow = 'hidden';
+			parent.document.getElementsByTagName('iframe')[0].style.marginTop = '40px';
+			window.location.href = location.href;
+		}
+		//parent.document.getElementsByTagName('iframe')[0].style.marginRight = '0px';
+		if($(parent.document).scrollTop()<100){
+			$(parent.document.getElementsByTagName('body')).animate({scrollTop:'100px'}, 800);
+		}
+	}
+	;
+	//console.log(parent.document.getElementsByTagName('section')[0].style.overflow);
+	//parent.document.getElementsByTagName('iframe')[0].scrolling = 'auto';
+	//parent.document.getElementsByTagName('iframe')[0].scrolling = 'auto';
+</script>
+<!--
+<style>
+	html { overflow-x: hidden; overflow-y: auto; }
+</style>
+-->
+<div>
+
+	{block name="main"}主内容{/block}
+</div>
+<div style="height: 80px;"></div>
+</body>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+<script type="text/javascript" src="/static/Validform_v5.3.2/js/Validform_v5.3.2.js"></script>
+<script type="text/javascript" src="/lib/lightbox2/2.8.1/js/lightbox.min.js"></script>
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js?v=<?= time() ?>"></script>
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"> </script>
+<script type="text/javascript" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<!--
+<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/static/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script type="text/javascript" src="/static/bootstrap-table/js/bootstrap-table.js"></script>
+<script type="text/javascript" src="/static/bootstrap-table/locales/bootstrap-table-zh-CN.js"></script>
+<script src="http://hs.cnfol.com/Cm/Js/Dialog.js"></script>-->
+
+
+<script type="text/javascript" src="/static/cms/js/super_include.js?v=<?= time() ?>"></script>
+<script type="text/javascript" src="/static/cms/js/date.js?v=<?= time() ?>"></script>
+<script type="text/javascript" src="/static/cms/js/H-ui.js?v=<?= time() ?>"></script>
+<script type="text/javascript" src="/static/cms/js/sendfile.js?v=<?= time() ?>"></script>
+<script type="text/javascript" src="/static/calendar/js/calendar.js"></script>
+
+<!--<script src="/js/Content/content.js" type="text/javascript"></script>-->
+
+<!--<script charset="utf-8" src="/js/Setting/category.js" type="text/javascript"></script>-->
+<!--<script type="text/javascript">-->
+    <!--Tables("Fa1","Ccl","Ocl");-->
+    <!--Checkbox("Fa1");-->
+<!--</script>-->
+<!--JS内容 begin-->
+{block name="script"} {/block}
+<!--JS内容 end-->
+</html>

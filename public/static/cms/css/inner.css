@@ -1,0 +1,280 @@
+@charset "utf-8";
+.DWXS{width:250px;}/*small dialog*/
+.Mt10{margin-top:10px !important;}
+.Mb10{margin-bottom:10px !important;}
+.PL100{padding-left:100px;}
+.PL30{padding-left:30px;}
+input{padding-left:3px;}
+select{padding-left:0;}
+select.Mlt,.DWM select.Mlt{width:120px;height:100px;}
+.DWM select.SlcS{width:80px;}
+.Fitl{font-style:italic;}
+
+.CoEm{color:#ff6000 !important;}
+.CoBrow{color:#93010F;}
+
+/*字体*/
+.FItl{font-style:italic;}
+.FUdl{text-decoration:underline;}
+
+/*Icon*/
+a.FldIco,.FldIco,a.OpnIco,.OpnIco{
+    display:inline-block;
+    width:13px;
+    height:13px;
+    margin:0 4px;
+    overflow:hidden;
+    vertical-align:middle;
+    background:#999 url(http://hs.cnfol.com/ui/Imgs/Clouds/W2/W2InrMbg.gif) 3px 3px no-repeat;}
+a.OpnIco,.OpnIco{background-position:3px -11px;}
+a.BgBlu,.BgBlu{background-color:#2298f0;}
+.BluLin{
+    margin-right:5px;
+    color:#2298f0;
+    font:bold 16px/20px Arial;}
+
+/*form元素*/
+label,.Lbl{padding:3px 0;}
+label i,.Lbl i,p.Lbl i{
+    width:110px;
+    text-align:right;
+    display:inline-block;
+    vertical-align:middle;}
+
+label.NoTil,p.NoTil{padding-left:110px;}
+label i.H30,.Lbl i.H30{height:30px;}
+
+/*Add for 微信后台*/
+p.Lbl i{
+    height:25px;
+    line-height:25px;
+    vertical-align:top;}
+p.Lbl{line-height:25px;}
+/*end Add for 微信后台*/
+
+.DWM{width:565px;}/*middle dialog*/
+.DWM input,.DWM select{width:170px;}
+.DWM select{height:22px;}
+.DWM select.Mlt{width:170px;}
+.DWM p,.FmDw p{font-weight:bold;padding:10px 0 0 40px;}
+.AreaM{width:320px;height:70px;}
+
+.DWS{width:495px;}/*small dialog*/
+.DWS input{width:270px;}
+.DWL label i,.DWS label i,.DWL .Lbl i,.DWS .Lbl i{width:85px}
+.DWL label.NoTil,.DWS label.NoTil{padding-left:85px;}
+.AreaS{width:270px;height:100px;}
+
+.DWL{width:750px;}/*large dialog*/
+.DiaWin{ z-index:99;}
+
+.InpL{width:220px;}
+.InpLB{width:345px;}
+.AreaL{width:620px;height:60px;}
+.DiaWin .LabSlc ul{z-index:2;}
+select.Multp{
+    width:264px;
+    height:143px;
+    border:1px solid #9ac4dc;}
+
+/*table元素*/
+td.TLP,td.TLP1,td.TLP2,th.TLP{
+    text-align:left;
+    padding-left:10px;}
+td.TLP1{padding-left:30px;}
+td.TLP2{padding-left:50px;}
+td.TLP3{padding-left:70px;}
+td.TLP4{padding-left:90px;}
+.ComTabl .PsiR{
+    text-align:left;
+    display:none;}
+.ComTabl .PsiR .FlwWrp{
+    width:280px;
+    top:-30px;
+    left:40px;}
+.ComTabl .PsiR .Con{
+    padding:5px 10px;
+    color:#266cb3;
+    line-height:22px;
+    border:2px solid #65b2ec;}
+
+/*多选系列*/
+.MltpWrp{
+    float:left;
+    width:268px;
+    height:210px;
+    margin-left:70px;}
+.MltpTil{
+    width:252px;
+    height:22px;
+    padding-left:10px;
+    color:#077ac7;
+    border:1px solid #9ac4dc;
+    border-bottom:0;
+    background:url(http://hs.cnfol.com/ui/Imgs/CloudCom/CldCmHBg.gif) 0 -40px repeat-x;}
+.LogIco{
+    width:50px;
+    height:50px;
+    margin:0 10px;}
+.RsltTil a.BtnGryR,.RsltTil a.BtnN,.RsltTil select{
+    margin-top:0;
+    font-size:12px;
+    font-weight:normal;}
+.RsltTil a.Cur{font-weight:bold;}
+/*统计*/
+.TblStic{
+    width:100%;
+    table-layout:fixed;}
+.TblStic th,.TblStic td{
+    height:30px;
+    color:#266ca3;
+    text-align:center;}
+.TblStic th{
+    font-weight:bold;
+    background:#e3f1fd;
+    border-bottom:1px solid #c4def4;}
+.TblStic td{background:#eff8fe;}
+.TblStic td.LftLn{border-left:1px solid #c4def4;}
+.TblStic tr.LnLas td{border-bottom:1px solid #c4def4;}
+.SticWrp{
+    padding:3px 15px;
+    background:#e3f1fd;
+    border:1px solid #6cbbf4;}
+.SticWrp a{color:#266ca3;margin-right:25px;}
+/*模板选择*/
+.ModSrc{
+    padding:3px 10px;
+    background:#f4f9ff;
+    border-bottom:1px solid #cfe3f7;}
+.ModSrc input{width:495px;}
+.ModWrp{height:260px;overflow-y:auto;}
+.ModTbl{
+    table-layout:fixed;
+    width:520px;
+    text-align:center;}
+.ModTbl th{text-align:center; font-weight:bold;}
+
+.BgNo{background:none !important;}
+
+/*add by Ly at 20130221*/
+.TableBx{
+    border-bottom: 1px solid #CFE3F7;
+    border-top: 1px solid #CFE3F7;
+    height: 182px;
+    overflow-y: auto;
+}
+.TableBx table{
+    border-bottom: 1px solid #CFE3F7;
+    margin-top: -1px;
+    width: 100%;
+}
+.TableBx table tr th, .TableBx table tr td{
+    border: 1px solid #cfe3f7;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+}
+.TableBx table tr th{
+    background-color: #d9ecff;
+}
+.TableBx table input{
+    width: 22px;
+}
+.DWM p.BtnsBx{
+    padding: 10px 0;
+}
+.DWM select.SelW{
+    width: 100px;
+}
+
+/*Add by Guxt for选择截图弹出*/
+.ShotCls{
+    position:absolute;
+    top:5px;
+    right:3px;}
+.ShotIFr{
+    width:750px;
+    height:545px;
+    border:0;}
+/*Add for 待审核文章页*/
+.KeyTab{Padding:0 0 10px;}
+.KeyTab dd{display:none;}
+.KeyTab dt{height:25px;padding:10px 0 0 18px;}
+.KeyTab dt a{
+    position:relative;
+    display:inline-block;
+    width:101px;
+    height:25px;
+    line-height:24px;
+    color:#3179c3;
+    margin-right:5px;
+    padding-left:10px;
+    background:url(http://hs.cnfol.com/ui/Imgs/Clouds/W2/W2InrMbg.gif) -68px 0 no-repeat;}
+.KeyTab dt a.CM{
+    height:26px;
+    background-position:-68px -28px;}
+.KeyTab dd{
+    border-top:1px solid #b4d3f2;
+    background:url(http://hs.cnfol.com/ui/Imgs/Clouds/W2/ZebraBg.gif);}
+/*.KeyTab dd a,*/.KeyTab dd .Itm{
+                     float:left;
+                     width:230px;
+                     height:26px;
+                     line-height:26px;
+                     padding:0 25px;
+                     overflow:hidden;}
+.KeyTab dd a:hover{color:#146bc0;}
+.KeyTab dd a.Cur{color:#ff6000;}
+
+/*Add for 财经组图 2013-3-11 11:00:11*/
+.FncPicWrp{
+    float:left;
+    position:relative;
+    width:180px;
+    height:175px;
+    padding-right:20px;
+    overflow:hidden;}
+.FncPicWrp .Img{
+    width:105px;
+    height:72px;
+    display:block;
+    background:#fff;
+    border:1px solid #ccc;}
+.FncPicWrp .Img img{
+    width:105px;
+    height:72px;}
+.FncPicWrp .Opr,.FncPicWrp .OprBg{
+    display:none;
+    position:absolute;
+    top:50px;
+    left:1px;
+    width:105px;
+    height:18px;
+    text-align:center;}
+.FncPicWrp .OprBg{
+    display:none;
+    top:55px;
+    background:#fff;
+    filter: alpha(opacity=20);
+    opacity: 0.20;}
+.FncPicWrp textarea{
+    width:170px;
+    height:46px;}
+.FncPicWrp input{width:170px;margin:5px 0 0;}
+.FncPicWrp em{height:22px;display:block;}
+.FncPicWrp:hover .Opr,.FncPicWrp:hover .OprBg{display:block;}
+
+iframe.WiF{width:100%;height:1000px;position:absolute;top:0px;left:0px;background:#000;filter:alpha(opacity=0);z-index:-1;}
+
+.ShrtInp input,.ShrtInp select{ width:108px;}
+
+/*Add by guxt 2013-9-24 17:37:58 for modify lager dialog*/
+.DWMdfy924{
+    width:635px;
+    margin-left:30px;}
+.DWMdfy924 .ShotIFr{
+    width:625px;}
+.CoBlack,.CoBlack *{color:#000;}
+.Editbox{
+    color:#000;
+    font-family: Courier New,Verdana;}

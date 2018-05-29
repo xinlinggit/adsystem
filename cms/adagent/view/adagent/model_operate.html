@@ -1,0 +1,59 @@
+<form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">用户名：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['username']?>" placeholder=""  name="username" required="true" >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">登录密码：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="password" class="input-text" placeholder="******"  name="password"  >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">昵称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['nick']?>" placeholder=""  name="nick">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">联系邮箱：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="email" class="input-text" value="<?=$info['email']?>" placeholder=""  name="email" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">请输入手机号码：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="mobile" class="input-text" value="<?=$info['mobile']?>" placeholder=""  name="mobile" required="true">
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default js_close_layer" >取消</button>
+		<button type="submit" class="btn btn-primary">保存</button>
+	</div>
+</form>
+<script>
+$(function(){
+	reasonTogg();
+	function reasonTogg(){
+	var reason=$("#reasonSel").val();
+		console.log(reason);
+		if(reason=="2"||reason=="4"){
+
+			$("#reasonBox").show();
+		}else{
+			$("#reasonBox").hide();
+
+		}
+
+
+	}
+
+})
+
+</script>

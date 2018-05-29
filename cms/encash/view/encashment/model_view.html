@@ -1,0 +1,89 @@
+<div class="HuiTab js_tab">
+	<div class="tabBar clearfix">
+		<span>提现申请&&处理结果</span>
+	</div>
+	<form class="form form-horizontal js_super_form" method="post" action="" autocomplete="off" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="<?= $info['id'] ?>" />
+		<div class="tabCon">
+			<div class="modal-body">
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">用户名：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['user']['nickname']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">提现金额：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['money']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">银行卡号：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['bank_card']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">开户行：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['open_bank']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">持卡人姓名：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['name']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">交易单号：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['deal_no']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">受理人：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['deal_user']['username']; ?>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">提现结果：</label>
+					<div class="col-xs-4 col-sm-4">
+						<?= $info['is_success']==2?'成功':"失败——".$info['remarks']; ?>
+					</div>
+				</div>
+				<?php if(isset($info['result_image']) && !empty($info['result_image'])){?>
+				<div class="row cl">
+					<label class=" col-xs-2 col-sm-2 text-r">转账截图：</label>
+					<div class="col-xs-4 col-sm-4">
+						<div class="picbox">
+							<a href="<?= $info['result_image']; ?>" data-lightbox="gallery" data-title="任务完成图片">
+								<img width="400" height="auto" class="picture-thumb" src="<?= $info['result_image']; ?>"> </a>
+						</div>
+					</div>
+				</div>
+				<?php }?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default js_close_layer">关闭</button>
+			</div>
+		</div>
+	</form>
+
+</div>
+<script>
+	$('.js_tab').Huitab({tabEvent: "mousemove", index: 0});
+	//调用示例
+	layer.photos({
+		offset: $(top.document).scrollTop(),
+		photos: '.layer-photos',
+		shade: 0.1,
+		area:'1000px',
+		anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+	});
+</script>
+<style>
+	.layui-layer-photos .layui-layer-content{overflow: auto};
+</style>

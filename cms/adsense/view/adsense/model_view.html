@@ -1,0 +1,48 @@
+<div class="HuiTab js_tab">
+	<div class="tabCon">
+			<div class="modal-body">
+				<div class="row cl">
+				<h3>广告位名称：<small><?=$info['sensename'];?></small></h3>
+				<!-- <h3>广告投放平台所在网址：<small><?=$info['targetsite'];?></small></h3> -->
+				<!-- <h3>尺寸：<small><?=$info['width'];?>*<?=$info['height'];?></small></h3> -->
+					<div class="formControls col-xs-12 col-sm-12">
+						<textarea class="textarea" placeholder="获取代码：" rows="" cols="" name="delete_reason" id="content"><?=$adcode;?></textarea>
+					</div>
+
+					<div class="formControls col-xs-12 col-sm-12">
+						<textarea class="textarea" placeholder="获取代码：" rows="" cols="" name="delete_reason" id="content"><?=$adcodes;?></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default js_close_layer">取消</button>
+				<button type="button" class="btn btn-primary" id="copyBT">复制</button>
+			</div>
+	</div>
+
+</div>
+<script>
+	$('.js_tab').Huitab({tabEvent: "mousemove", index: 0});
+	//调用示例
+	layer.photos({
+		offset: $(top.document).scrollTop(),
+		photos: '.layer-photos',
+		shade: 0.1,
+		area:'1000px',
+		anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+	});
+	function copyArticle(event) {
+        const range = document.createRange();
+        range.selectNode(document.getElementById('content'));
+ 
+        const selection = window.getSelection();
+        if(selection.rangeCount > 0) selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('copy');
+        alert("复制成功！");
+      }
+      document.getElementById('copyBT').addEventListener('click', copyArticle, false);
+</script>
+<style>
+	.layui-layer-photos .layui-layer-content{overflow: auto}
+</style>

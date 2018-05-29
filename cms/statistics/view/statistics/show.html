@@ -1,0 +1,108 @@
+{extend name="/common@body" /}{block name="main"}
+<script src="/statics/js/echarts.min.js"></script>
+<?php
+echo widget('common/filter/formWithoutId', [
+[
+widget('common/filter/input', ['用户名', 'username', '']),
+widget('common/filter/ex_select', ['广告位', 'adsenseid', $ad_position, 'my_position', 'onchange="loadAdv()"']),
+widget('common/filter/ex_select', ['广告', 'adv', '', 'my_adv']),
+widget('common/filter/select', ['素材', 'materialid', $materials]),
+widget('common/filter/ex_date_range', ['时间', 'time', $materials]),
+]
+]);
+?>
+<div id="my_charts" style="width: 1200px;height:400px;"></div>
+<div class="js_super_table">
+    <div class="cl pd-5 bg-1 bk-gray mt-20" style="display: none;">
+		<span class="l">
+            <button class="btn btn-success js_operate" title="添加广告" data-title="添加广告" data-callback="layer_model" data-url="<?= url('model_add'); ?>"><i class="Hui-iconfont Hui-iconfont-add"></i> 添加广告</button>
+			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+		</span>
+    </div>
+    <div class="mt-20">
+        <div class="dataTables_wrapper">
+            <?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+            <table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+                <thead>
+                <tr class="text-c">
+                    <th>广告ID</th>
+                    <th>广告名称</th>
+                    <th>曝光量</th>
+                    <th>消耗</th>
+                    <th>创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+			foreach($list as $k => $row){
+                ?>
+                <tr class="text-c" >
+                    <td>{$row['id']}</td>
+                    <td>{$row['title']}</td>
+                    <td>{$row['sum']}</td>
+                    <td>{$row['cost']}</td>
+                    <td>{$row['time']}</td>
+                </tr>
+                <?php
+			}
+			?>
+                </tbody>
+            </table>
+            <?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('my_charts'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        xAxis: {
+            type: 'category',
+            // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: {$x_data},
+            name : '日期',
+        },
+        yAxis: {
+            type: 'value',
+            name : '曝光量',
+        },
+        series: [{
+            // data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: {$y_data},
+            type: 'line',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            },
+        }]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script>
+    // 加载所有广告
+    function loadAdv()
+    {
+        var adsenseid = $("#my_position").val();
+        $('#adsenseid option').html("");
+        $.ajax({
+            method: "POST",
+            url: "{:url('statistics/statistics/getAd')}",
+            data: {adsenseid: adsenseid}
+        }).done(function(data){
+            eval("var data=" + data + "");
+            var options = '';
+            $.each(data, function(i, item){
+                var option = $("<option>").val(item.id).text(item.title);
+                $('#my_adv').append(option);
+            })
+        })
+    }
+</script>
+{/block}

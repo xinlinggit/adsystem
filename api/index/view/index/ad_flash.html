@@ -1,0 +1,26 @@
+<style>
+    .cls_btn{
+        width:15px;
+        height:15px;
+        font-size:12px;
+        text-align:center;
+        line-height:15px;
+        text-decoration: none;
+        border:1px solid #999;
+        background-color:#fff;
+        color: #999;
+        position:absolute;
+        right:0;
+        top:0;
+        z-index:100;
+    }
+</style>
+<a href="javascript:void(0);" <?=$info['sensetype']==2?'style="display: block;"':'style="display: none;"';?>  class="cls_btn" onclick="window.parent.document.getElementById('{$info.adsystem_id}').style.display='none'">X</a>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash2/cabs/swflash.ab#version=4,0,0,0" width="{$info.width}" height="{$info.height}" >
+        <param name="movie" value="{$info.image_url}">
+        <param name="wmode" value="transparent">
+        <param name="allowscriptaccess" value="always">
+        <embed src="{$info.image_url}" width="{$info.width}" height="{$info.height}" wmode="transparent" type="application/x-shockwave-flash" allowscriptaccess="always" >
+</object>
+<span style="position: absolute;left: 2px;bottom: 2px;color: #fff;font-size: 12px;line-height: 1;z-index: 999;width:24px;height:14px;background: url(http://hsnew.cnfol.com/pc/Imgs/newAs/as.png) no-repeat center center;text-indent: -9999px;overflow: hidden;display: block; ">广告</span>
+<a href="http://www.cnfol.com/" target="_blank" style="display: block;background-color:#fff;position:absolute;left:0px;top:0px;z-index:3;width:{$info.width}px;height:{$info.height}px;opacity:0.00001;filter:alpha(opacity=0);"></a>

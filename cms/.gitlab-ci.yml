@@ -1,0 +1,8 @@
+stages:
+    - test_deploy
+job:
+    stage: test_deploy
+    only:
+        - master
+    script:
+        - rsync -zrtv --delete --exclude=.git --exclude=.gitlab-ci.yml --exclude=exclude.list --exclude-from=${CI_PROJECT_DIR}/exclude.list ${CI_PROJECT_DIR}/ /home/httpd/tp/app_cms/

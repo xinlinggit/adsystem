@@ -1,0 +1,69 @@
+{extend name="/common@body" /}{block name="main"}
+<?php
+echo widget('common/filter/form', [/*参数数组*/
+[/*第一个参数*/
+widget('common/filter/input', ['用户ID', 'userid']),
+widget('common/filter/input', ['手机号', 'tel']),
+widget('common/filter/date_range', ['申请时间', 'create']),
+widget('common/filter/select', ['状态', 'status', $status]),
+]
+]);
+?>
+<div class="page-container">
+	<div class="mt-20">
+		<div class="dataTables_wrapper">
+			<?= widget('common/page/render', ['page' => $page, 'param' => $param]); ?>
+			<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+				<thead>
+				<tr class="text-c">
+					<th class="th_check_id">
+						<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0" /></label>
+					</th>
+					<th class="th_id <?=$thead['id']['class'];?>" data-url="<?=$thead['id']['url'];?>">编号</th>
+					<th class="">用户ID</th>
+					<th class="">手机号</th>
+					<th class="">转出数量</th>
+					<th class="">收币地址</th>
+					<th class=" <?=$thead['create_time']['class'];?>" data-url="<?=$thead['create_time']['url'];?>">申请时间</th>
+					<th >操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				foreach ($list as $row) {
+				?>
+				<tr class="text-c">
+					<td>
+						<label for="info_<?= $row->id ?>"><input id="info_<?= $row->id ?>" type="checkbox" class="js_checkbox" data-type="child" value="<?= $row->id ?>"></label>
+					</td>
+					<td><?= $row->id ?></td>
+					<td><?= $row->userid ?></td>
+					<td>
+						<?= encode_tel($row['user']['tel']); ?>
+					</td>
+					<td>
+						<?= $row->num; ?>
+					</td>
+					<td>
+						<?= $row->shipping_address; ?>
+					</td>
+					<td><?= date('Y.m.d H:i',strtotime($row->create_time)) ?></td>
+<!-- 					<td>
+	<input type="text" class="input-text js_operate" data-title="修改单号" data-url="<?= url('operate_change_field',['field'=>'deal_no']); ?>" data-event="blur" data-confirm="0" data-id="<?= $row['id'] ?>" data-default="<?= $row->deal_no; ?>" value="<?= $row->deal_no; ?>">
+</td> -->
+					<td>
+						<button data-url="<?= url('model_result'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI js_operate btn-success-outline" data-callback="layer_model" data-title="审核" title="审核">
+							<i class=" Hui-iconfont Hui-iconfont-manage"></i>
+						</button>
+					</td>
+				</tr>
+				<?php
+				}
+				?>
+				</tbody>
+			</table>
+			<?= widget('common/page/render', ['page' => $page, 'param' => $param]); ?>
+		</div>
+	</div>
+</div>{/block}
+

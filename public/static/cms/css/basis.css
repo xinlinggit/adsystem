@@ -1,0 +1,50 @@
+@charset "utf-8";
+/**
+* @CNFOL-UED-BJ
+* @version:v0.1
+* @2012-8-3
+**/
+
+/* reset */
+html{color:#000}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,select,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,button,caption,cite,code,dfn,em,input,optgroup,option,select,strong,textarea,th,var{font:inherit}del,ins{text-decoration:none}li{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:baseline}sub{vertical-align:baseline}legend{color:#000}
+/* html5 */
+article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block}
+
+/* common */
+body{color: #333;font:12px/24px Arial, Helvetica, sans-serif, '宋体';background:#FFF}
+a{text-decoration:none;color:#333;}
+a:link{text-decoration:none;color:inherit;}
+
+em,i{text-decoration:none;font-style:normal;}
+.Cf:before, .Cf:after{content:"";display:table;}
+.Cf:after{clear:both;}
+.Cf{zoom:1;}
+.Trs{filter:alpha(opacity=80);opacity:0.8;}
+
+/* Font */
+.Fb,.Fb14,.Fb16,.Fb20{font-weight:bold;}
+.F14,.Fb14{font-size:14px;}
+.F16,.Fb16{font-size:16px;}
+.F20,.Fb20{font-size:20px;}
+
+/* text align */
+.Tc{text-align:center;}
+.Tr{text-align:right;}
+.Wrp{margin:0 auto;}
+
+.Fl{float:left;display:inline;}
+.Fr{float:right;display:inline;}
+
+/* Margins */
+.Mt10{margin-top:10px;}
+.Ml10{margin-left:10px;}
+
+/* Padding */
+.P10{padding:10px;}
+.Pt10{padding-top:10px;}
+.Pr10{padding-right:10px;}
+.Pb10{padding-bottom:10px;}
+.Pl10{padding-left:10px;}
+
+.Ld{display:block;background:url(http://hs.cnfol.com/Cm/Imgs/Load.gif) no-repeat center center;position:relative;}
+.Nrp{overflow:hidden;white-space:nowrap;word-break:keep-all;text-overflow:ellipsis;}

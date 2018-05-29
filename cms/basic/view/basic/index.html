@@ -1,0 +1,35 @@
+{extend name="/common@body" /}{block name="main"}
+<div class="page-container">
+<form class="form form-horizontal js_super_form" method="post" action="index" autocomplete="off" enctype="multipart/form-data">
+	<div id="tab-system" class="HuiTab">
+		<div class="tabBar cl">
+				<span class="current">基础设置</span>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">qq：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				<input type="text" class="input-text" value="{$qq}"  name="qq" required="true" >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">email：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				<input type="text" class="input-text" value="{$email}"  name="email" required="true" >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">电话：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				<input type="text" class="input-text" value="{$tel}"  name="tel" required="true" >
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<a href="/basic/basic/index.html" class="btn btn-default">取消</a>
+				<button type="submit" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</div>	
+</form>
+</div>
+{/block}

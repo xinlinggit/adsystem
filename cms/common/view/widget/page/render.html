@@ -1,0 +1,30 @@
+<div class="dataTables_info">
+	共有<strong><?= $page->total(); ?></strong>条数据，<strong><?= $page->lastPage(); ?></strong>页；每页显示：
+	<select class="js_change_num">
+		<?php
+		$url = '';
+		if(\think\Request::instance()->routeInfo()){
+			$url = \think\Request::instance()->routeInfo()['route'];
+		};
+		for ($i = 20; $i <= 100; $i += 20) {
+			?>
+			<option <?= ($page->listRows() == $i) ? 'selected="selected"' : ''; ?> value="<?= $i; ?>"><?= $i; ?></option>
+			<?php
+		}
+		?>
+	</select>
+</div>
+<div class="dataTables_paginate paging_simple_numbers">
+	<a class="paginate_button" href="<?=url($url,array_merge($param,['page'=>1]));?>">首页</a>
+	<a class="paginate_button " href="<?=url($url,array_merge($param,['page'=>max(1,$page->currentPage() -1)]));?>">上一页</a>
+	<?php
+	$page_length = 10;
+	for($i = max(1,$page->currentPage() - $page_length / 2);$i<=min($page->currentPage() + $page_length / 2,$page->lastPage());$i++) {
+		?>
+		<a class="paginate_button <?=($page->currentPage() == $i) ? 'current' : '';?>" href="<?=url($url,array_merge($param,['page'=>$i]));?>"><?=$i;?></a>
+	<?php
+	}
+	?>
+	<a class="paginate_button " href="<?=url($url,array_merge($param,['page'=>min($page->lastPage(),$page->currentPage() + 1)]));?>">下一页</a>
+	<a class="paginate_button " href="<?=url($url,array_merge($param,['page'=>$page->lastPage()]));?>">尾页</a>
+</div>
