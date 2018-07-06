@@ -55,9 +55,9 @@ widget('common/filter/select', ['状态', 'status', $status]),
 				<td><?php echo $row->status == 1 ? '正常':'锁定'; ?></td>
 				<td>
 					<button data-url="<?= url('model_edit') ?>" data-id="<?= $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="编辑" title="编辑">
-						<i class=" Hui-iconfont Hui-iconfont-edit"></i></button>
+						编辑</button>
 					<button data-url="<?= url('operate_status_1') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
-						<i class="Hui-iconfont Hui-iconfont-del3"></i></button>
+						删除</button>
 				</td>
 			</tr>
 				<?php

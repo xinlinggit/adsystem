@@ -10,7 +10,7 @@ widget('common/filter/input', ['账号', 'username'])
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
             <button class="btn btn-success js_operate" title="添加代理商" data-title="添加代理商" data-callback="layer_model" data-url="<?= url('model_add'); ?>"><i class="Hui-iconfont Hui-iconfont-add"></i> 添加代理商</button>
-			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+			<!-- <button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button> -->
 		</span>
 	</div>
 <div class="mt-20">
@@ -23,8 +23,8 @@ widget('common/filter/input', ['账号', 'username'])
 					<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0"/></label>
 				</th>
 				<th>代理商ID</th>
-				<th>账号</th>
-				<th>代理商昵称</th>
+				<th>账户</th>
+				<th>代理商名</th>
 				<th>账户余额</th>
 				<th>账户状态</th>
 				<th width="220">操作</th>
@@ -59,6 +59,9 @@ widget('common/filter/input', ['账号', 'username'])
 					<button data-url="<?= url('charge?id=') .$row['id'] ?>" data-id="<?php echo $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="充值" title="充值">
 						充值
 					</button>
+					<button data-url="<?= url('refund?id=') .$row['id'] ?>" data-id="<?php echo $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="退款" title="退款">
+						退款
+					</button>
 					<!-- 管理员（目前是 role = 2 - 系统管理员 = 5 管理员的角色）不用显示认证的按钮-->
 					{php}
 						if(($row['role_id'] != 2 ) && ($row['role_id'] != 5) && ( !empty($license_auth[$row['id']]['status'])))
@@ -80,9 +83,9 @@ widget('common/filter/input', ['账号', 'username'])
 					</button>
 					{/if}
 
-					<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
+					<!-- <button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
 						<i class="Hui-iconfont Hui-iconfont-del3"></i>
-					</button>
+					</button> -->
 				</td>
 			</tr>
 				<?php

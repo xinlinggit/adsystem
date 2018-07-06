@@ -14,6 +14,8 @@ class Admaterial extends Model
 {
 	protected $table = 'material_text';
 
+	protected $field = true;
+
 	/**
 	 * 查找一条关联记录
 	 * @param int $id

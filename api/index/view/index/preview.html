@@ -3,17 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>预览素材id：{$material_id}</title>
+<style>
+ins{
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
 
 <div style="margin:30px;height:1000px;">
     <h3 >预览效果>></h3>
-    <div style="width:{$width}px;height:{$height}px;border: 1px solid #ddd;">
+    <div id="as_{$material_id}" style="width:{$width+50}px;height:{$height}px;">
     <ins data-revive-zoneid="{$material_id}" ></ins>
     <!--以下为广告系统引用js，放在页面底部，页面中如果有多个广告位只放一次-->
     </div>
 </div>
-
-<script type="text/javascript" src="http://as.cnfol.com/async_preview.js"></script>
+<script type="text/javascript" src="<?=config('app_domain');?>/async_preview.js"></script>
+<!-- <script type="text/javascript" src="http://as.cnfol.com/async_preview.js"></script> -->
 </body>
 </html>

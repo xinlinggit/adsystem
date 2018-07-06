@@ -56,7 +56,7 @@ widget('common/filter/select', ['状态', 'status', $status]),
 				{elseif condition="$row['material_type'] == 3"}
 				<td>flash广告</td>
 				{else/}
-				<td>信息流广告</td>
+				<td>图文广告</td>
 				{/if}
 				<td><?= date('Y-m-d H:i',strtotime($row->create_time)) ?></td>
 				{if condition="$row['status'] == 0"}
@@ -69,7 +69,7 @@ widget('common/filter/select', ['状态', 'status', $status]),
 				<td>待审核</td>
 				{/if}
 				<td>
-					<a class="btn size-MINI radius btn-secondary-outline" title="预览" href="http://as.cnfol.com/index/index/preview?material_id=<?= $row['id'] ?>" target="_blank">
+					<a class="btn size-MINI radius btn-secondary-outline" title="预览" href="{:config('review') . $row['id']}" target="_blank">
 						预览
 					</a>
 					<button data-url="<?= url('model_edit') ?>" data-id="<?= $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="编辑" title="编辑">

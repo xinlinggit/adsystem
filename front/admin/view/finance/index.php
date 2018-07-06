@@ -1,22 +1,16 @@
 <script src="__STATIC__/js/echarts.min.js"></script>
 <div id="my_charts" style="width: 1200px;height:400px;"></div>
 <div class="layui-form-item">
-	<label class="layui-form-label">账户总金额(元)</label>
-	<div class="layui-input-inline">
-		<input type="text" class="layui-input " name="username" value="{$data.charge_sum}" autocomplete="off" placeholder="" readonly>
-	</div>
+    <label class="layui-form-label">剩余金额</label>
+    <div class="layui-input-inline">
+        <input type="text" class="layui-input " name="username" value="{$data.blance}"  autocomplete="off" placeholder=""  readonly>
+    </div>
 </div>
 <div class="layui-form-item">
-	<label class="layui-form-label">剩余金额</label>
-	<div class="layui-input-inline">
-		<input type="text" class="layui-input " name="username" value="{$data.blance}"  autocomplete="off" placeholder=""  readonly>
-	</div>
-</div>
-<div class="layui-form-item">
-	<label class="layui-form-label">消费金额</label>
-	<div class="layui-input-inline">
-		<input type="text" class="layui-input" name="company"  value="{$data.spendding}" autocomplete="off" placeholder=""  readonly>
-	</div>
+    <label class="layui-form-label">消费金额</label>
+    <div class="layui-input-inline">
+        <input type="text" class="layui-input" name="company"  value="{$data.spendding}" autocomplete="off" placeholder=""  readonly>
+    </div>
 </div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
@@ -48,17 +42,17 @@
                 selectedMode: 'single',
                 data:[
                     {value:{$data.blance}, name: '剩余金额（元）'},
-                    {value:{$data.spendding}, name: '消费金额（元）'}
-                ],
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        ]
+    {value:{$data.spendding}, name: '消费金额（元）'}
+    ],
+    itemStyle: {
+        emphasis: {
+            shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+    }
+    }
+    ]
     };
 
 

@@ -27,9 +27,13 @@ widget('common/filter/ex_date_range', ['时间', 'time', $materials]),
                 <tr class="text-c">
                     <th>广告ID</th>
                     <th>广告名称</th>
+                    <th>所属广告位</th>
+                    <th>素材id</th>
                     <th>曝光量</th>
-                    <th>消耗</th>
-                    <th>创建时间</th>
+                    <th>CPM消耗</th>
+                    <th>点击量</th>
+                    <th>CPC消耗</th>
+                    <th>记录时间</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,10 +41,14 @@ widget('common/filter/ex_date_range', ['时间', 'time', $materials]),
 			foreach($list as $k => $row){
                 ?>
                 <tr class="text-c" >
-                    <td>{$row['id']}</td>
+                    <td>{$row['adv_id']}</td>
                     <td>{$row['title']}</td>
+                    <td>{$row['sensename']}</td>
+                    <td>{$row['materialid']}</td>
                     <td>{$row['sum']}</td>
                     <td>{$row['cost']}</td>
+                    <td>{$row['click_sum']?:0.00}</td>
+                    <td>{$row['record_click_cost']?:0.00}</td>
                     <td>{$row['time']}</td>
                 </tr>
                 <?php
@@ -58,17 +66,25 @@ widget('common/filter/ex_date_range', ['时间', 'time', $materials]),
 
     // 指定图表的配置项和数据
     var option = {
+        legend: {
+            data:['曝光量', '点击量']
+        },
         xAxis: {
             type: 'category',
             // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             data: {$x_data},
             name : '日期',
+            axisLabel :{
+                interval:0,
+                rotate:40,
+            }
         },
         yAxis: {
             type: 'value',
-            name : '曝光量',
+            name : '曝光/点击量',
         },
         series: [{
+            name:"曝光量",
             // data: [820, 932, 901, 934, 1290, 1330, 1320],
             data: {$y_data},
             type: 'line',
@@ -78,7 +94,20 @@ widget('common/filter/ex_date_range', ['时间', 'time', $materials]),
                     position: 'top'
                 }
             },
-        }]
+        }
+        ,
+        {
+            name:"点击量",
+            data: {$y_data_click},
+            type: 'line',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            },
+        }
+        ]
     };
 
 

@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{if condition="$_admin_menu_current['url'] eq 'admin/index/index'"}中金在线聚汇通客户平台{else /}{$_admin_menu_current['title']}{/if} -  Powered by {:config('hisiphp.name')}</title>
+    <title>{if condition="$_admin_menu_current['url'] eq 'admin/index/index'"}聚汇通-广告主平台{else /}{$_admin_menu_current['title']}{/if} -  Powered by {:config('hisiphp.name')}</title>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <link rel="stylesheet" href="__ADMIN_JS__/layui/css/layui.css?v={:config('hisiphp.version')}">
     <link rel="stylesheet" href="__ADMIN_CSS__/style.css?v={:config('hisiphp.version')}">
@@ -28,7 +28,7 @@ $ca = strtolower(request()->controller().'/'.request()->action());
 {/php}
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" style="z-index:999!important;">
-        <div class="fl header-logo">中金在线聚汇通客户平台</div>
+        <div class="fl header-logo">聚汇通-广告主平台</div>
         <div class="fl header-fold"><a href="javascript:;" title="打开/关闭左侧导航" class="aicon ai-caidan" id="foldSwitch"></a></div>
         <ul class="layui-nav fl nobg main-nav">
             {volist name="_admin_menu" id="vo"}

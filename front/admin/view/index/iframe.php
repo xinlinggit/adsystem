@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>中金在线聚汇通客户平台 -  Powered by {:config('hisiphp.name')}</title>
+    <title>聚汇通-广告主平台 -  Powered by {:config('hisiphp.name')}</title>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <link rel="stylesheet" href="__ADMIN_JS__/layui/css/layui.css?v={:config('hisiphp.version')}">
     <link rel="stylesheet" href="__ADMIN_CSS__/style.css?v={:config('hisiphp.version')}">
@@ -41,7 +41,7 @@ $ca = strtolower(request()->controller().'/'.request()->action());
 {/php}
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" style="z-index:999!important;">
-        <div class="fl header-logo">中金在线聚汇通客户平台</div>
+        <div class="fl header-logo">聚汇通-广告主平台</div>
         <div class="fl header-fold"><a href="javascript:;" title="打开/关闭左侧导航" class="aicon ai-caidan" id="foldSwitch"></a></div>
         <ul class="layui-nav fl nobg main-nav">
             {volist name="_admin_menu" id="vo"}
@@ -60,6 +60,9 @@ $ca = strtolower(request()->controller().'/'.request()->action());
                     <dd><a href="{:url('admin/publics/logout')}">退出登陆</a></dd>
                 </dl>
             </li>
+            {if condition="$admin_user.uid eq 1"}
+            <li class="layui-nav-item"><a href="{:url('admin/index/clear')}" class="j-ajax" refresh="yes">清缓存</a></li>
+            {/if}
             <li class="layui-nav-item"><a href="javascript:void(0);" id="lockScreen">锁屏</a></li>
         </ul>
     </div>
@@ -120,7 +123,6 @@ $ca = strtolower(request()->controller().'/'.request()->action());
 </div>
 {include file="block/layui" /}
 <script type="text/javascript">
-
     layui.use(['jquery', 'element', 'layer'], function() {
         var $ = layui.jquery, element = layui.element, layer = layui.layer;
         $('.layui-tab-content').height($(window).height() - 145);
@@ -135,28 +137,24 @@ $ca = strtolower(request()->controller().'/'.request()->action());
                   element.tabChange('hisiTab', id);
                 }
             };
+        var layidarr=[];
         $('.admin-nav-item').click(function(event) {
             var that = $(this);
             // 将所有 class = "admin-nav-item" 的父 <dd></dd> 标签的 class 中的 "layui-this" 去掉，高亮自己的
             var dd_nodes = $(".admin-nav-item").parent('dd');
-
             $.each(dd_nodes, function(i, val){
                 $(val).removeClass('layui-this');
             })
             that.parent('dd').addClass('layui-this');
-
-            if ($('iframe[src="'+that.attr('href')+'"]')[0]) {
-                tab.change(that.attr('data-id'));
-                event.stopPropagation();
-                return false;
-            }
-            if ($('iframe').length == 10) {
-                layer.msg('最多可打开10个标签页');
-                return false;
+            // 仅保留一个 tab
+            element.tabDelete('hisiTab', 0);
+            if(layidarr){
+                element.tabDelete('hisiTab', layidarr);
             }
             that.css({color:'#fff'});
             tab.add(that.text(), that.attr('href'), that.attr('data-id'));
             tab.change(that.attr('data-id'));
+            layidarr=that.attr('data-id');
             event.stopPropagation();
             return false;
         });

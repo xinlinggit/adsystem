@@ -1,3 +1,4 @@
+<!-- 信息流编辑弹出层 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">信息流选中尺寸:</label>
+            <label class="layui-form-label">选中尺寸:</label>
             <div class="">
                 <label class="">&nbsp;宽&nbsp;</label>
                 <input type="number" class="my_input field-width" name="width" id ="info_width" lay-verify="required|number" autocomplete="off" placeholder="" readonly />
@@ -49,7 +50,7 @@
         <div class="layui-form-item" id="info_pic_desc_box" style="display: block">
             <label class="layui-form-label">文案:</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input field-image_description" id="info_desc" name="image_description" lay-verify = "required" autocomplete="off" placeholder="" />
+                <input type="text" class="layui-input field-image_description" id="info_desc" name="image_description" lay-verify = "required" autocomplete="off" placeholder="16 字以内" />
             </div>
         </div>
         <div class="layui-form-item">
@@ -92,7 +93,7 @@
                     parent.layer.msg('编辑成功', {icon:1});
                 }else{
                     parent.layer.closeAll();
-                    parent.layer.msg('编辑失败', {icon:5});
+                    parent.layer.msg(data.msg, {icon:5});
                 }
             });
         })

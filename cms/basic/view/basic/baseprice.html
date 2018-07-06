@@ -7,15 +7,27 @@
 		</div>
 	<div class="modal-body">
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">当前最低单价：</label>
+			<label class="form-label col-xs-2 col-sm-2">当前最低竞价：</label>
 			<div class="formControls col-xs-5 col-sm-2">
 				¥{$baseprice}/CPM
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">设置竞价起步：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				<input type="number" class="input-text" value="{$baseprice}"  name="baseprice" required="true" min="10">/CPM
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">当前最低单价：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				¥{$basecpc}/CPC
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">设置最低单价：</label>
 			<div class="formControls col-xs-5 col-sm-2">
-				<input type="number" class="input-text" value=""  name="baseprice" required="true" >/CPM
+				<input type="number" step="0.01" class="input-text" value="{$basecpc}"  name="basecpc" required="true">/CPC
 			</div>
 		</div>
 		<div class="row cl">

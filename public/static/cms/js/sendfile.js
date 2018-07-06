@@ -42,7 +42,7 @@
                 options.beforeup(elements.input);
                 var oData = new FormData(document.forms.namedItem("fileinfo"));
                 var oReq = new XMLHttpRequest();
-                oReq.open( "POST", options.url , true );
+                oReq.open( "POST", options.url += "?" + (new Date()).getTime() , true );
                 oReq.onload = function(oEvent) {
                     options.afterup(oReq.responseText);
                 };

@@ -1,8 +1,9 @@
 <form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" enctype="multipart/form-data">
 	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<input type="hidden" name="role_id" value="6"/>
 	<div class="modal-body">
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">用户名：</label>
+			<label class="form-label col-xs-2 col-sm-2">账户：</label>
 			<div class="formControls col-xs-5 col-sm-5">
 				<input type="text" class="input-text" value="<?=$info['username']?>" placeholder=""  name="username" required="true" >
 			</div>
@@ -14,7 +15,7 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">昵称：</label>
+			<label class="form-label col-xs-2 col-sm-2">代理商名：</label>
 			<div class="formControls col-xs-5 col-sm-5">
 				<input type="text" class="input-text" value="<?=$info['nick']?>" placeholder=""  name="nick">
 			</div>

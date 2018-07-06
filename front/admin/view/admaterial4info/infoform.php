@@ -1,3 +1,4 @@
+<!--信息流图文-->
 <link href="__STATIC__/myCommon.css?v=0.1" rel="stylesheet">
 <style>
     .layui-form-pane .layui-form-label {width:200px;}
@@ -36,7 +37,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">信息流选中尺寸:</label>
+            <label class="layui-form-label">选中尺寸:</label>
             <div class="">
                 <label class="">&nbsp;宽&nbsp;</label>
                 <input type="number" class="my_input" name="width" id ="info_width" lay-verify="required|number" autocomplete="off" placeholder="" {if condition="$infoform"}value="{$infoform.width}"{/if} readonly>

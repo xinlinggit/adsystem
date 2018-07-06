@@ -1,0 +1,27 @@
+<form class="form form-horizontal js_super_form" method="post" action="<?=$action?>" autocomplete="off" id="auth_form" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">代理商账户：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['username']?>" placeholder=""  name="" readonly>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">当前余额：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<span style="height: 31px;line-height: 31px;">{$info['account']}</span>
+				<!--<input type="number" class="input-text" placeholder="充值金额"  name="account" required>-->
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">退款金额：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="number" class="input-text" placeholder="退款金额"  name="account" required onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary">确认</button>
+	</div>
+</form>

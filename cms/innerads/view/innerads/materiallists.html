@@ -1,0 +1,71 @@
+<div class="js_super_table" id = "my_material_table" data-window_id = '' data-href="{$action}">
+    <div class="mt-20">
+        <div class="dataTables_wrapper">
+            <?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+            <table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+                <thead>
+                <tr class="text-c">
+                    <th width="15px;">
+
+                    </th>
+                    <th class="th_id <?=$thead['id']['class'];?>" data-url="<?=$thead['id']['url'];?>">编号</th>
+                    <th>广告素材名称</th>
+                    <th>素材尺寸</th>
+                    <th>素材类型</th>
+                    <th class=" <?=$thead['create_time']['class'];?>" data-url="<?=$thead['create_time']['url'];?>">创建时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+			foreach($list as $k => $row){
+			?>
+                <tr class="text-c" >
+                    <td>
+                        <label for="info_<?=$row['id'];?>">
+                        <input name = "choose_materialid" data-title = "<?=$row['material_title'];?>" id="info_<?=$row['id'];?>" {if condition="isset($material_id_choosed)  AND ($row['id'] eq $material_id_choosed)"} checked {/if} value="{$row.id}" type="checkbox" class="js_checkbox material_id" data-type="child" value="<?=$row['id'];?>">
+                        </label>
+                    </td>
+                    <td><?=$row['id'];?></td>
+                    <td><?=$row['material_title'];?></td>
+                    <td><?=$row['width'];?>*<?=$row['height'];?></td>
+                    {if condition="$row['material_type'] == 1"}
+                    <td>文字广告</td>
+                    {elseif condition="$row['material_type'] == 2"}
+                    <td>图片广告</td>
+                    {elseif condition="$row['material_type'] == 3"}
+                    <td>flash广告</td>
+                    {else/}
+                    <td>对联广告</td>
+                    {/if}
+                    <td><?= date('Y-m-d H:i',strtotime($row['create_time'])) ?></td>
+                    {if condition="$row['status'] == 0"}
+                    <td>等待提交审核</td>
+                    {elseif condition="$row['status'] == 3"}
+                    <td>审核已通过</td>
+                    {elseif condition="$row['status'] == 4"}
+                    <td>审核未通过<i class="Hui-iconfont Hui-iconfont-shenhe-weitongguo" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<?=$row['remark'];?>"></i></td>
+                    {else/}
+                    <td>待审核</td>
+                    {/if}
+                    <td>
+                        <a class="btn size-MINI radius btn-secondary-outline" title="预览" href="http://ad.api.dev.cnfol.wh/index/index/preview?material_id=<?= $row['id'] ?>" target="_blank">
+                            预览
+                        </a>
+                    </td>
+                </tr>
+            <?php
+			}
+			?>
+                </tbody>
+                <input type="hidden" name="extra_param" value="<?= $extra_param ?>"/>
+            </table>
+            <div class="modal-footer">
+                <a type="button"  onclick="add_choosed_materials()" class="btn btn-primary" class="">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+</script>

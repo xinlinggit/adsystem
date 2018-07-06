@@ -24,7 +24,7 @@ class Adsense extends Base
         
         $this->view->assign('status',ArrayUnit::array_to_options([0=>'停用',1=>'启用'],$this->request->param('status')));
         $this->view->assign('platform',ArrayUnit::array_to_options([1=>'PC',2=>'App',3=>'移动Web'],$this->request->param('platform')));
-        $this->view->assign('sensetype',ArrayUnit::array_to_options([1=>'固定(PC或者移动Web)',2=>'漂浮(PC或者移动Web)',3=>'弹窗(PC或者移动Web)',5=>'信息流(APP)',6=>'轮播图(APP)',7=>'视频(APP)'],$this->request->param('sensetype')));
+        $this->view->assign('sensetype',ArrayUnit::array_to_options([1=>'固定',2=>'漂浮',3=>'弹窗'],$this->request->param('sensetype')));
         return $this->fetch_base($set);
     }
 

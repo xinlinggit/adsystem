@@ -63,43 +63,42 @@ class Authentication extends Admin {
 	 */
 	public function add()
 	{
-		// 检查是否提交过审核
-		$record_exist = $this->_check_current_authentication();
-		if( ! $record_exist)
+		$data                = input();
+		$row = $this->_get_authentication();
+		if($row['status'] == 1 || $row['status'] == 2)
 		{
+			return '您有资质在审核或者审核已通过，请在认证状态查看。';
+		} else if($row['status'] == -1) {
 			if ( $this->request->isPost() ) {
-				$data                = input();
+				// 更新认证资料
 				$this->_check_data($data);
 				$data['uid']         = ADMIN_ID;
 				$data['create_time'] = date( 'Y-m-d H:i:s', time() );
 				$data['status']      = 2; // 等待审核
 				unset( $data['image'] );
-				Db::startTrans();
-				$res = Db::table( 'license_auth' )->insertGetId( $data );
-
+				$res = Db::table( 'license_auth' )->where('uid = ' . ADMIN_ID)->update($data);
 				if ( $res !== false ) {
-					$current_res = Db::table('license_auth_current')->where(['uid' => ADMIN_ID])->find();
-					if(! $current_res)
-					{
-						Db::table('license_auth_current')->insert(['uid' => ADMIN_ID, 'status' => $data['status'], 'pid' => $res]);
-					} else {
-						Db::table('license_auth_current')->where(['uid' => ADMIN_ID])->update(['status' => $data['status'], 'pid' => $res]);
-					}
-					if(($res !== false) && ($current_res !== false))
-					{
-						Db::commit();
-						$this->success( '上传成功');
-					} else {
-						Db::rollback();
-						$this->error( '上传失败' );
-					}
+					$this->success( '上传成功');
 				} else {
 					$this->error( '上传失败' );
 				}
 			}
 			return $this->fetch();
 		} else {
-			return '您有资质在审核或者审核已通过，请在认证状态查看。';
+			if ( $this->request->isPost() ) {
+				$this->_check_data($data);
+				$data['uid']         = ADMIN_ID;
+				$data['create_time'] = date( 'Y-m-d H:i:s', time() );
+				$data['status']      = 2; // 等待审核
+				unset( $data['image'] );
+				$res = Db::table( 'license_auth' )->insertGetId( $data );
+				if ( $res !== false ) {
+					$this->success( '上传成功');
+				} else {
+					$this->error( '上传失败' );
+				}
+			}
+			return $this->fetch();
 		}
 	}
 
@@ -110,11 +109,11 @@ class Authentication extends Admin {
 		}
 	}
 
-	private function _check_current_authentication()
+	private function _get_authentication()
 	{
 		$map['uid'] = ADMIN_ID;
-		$map['status'] = ['<>', -1];
-		return Db::table('license_auth_current')->where($map)->find();
+		$row = Db::table('license_auth')->where($map)->find();
+		return $row;
 	}
 
 	/**

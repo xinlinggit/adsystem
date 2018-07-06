@@ -23,15 +23,11 @@ class Base extends \cms\common\controller\Common
 		if(!$param['id'] && ! in_array($param['status'], [-1, 1, 2])){
 			return $this->api_error('请检查参数');
 		}
-		Db::startTrans();
-		$result = Db::table('license_auth')->where(['id' => $param['id']])->update(['status' =>$param['status']]);
-		$result_current = Db::table('license_auth_current')->where(['pid' => $param['id']])->update(['status' =>$param['status']]);
-		if(($result !== false ) && ($result_current !== false))
+		$result = Db::table('license_auth')->where(['id' => $param['id']])->update(['status' =>$param['status'], 'remark' => $param['remark']]);
+		if($result !== false )
 		{
-			Db::commit();
 			return $this->api_success();
 		} else {
-			Db::rollback();
 			return $this->api_error($this->model->getError());
 		}
 	}

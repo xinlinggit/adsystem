@@ -11,4 +11,6 @@ use think\Model;
 class Admaterial4image extends Model
 {
 	protected $table = 'material_image';
+
+	protected $filed = true;
 }

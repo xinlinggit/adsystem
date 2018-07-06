@@ -14,15 +14,15 @@ return [
     'type'           => 'mysql',
     // 服务器地址
     //'hostname'        => 'zimeiti.casetrvucwnv.rds.cn-north-1.amazonaws.com.cn',
-    'hostname'        => '172.30.2.82',
+    'hostname'        => '192.168.3.12',
     // 数据库名
     'database'        => 'adserver',
     // 用户名
     //'username'        => 'taskbao',
-    'username'        => 'adserver',
+    'username'        => 'root',
     // 密码
     //'password'        => 'vnXeu0so~l8temkMc',
-    'password'        => '|lcnfodCuxl8diFx6',
+    'password'        => 'root',
     // 端口
     'hostport'       => '3306',
     // 连接dsn

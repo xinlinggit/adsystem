@@ -15,7 +15,7 @@
 define('SHELL_PATH', __DIR__ . '/');
 define('PHP_EXE', '/usr/local/php/bin/php');
 define('APP_PATH', __DIR__ . '/../cms/');
-define('FOLDER_PATH', __DIR__ . '/folder/');
+define('FOLDER_PATH', __DIR__ . '/upload/');
 define('APP_NAMESPACE','cms');
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';

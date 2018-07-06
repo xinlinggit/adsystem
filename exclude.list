@@ -4,11 +4,9 @@ api/database.php
 api/config.php
 cms/database.php
 cms/config.php
-cms/common/controller.Common.php
+front/config.php
+front/database.php
 runtime
-
-public/folder
-
-public/doc
-public/robots.txt
-public/router.php
+public/upload
+create/config.php
+public/async_preview.js

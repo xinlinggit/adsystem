@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+        .Margin{
+            margin:50px 0 0 50px;
+        }
+        #aBox a{
+            text-decoration: none;
+            display:inline-block;
+            padding:10px;
+            line-height:36px;
+            border-radius:5px;
+            color:#333;
+            background-color:#eee;
+            text-align:center;
+            height:36px;
+            margin:0 10px 10px 0;
+
+
+        }
+
+    </style>
+</head>
+<body >
+<h2 class="Margin">该条广告有多个素材,请点击以下按钮预览>></h2>
+<div id="aBox" class="Margin">
+<?php 
+foreach($info as $key=>$value){
+?>
+<a href="<?=config('app_domain');?>/index/index/preview?material_id={$value.id}" target="_blank">{$value['material_title']}</a>
+<?php
+}
+?>
+</div>
+
+</body>
+</html>

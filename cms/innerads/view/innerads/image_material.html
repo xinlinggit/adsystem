@@ -1,0 +1,77 @@
+<form class="form form-horizontal js_super_form" id="add_image_material_form" method="post" action="{$action}" autocomplete="off" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">素材名称：</label>
+            <div class="formControls col-xs-5 col-sm-5">
+                <input type="text" class="input-text" placeholder="" id="material_title" name="material_title" required value="{if condition='isset($material.material_title)'}{$material.material_title}{/if}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">类型：</label>
+            <div class="radio-box" style="padding-left: 0px;">
+                <label for="layer_project_type">图片</label>
+                <input type="radio"  id ="layer_project_type" value="2" checked required >
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">图片地址：</label>
+            <div class="radio-box" style="padding-left: 0px;">
+                <div class="formControls col-xs-10 col-sm-10" style="overflow:hidden;width:700px;">
+							<input class="input-text" type="text" id="image_url" name="image_url" value="{if condition='isset($material.image_url)'}{$material.image_url}{/if}" required readonly style="float:left;dispay:inline-block;width:405px;">
+							<input type="button" class="btn btn-success radius ml-20" name="file" id="image_file" value="选择图片" style="float:left;display:inline-block;width:87px;" >
+						</div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">点击文字链接：</label>
+            <div class="formControls col-xs-5 col-sm-5">
+                <input type="url" class="input-text" placeholder="" id="click_url"  name="click_url" required value="{if condition='isset($material.click_url)'}{$material.click_url}{/if}" >
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        {if condition="$edit eq 0"}
+        <input type="hidden" name="adsenseid" value="{$adsenseid}" />
+        <input type="hidden" name="adsiteid" value="{$adsiteid}" />
+        {else /}
+        <input type="hidden" name="id" value="{$material.id}" />
+        <input type="hidden" name="sid" value="{$material.sid}" />
+        <input type="hidden" name="adsenseid" value="{$material.adsenseid}" />
+        <input type="hidden" name="adsiteid" value="{$material.adsiteid}" />
+        {/if}
+        <input type="hidden" name="material_type" value="2" />
+        <!--<button type="reset" class="btn btn-default" >重置</button>-->
+        <input type="button" id="image_material_btn" {if condition='$edit eq 0'} onclick="add_image_materal()" {else /} onclick="edit_image_materal()" {/if} class="btn btn-primary" value="{if condition='$edit eq 0'} 添加素材 {else /} 修改素材 {/if}" />
+    </div>
+</form>
+<script>
+    $(function(){
+        //调用封装好的sendfile插件进行上传,该函数需要一个json对象的实参
+        sendfile.up({
+            id:'image_file',
+            num:'one',
+            name:'image',
+            url:'<?= url("upload"); ?>',
+            beforeup:function(obj){
+
+            },
+            doingup:function(obj){
+                $('#image_file').val('正在上传...');
+                var img = "<img src='/static/h-ui/images/loading/loading.gif'>";
+                $('#image_file').parent().append(img);
+            },
+            afterup:function(msg){
+                msg = JSON.parse(msg);
+                if (msg.flag){
+                    $('#image_file').val("重新上传");
+                    $('#image_file').parent().find('img').remove();
+                    $("input[name='image_url']").val(msg.data);
+                } else {
+                    $('#image_file').val('上传失败');
+                    $('#image_file').parent().find('imgurl').remove();
+                    $('#image_file').parent().next('div').append("<span class='Validform_checktip Validform_wrong'>"+  msg.data+"</span>");
+                }
+            }
+        });
+    })
+</script>

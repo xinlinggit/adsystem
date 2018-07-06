@@ -1,0 +1,121 @@
+<!--<script type="text/javascript" src="/static/Validform_v5.3.2/js/Validform_v5.3.2.js"></script>-->
+
+<script>
+    {if condition="$edit eq 1"}
+    // 编辑的时候加载选中的素材
+    $(function(){
+        load_choosed_material();
+        $.each({$adsense}, function(i, item){
+            var option = '';
+            if({$choosed_adsense} == item.id)
+            {
+                option = $("<option selected>").val(item.id).text(item.sensename);
+            } else {
+                option = $("<option>").val(item.id).text(item.sensename);
+            }
+            $('#adsenseid').append(option);
+        })
+    })
+    {/if}
+</script>
+<!--<link type="text/css" rel="stylesheet" href="/static/Validform_v5.3.2/css/style.css">-->
+<form class="form form-horizontal js_super_form" id="ads_form" method="post" {if condition="$edit eq 1"} action="{:url('edit')}" {else /} action="{:url('add')}" {/if} autocomplete="off" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?=$info['id']?>"/>
+	<div class="modal-body">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">广告名称：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<input type="text" class="input-text" value="<?=$info['title']?>" id="title"  name="title">
+			</div>
+		</div>
+        <div class="row cl" id="project_radio">
+            <label class="form-label col-xs-2 col-sm-2">投放形式：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="project_type" id="project_type" class="select" title="" required="true" onchange="loadAdPosition()" {if condition="isset($edit) AND $edit eq 1"} disabled {/if}>
+					<option value="-1">请选择</option>
+					<option value="1" {if condition="isset($info['project_type']) && $info['project_type'] eq 1"} selected {/if}>文字</option>
+					<option value="2" {if condition="isset($info['project_type']) && $info['project_type'] eq 2"} selected {/if}>图片</option>
+					<option value="3" {if condition="isset($info['project_type']) && $info['project_type'] eq 3"} selected {/if}>图文</option>
+				</select>
+				</span>
+			</div>
+        </div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">选择站点：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="adsiteid" id="adsiteid" class="select" title="选择站点" onchange="loadAdPosition()"  {if condition="isset($edit) AND $edit eq 1"} disabled {/if}>
+					<option value="-1">请选择</option>
+					<?php
+						foreach($adsite as $k => $v){
+					?>
+					<option {if condition="isset($choosed_adsite) && $choosed_adsite eq $v['id']"} selected {/if} value="<?= $v['id'] ?>" <?= ($v['id'] == $info['adsiteid'] ? 'selected' : '') ?>><?= $v['sitename'] ?></option>
+					<?php } ?>
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">选择广告位：</label>
+			<div class="formControls col-xs-5 col-sm-5">
+				<span class="select-box">
+				<select name="adsenseid" id="adsenseid"type="select" class="select field-adsenseid" title="选择广告位"  {if condition="isset($edit) AND $edit eq 1"} disabled {/if}>
+					<option value="-1">请选择</option>
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">投放模式：</label>
+			<div class="col-xs-10 col-sm-5">
+				<div class="radio-box">
+					<input type="radio" id="radio-1" name="sensemodel" value="1" checked>
+					<label for="radio-1">包时段</label>
+				</div>
+			</div>
+		</div>  
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">选择时段：</label>
+			<div class="formControls col-xs-2 col-sm-2" style="padding-right: 5px;">
+				<input type="text" class="input-text Wdate" name = "btime" id="btime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="<?=$info['btime'] ?>" placeholder="开始时间" required="true" />
+			</div>
+			<div class="formControls col-xs-2 col-sm-2">
+				<input type="text" required="true" class="input-text Wdate" name="etime" id="etime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="<?=$info['etime'] ?>" placeholder="结束时间" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">广告定向：</label>
+            <div class="radio-box">
+                <input type="radio" id="orientation" name="orientation" value="1" checked >
+                <label for="radio-1">默认全地段</label>
+            </div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">添加素材：</label>
+            <div class="formControls col-xs-5 col-sm-5">
+                <a type="button" id="add_material_btn" class="btn btn-primary" onclick="add_material_ajax();" class="" data-mid="">添加</a>
+                <a type="button" id="choose_material" class="btn btn-primary" onclick="choose_material_ajax();" class="" data-mid="">选择</a>
+            </div>
+        </div>
+        <br />
+        已选素材
+        <hr class="layui-bg-green">
+        <div id="material_list" style="display: block">
+        </div>
+	</div>
+	<div class="modal-footer">
+        <input type="hidden" name="materialid" id="materialid" required="true"  class=" field-materialid" {if condition="$edit eq 1"} value="{$info.materialid}" {/if} lay-verify =  "materialIdNotEmpty" />
+		{if condition="$edit eq 1"}
+		<input type="hidden" name="id" value="{$info['id']}">
+		<input type="hidden" id="choosed_material_data" value="{$choosed_material_data}" />
+
+		<input type="hidden" name="project_type" value="{$info['project_type']}" />
+		<input type="hidden" name="adsiteid" value="{$info['adsiteid']}" />
+		<input type="hidden" name="adsenseid" value="{$info['adsenseid']}" />
+		{/if}
+		<!--<button type="reset" class="btn btn-default" >重置</button>-->
+		<a type="button" onclick="add_advertisement()" class="btn btn-primary" class="">投放广告</a>
+	</div>
+</form>
+

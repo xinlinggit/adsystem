@@ -10,6 +10,8 @@ namespace app\admin\controller;
 use app\admin\model\Admaterial as MaterialModel;
 use app\admin\model\Admaterial4main as MainModel;
 use app\admin\model\Admaterial4main;
+use think\exception\HttpResponseException;
+use think\Response;
 use think\db;
 /**
  * 广告素材库 - 公共
@@ -18,6 +20,18 @@ use think\db;
 
 class Admaterialcommon extends Admin
 {
+
+	public function api_success($data = [], $msg = '操作成功') {
+		$data = ['code' => 1, 'msg' => $msg, 'data' => $data];
+		$response =  Response::create($data,'json');
+		throw new HttpResponseException($response);
+	}
+
+	public function api_error($msg = '操作失败') {
+		$data = ['code' => 0, 'msg' => $msg];
+		$response = Response::create($data,'json');
+		throw new HttpResponseException($response);
+	}
 
 	/**
 	 * 素材列表
@@ -48,8 +62,8 @@ class Admaterialcommon extends Admin
 		// 根据不用的 material_type 选择不同的控制器
 		$material_type = array('1' => 'admaterial', '2' => 'admaterial4image', '3' => 'admaterial4flash', '4' => 'admaterial4info');
 		$data_list = Admaterial4main::where($where)->field('id,remark, material_id,material_title,status,width,height,material_type')
-		                                           ->order('id desc')
-		                                           ->paginate(15, false, ['query' =>$this->request->param()]);
+		                            ->order('id desc')
+		                            ->paginate(15, false, ['query' =>$this->request->param()]);
 
 		// 分页
 		$pages = $data_list->render();
@@ -156,10 +170,10 @@ class Admaterialcommon extends Admin
 		}
 		$where['material_main.id'] = ['exp', 'is not null'];
 		$row = Db::table('adsense')->field('material_main.id as mid, adsense.id, adsense.width, adsense.height, adsense.sensename, adsense.sensetype')
-		                           ->join('adserver.material_main', 'adsense.id = material_main.adsenseid', 'left')
-		                           ->where($where)
-		                           ->group('adsense.sensename')
-		                           ->select();
+		         ->join('adserver.material_main', 'adsense.id = material_main.adsenseid', 'left')
+		         ->where($where)
+		         ->group('adsense.sensename')
+		         ->select();
 		return $row;
 	}
 
@@ -210,15 +224,21 @@ class Admaterialcommon extends Admin
 	public function upload($type = 'image'){
 		// 获取表单上传文件 例如上传了001.jpg
 		$file = request()->file($type);
-
+		$fileinfo = $file->getInfo();
+		$fileSize = $fileinfo['size'];
+		$allow_max_size = Db::name('admin_config')->where('id = 14')->value('value');
+		$allow_extension = Db::name('admin_config')->where('id = 15')->value('value');
+		if($fileSize > intval($allow_max_size) * 1024){
+			return ['code' => 0, 'msg' => '文件大小超过' . $allow_max_size . ' kb' ];
+		}
 		// 移动到框架应用根目录/public/uploads/material 目录下
 		if($file){
-			$info = $file->move(ROOT_PATH . 'public' . DS . 'upload' . DS . 'material');
+			$info = $file->validate(['ext'=>$allow_extension])->move(ROOT_PATH . 'public' . DS . 'upload' . DS . 'material');
 			if($info){
 				// 成功上传后 获取上传信息
-				return 'upload' . DS . 'material' . DS . $info->getSaveName();
+				return ['code' => 1, 'data' => ['path' => 'upload' . DS . 'material' . DS . $info->getSaveName()]];
 			}else{
-				// TODO: 上传失败
+				return ['code' => 0, 'msg' => $this->error($file->getError())];
 			}
 		}
 	}
@@ -233,16 +253,16 @@ class Admaterialcommon extends Admin
 		return $data;
 	}
 
-    public function audit($id)
-    {
-	    $res = MainModel::update(['status' => 5], ['id' => $id, 'status' => 0]);
-	    if($res)
-	    {
-		    return $this->success('修改成功');
-	    } else {
-		    return $this->error('修改失败');
-	    }
-    }
+	public function audit($id)
+	{
+		$res = MainModel::update(['status' => 5], ['id' => $id, 'status' => 0]);
+		if($res)
+		{
+			return $this->success('修改成功');
+		} else {
+			return $this->error('修改失败');
+		}
+	}
 
 	public function delAdMaterialMain($id = 0)
 	{

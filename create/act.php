@@ -1,16 +1,21 @@
 <?php
+require_once "/home/httpd/adsystem/create/config.php";
+ini_set('memory_limit','2048M');
 //定时任务--数据归纳 凌晨0点过5分钟操作
 $table_name = 'record_'.date('Ymd',strtotime("-1 day"));
 //$table_name = "record_20180527";
 $date = date('Y-m-d 00:00:00', time());
 $to_date = date('Y-m-d',strtotime("-1 day"));
 //$to_date = "20180527";
-$con = mysqli_connect("172.30.2.82","adserver","|lcnfodCuxl8diFx6","adserver");
+$con = mysqli_connect($createconfig['hostname'],$createconfig['username'],$createconfig['password'],$createconfig['database']);
 if (!$con){
   die('Could not connect: ' . mysql_error());
 }
 
 mysqli_query($con,'set names utf8');
+/*先删除昨天acts每分钟（后面可能是1个小时）增加的数据*/
+$old_delete_sql = "delete from record_day  where time = '{$to_date}'";
+mysqli_query($con,$old_delete_sql);
 
 
 $create_sql = "CREATE TABLE {$table_name} like record";

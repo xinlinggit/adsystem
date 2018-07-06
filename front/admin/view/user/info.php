@@ -1,13 +1,13 @@
 <form class="layui-form" action="{:url()}" method="post" id="editForm">
 <div class="page-form">
     <div class="layui-form-item">
-        <label class="layui-form-label">用户名</label>
+        <label class="layui-form-label">账户</label>
         <div class="layui-input-inline">
             <input type="text" class="layui-input field-username" name="username" lay-verify="required" autocomplete="off" placeholder="请输入用户名" readonly="">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称</label>
+        <label class="layui-form-label">广告主名称</label>
         <div class="layui-input-inline">
             <input type="text" class="layui-input field-nick" name="nick" lay-verify="required" autocomplete="off" placeholder="请输入用户名">
         </div>

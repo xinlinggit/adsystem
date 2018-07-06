@@ -22,14 +22,51 @@ class Index extends Admin
     {
         if (cookie('hisi_iframe')) {
             $this->view->engine->layout(false);
-            $authentication = $this->_check_current_authentication();
-            $this->view->assign('authentication', $authentication);
-	        $this->_load_echarts_data();
+            $authentication = $this->_check_authentication();
+            $data = $this->_load_finance_index_data();
+	        $this->view->assign('data', $data);
+	        $this->view->assign('authentication', $authentication);
             return $this->fetch('iframe');
         } else {
-	        $this->_load_echarts_data();
+	        $data = $this->_load_finance_index_data();
+	        $this->view->assign('data', $data);
             return $this->fetch();
         }
+    }
+
+	/**
+	 * 获取余额
+	 * @return mixed
+	 */
+	protected function _get_blance()
+	{
+		$row = Db::table('userinfo')
+		         ->field('round(account/100, 2) account')
+		         ->where('uid = ' . ADMIN_ID)
+		         ->find();
+		return $row['account'];
+	}
+
+	/**
+	 * 获取历史充值/退款金额之和
+	 */
+	protected function _get_charge_sum(){
+		$charge_sum = Db::table('transaction_flow')->where(['user_id' => ADMIN_ID, 'type' => 1])->sum('money');
+		$withdraw_sum = Db::table('transaction_flow')->where(['user_id' => ADMIN_ID, 'type' => 2])->sum('money');
+		return round(($charge_sum - $withdraw_sum) / 100, 2);
+	}
+
+    protected function _load_finance_index_data(){
+	    $blance = $this->_get_blance();
+	    $charge_sum = $this->_get_charge_sum();
+	    if($charge_sum > 0)
+	    {
+		    $spendding = $charge_sum - $blance;
+	    } elseif($charge_sum == 0) {
+		    $spendding = 0;
+	    }
+	    $data = ['charge_sum' => $charge_sum, 'blance' => $blance, 'spendding' => round($spendding, 2)];
+	    return $data;
     }
 
     protected function _load_echarts_data(){
@@ -52,15 +89,15 @@ class Index extends Admin
 	    $this->assign('y_data', $y_data);
     }
 
-	private function _check_current_authentication()
+	private function _check_authentication()
 	{
-		if(in_array(ADMIN_ROLE, [1, 2, 5]))
+		$res = in_array(ADMIN_ROLE, [1, 2, 5]);
+		$res2 = Db::table('license_auth')->where(['uid' => ADMIN_ID, 'status' => 1])->find();
+		if($res || $res2)
 		{
 			return true;
 		} else {
-			$map['uid'] = ADMIN_ID;
-			$map['status'] = 1;
-			return (boolean)Db::table('license_auth_current')->where($map)->find();
+			return false;
 		}
 	}
 
@@ -71,7 +108,8 @@ class Index extends Admin
      */
     public function welcome()
     {
-	    $this->_load_echarts_data();
+	    $data = $this->_load_finance_index_data();
+	    $this->view->assign('data', $data);
         return $this->fetch();
     }
 
@@ -93,7 +131,9 @@ class Index extends Admin
      */
     public function clear()
     {
-        if (Dir::delDir(RUNTIME_PATH) === false) {
+    	$res1 = (Dir::delDir(RUNTIME_PATH . DS . 'cache') === false);
+    	$res2 = (Dir::delDir(RUNTIME_PATH . DS . 'temp') === false);
+        if ($res1 && $res2) {
             return $this->error('缓存清理失败！');
         }
         return $this->success('缓存清理成功！');

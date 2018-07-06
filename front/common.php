@@ -950,15 +950,14 @@ if(!function_exists('curl_get'))
 
 if(!function_exists('adv_bccomp'))
 {
-	function adv_bccomp($left, $right, $scale = 5)
+	function adv_bccomp($price, $account, $scale = 5)
 	{
 		// TODO: 检测模块不存在的时候
-		// 为什么 bccomp 在这里不能使用
-		if($right - $left > 0.0001)
+		if(bccomp($account, $price, 4) == -1)
 		{
-			return 1;
-		} else {
 			return -1;
+		} else {
+			return 1;
 		}
 	}
 }

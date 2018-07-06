@@ -30,7 +30,7 @@
 					<option data-level="0" data-parent="0" value="1" <?=$info['material_type']==1?'selected="selected"':'';?>>文字广告</option>
 					<option data-level="0" data-parent="0" value="2" <?=$info['material_type']==2?'selected="selected"':'';?>>图片广告</option>
 					<option data-level="0" data-parent="0" value="3" <?=$info['material_type']==3?'selected="selected"':'';?>>flash广告</option>
-					<option data-level="0" data-parent="0" value="4" <?=$info['material_type']==4?'selected="selected"':'';?>>对联广告</option>
+					<option data-level="0" data-parent="0" value="4" <?=$info['material_type']==4?'selected="selected"':'';?>>信息流广告</option>
 				</select>
 				</span>
 				</div>
@@ -40,7 +40,7 @@
 				<div class="formControls col-xs-5 col-sm-5">
 				<span class="select-box">
 				<select id=reasonSel name="status" class="select" title="状态" onchange="reasonTogg();" >
-					<option  data-level="0" data-parent="0" value="0" <?=$info['status']==0?'selected="selected"':'';?>>等待提交审核</option>
+					<!-- <option  data-level="0" data-parent="0" value="0" <?=$info['status']==0?'selected="selected"':'';?>>等待提交审核</option> -->
 					<option  data-level="0" data-parent="0" value="3" <?=$info['status']==3?'selected="selected"':'';?>>审核已通过</option>
 					<option  data-level="0" data-parent="0" value="4" <?=$info['status']==4?'selected="selected"':'';?>>审核未通过</option>
 					<option  data-level="0" data-parent="0" value="5" <?=$info['status']==5?'selected="selected"':'';?>>待审核</option>

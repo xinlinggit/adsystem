@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>后台管理登陆</title>
+    <title>广告主平台登录</title>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <link rel="stylesheet" href="__ADMIN_JS__/layui/css/layui.css">
     <style type="text/css">
@@ -18,12 +18,12 @@
 </head>
 <body>
 <div class="login-head">
-    <h1>{:config('base.site_name')}</h1>
+    <h1>聚汇通-广告主平台</h1>
 </div>
 <div class="login-box">
     <form action="{:url()}" method="post" class="layui-form layui-form-pane">
         <fieldset class="layui-elem-field layui-field-title">
-            <legend>管理后台登陆</legend>
+            <legend>广告主平台登录</legend>
         </fieldset>
         <div class="layui-form-item">
             <label class="layui-form-label">登陆账号</label>

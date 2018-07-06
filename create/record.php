@@ -1,5 +1,5 @@
 <?php
-//echo 222;exit;暂时没用
+echo 222;exit;//暂时没用
 require_once "/home/httpd/adsystem/vendor/autoload.php";
 use Predis\Client;
 $redis = new Client([

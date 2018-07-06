@@ -361,6 +361,13 @@ class File extends SplFileObject
             return false;
         }
 
+        // 同名文件存在先记录
+		if(is_file($filename))
+		{
+			// debug
+			@error_log(date('Y-m-d H:i:s') . ' |-info-| ' . print_r($filename, true) . PHP_EOL, 3, LOG_PATH . '/upload_old_filename_conflicts' . date('Ymd') . '.log');
+		}
+
         /* 移动文件 */
         if ($this->isTest) {
             rename($this->filename, $filename);

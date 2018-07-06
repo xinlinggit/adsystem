@@ -24,6 +24,18 @@
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">允许上传图片大小：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				<input type="text" class="input-text" value="{$upload_image_size}"  name="upload_image_size" required="true" >单位kb
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">允许上传格式：</label>
+			<div class="formControls col-xs-5 col-sm-2">
+				<input type="text" class="input-text" value="{$upload_image_ext}"  name="upload_image_ext" required="true" >用英文,隔开
+			</div>
+		</div>
+		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 				<a href="/basic/basic/index.html" class="btn btn-default">取消</a>
 				<button type="submit" class="btn btn-primary">保存</button>

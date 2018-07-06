@@ -143,14 +143,6 @@
         $("#pricelimit").val(price);
     }
 
-    /**
-     * TODO: 检查是否有匹配当前条件的素材，否则提示
-     */
-    function check_has_materials()
-    {
-        
-    }
-
     // 只有的在竞价模式才判断价格
     function check_rpm_model()
     {

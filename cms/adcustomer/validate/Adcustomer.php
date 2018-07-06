@@ -18,8 +18,8 @@ class Adcustomer extends Validate
 {
 	//定义验证规则
 	protected $rule = [
-		'username|用户名' => 'require|alphaNum|unique:ad_admin_user',
-		'nick|昵称'       => 'require|unique:ad_admin_user',
+		'username|账户' => 'require|alphaNum|unique:ad_admin_user',
+		'nick|广告主名'       => 'require|unique:ad_admin_user',
 		'role_id|角色'    => 'requireWith:role_id|notIn:0,1',
 		'email|邮箱'     => 'requireWith:email|email|unique:ad_admin_user',
 		'password|密码'  => 'require|length:6,20',
@@ -28,7 +28,7 @@ class Adcustomer extends Validate
 
 	//定义验证提示
 	protected $message = [
-		'username.require' => '请输入用户名',
+		'username.require' => '请输入账户',
 		'role_id.require'  => '请选择角色分组',
 		'role_id.notIn'    => '禁止设置为超级管理员',
 		'email.require'    => '邮箱不能为空',

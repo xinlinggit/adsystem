@@ -13,7 +13,7 @@ $client = new Client([
 //$db = Db::connect($conf);
 $map['status'] = 1;
 $adsense_data = Db::table('adsense')->where($map)->select()->toarray();
-dump($adsense_data);exit;
+var_dump($adsense_data);exit;
 $adposition_id = [
     [
         'ad_id'=>1,

@@ -102,6 +102,7 @@ if(!function_exists('upload2fileserver'))
 		}catch (Exception $e)
 		{
 			$msg = $e->getMessage();
+			@error_log(date('Y-m-d H:i:s') . ' |-info-| ' . print_r($msg, true) . PHP_EOL, 3, LOG_PATH . '/upload2fileserver_' . date('Ymd') . '.log');
 		}
 		@unlink($path);
 		if($res)

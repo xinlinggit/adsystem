@@ -95,6 +95,7 @@ class Ads extends Base
 		               ->join("adserver.adsense sense", "a.adsenseid = sense.id", 'LEFT')
 			->join('adserver.ad_admin_user u', 'a.userid = u.id', 'LEFT')
 						->where('a.status <> -1')
+						->where('a.userid > 0')
 		               ->where($map)
 			->order($order . ' ' . $by)
 		               ->paginate($per_page, false, ['query' => $this->request->param()]);

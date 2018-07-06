@@ -1,0 +1,43 @@
+<form class="form form-horizontal js_super_form" id="add_text_material_form" action="{$action}">
+    <div class="modal-body">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">素材名称：</label>
+            <div class="formControls col-xs-5 col-sm-5">
+                <input type="text" class="input-text" placeholder=""  id="material_title" name="material_title" required value="{if condition='isset($material.material_title)'}{$material.material_title}{/if}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">类型：</label>
+            <div class="radio-box"  style="padding-left: 0px;">
+                <label for="layer_project_type">文字</label>
+                <input type="radio"  id ="layer_project_type" value="1" checked required >
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">标题：</label>
+            <div class="formControls col-xs-5 col-sm-5">
+                <input type="text" class="input-text" id="material_content" name="material_content" required value="{if condition='isset($material.material_content)'}{$material.material_content}{/if}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">点击文字链接：</label>
+            <div class="formControls col-xs-5 col-sm-5">
+                <input type="url" class="input-text" id="click_url" name="click_url" required value="{if condition='isset($material.click_url)'}{$material.click_url}{/if}" >
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        {if condition="$edit eq 0"}
+        <input type="hidden" name="adsenseid" value="{$adsenseid}" />
+        <input type="hidden" name="adsiteid" value="{$adsiteid}" />
+        {else /}
+        <input type="hidden" name="id" value="{$material.id}" />
+        <input type="hidden" name="sid" value="{$material.sid}" />
+        <input type="hidden" name="adsenseid" value="{$material.adsenseid}" />
+        <input type="hidden" name="adsiteid" value="{$material.adsiteid}" />
+        {/if}
+        <input type="hidden" name="material_type" value="1" />
+        <!--<button type="reset" class="btn btn-default" >重置</button>-->
+        <input type="button" id="text_material_btn" class="btn btn-primary" {if condition='$edit eq 0'} onclick='submit_text_material()' {else /} onclick='submit_edit_text_material()' {/if} value="{if condition='$edit eq 0'} 添加素材 {else /} 修改素材 {/if}" />
+    </div>
+</form>

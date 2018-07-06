@@ -1,5 +1,12 @@
 (function (d, c) {
-    var a = "7bd801dab4fa8409f7252de594bcf18b",n = "revive",api = "http://ad.api.dev.cnfol.wh/interface.php";
+    //后加
+    var ins=document.querySelectorAll('ins'),insArr=new Array();
+    for(var i=0;i<ins.length;i++){
+        insArr.push(ins.item(i).getAttribute('data-revive-id'))
+    }
+    //后加
+    //var a = insArr,n = "revive",api = "http://ad.api.dev.cnfol.wh/interface.php";
+    var a = insArr,n = "revive",api = "http://ad.api.dev.cnfol.wh/Index/index/index";
     c.reviveAsync = c.reviveAsync || {};
     (function (e) {
         if (typeof e.CustomEvent === "function") {
@@ -40,7 +47,7 @@
                                 });
                             }
                         } catch (h) {
-                            console.log(h);
+                            //console.log(h);
                         }
                     };
                     f.dispatchEvent("init");
@@ -71,8 +78,8 @@
                         }
                     };
                     this.dispatchEvent("send", g);
-                    h.open("GET", e + "?" + f.encode(g).join("&"), true);
-                    h.withCredentials = true;
+                    h.open("GET", e + "?" + f.encode(g).join("&")+'&t='+Math.random(), true);
+                    h.withCredentials = false;
                     h.send();
                 },
                 encode: function (m, n) {
@@ -223,8 +230,8 @@
             f.main();
         }
     } catch (b) {
-        if (console.log) {
+        /*if (console.log) {
             console.log(b);
-        }
+        }*/
     }
 })(document, window);

@@ -268,14 +268,14 @@ class Filter extends Base
 		$html .= '<div class="col-xs-4 col-sm-4">';
 		$html .= '<label class="form-label col-xs-3 col-sm-3">' . $title_0 . '：</label>';
 		$html .= '<div class="col-xs-4 col-sm-4">';
-		$html .= '<input type="text" name="' . $field_start . '" id="' . $field_start . '" class="input-text Wdate" value="' . $start . '"';
+		$html .= '<input autocomplete="off" type="text" name="' . $field_start . '" id="' . $field_start . '" class="input-text Wdate" value="' . $start . '"';
 		//$html .= ' onfocus="WdatePicker({ maxDate:\'#F{ $dp.$D(\\\'' . $field_end . '\\\')}\', dateFmt:\'yyyy-MM-dd\' })">';
 		$html .= ' onclick="showCalendar(this)">';
 		//<input type="text" class="InpDate" onclick="showCalendar(this)" name="start_time" id="start_time" value="">
 		$html .= '</div>';
 		$html .= '<label class="form-label col-xs-1 col-sm-1">' . $title_1 . '：</label>';
 		$html .= '<div class="col-xs-4 col-sm-4">';
-		$html .= '<input type="text" name="' . $field_end . '" id="' . $field_end . '" class="input-text Wdate" value="' . $end . '"';
+		$html .= '<input autocomplete="off" type="text" name="' . $field_end . '" id="' . $field_end . '" class="input-text Wdate" value="' . $end . '"';
 		//$html .= ' onfocus="WdatePicker({ minDate:\'#F{ $dp.$D(\\\'' . $field_start . '\\\')}\', dateFmt:\'yyyy-MM-dd\' })">';
 		$html .= ' onclick="showCalendar(this)">';
 		$html .= '</div>';

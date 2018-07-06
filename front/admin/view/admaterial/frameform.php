@@ -19,21 +19,21 @@
     {include file="admaterial4info/infoform" /}
 </div>
 {include file="block/layui" /}
-<!-- æ–‡å­— begin -->
+<!-- ÎÄ×Ö begin -->
 {include file="admaterial/textform_help_js"}
-<!-- æ–‡å­— end -->
+<!-- ÎÄ×Ö end -->
 
-<!-- å›¾ç‰‡ begin -->
+<!-- Í¼Æ¬ begin -->
 {include file="admaterial4image/imageform_help_js"}
-<!-- å›¾ç‰‡ end -->
+<!-- Í¼Æ¬ end -->
 
 <!-- flash begin -->
 {include file="admaterial4flash/flashform_help_js"}
 <!-- flash end -->
 
-<!--  ä¿¡æ¯æµ  begin  -->
+<!--  ÐÅÏ¢Á÷  begin  -->
 {include file="admaterial4info/infoform_help_js"}
-<!--  ä¿¡æ¯æµ  end  -->
+<!--  ÐÅÏ¢Á÷  end  -->
 <script>
     function hide(obj){
         obj.style.display = "none";

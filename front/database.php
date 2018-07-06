@@ -12,9 +12,9 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => 'dev.cnfol.wh',
+    'hostname'        => 'localhost',
     // 数据库名
-    'database'        => 'adserver',  //123
+    'database'        => 'adserver',
     // 用户名
     'username'        => 'root',
     // 密码

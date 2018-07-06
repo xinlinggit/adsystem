@@ -2,7 +2,7 @@
 	<input type="hidden" name="id" value="<?=$info['id']?>"/>
 	<div class="modal-body">
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">用户名：</label>
+			<label class="form-label col-xs-2 col-sm-2">代理商账户：</label>
 			<div class="formControls col-xs-5 col-sm-5">
 				<input type="text" class="input-text" value="<?=$info['username']?>" placeholder=""  name="" readonly>
 			</div>
@@ -17,7 +17,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">充值金额：</label>
 			<div class="formControls col-xs-5 col-sm-5">
-				<input type="number" class="input-text" placeholder="充值金额"  name="account" required>
+				<input type="number" class="input-text" placeholder="充值金额"  name="account" required onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
 			</div>
 		</div>
 	</div>

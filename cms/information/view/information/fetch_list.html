@@ -1,0 +1,64 @@
+{extend name="/common@body" /}{block name="main"}
+<?php
+echo widget('common/filter/formWithoutId', [/*参数数组*/
+[/*第一个参数*/
+widget('common/filter/input', ['标题', 'title'])
+]
+]);
+?>
+<div class="js_super_table">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+            <button class="btn btn-success js_operate" title="添加通知" data-title="添加通知" data-callback="layer_model" data-url="<?= url('model_add'); ?>"><i class="Hui-iconfont Hui-iconfont-add"></i> 添加通知</button>
+			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+		</span>
+	</div>
+<div class="mt-20">
+	<div class="dataTables_wrapper">
+	<?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+		<table class="table table-border table-bordered table-bg table-hover table-striped dataTable">
+			<thead>
+			<tr class="text-c">
+				<th width="15px;">
+					<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0"/></label>
+				</th>
+				<th>编号</th>
+				<th>通知标题</th>
+				<th>通知内容</th>
+				<th>创建人</th>
+				<th>创建时间</th>
+				<th width="220">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach($list as $k => $row){
+			?>
+			<tr class="text-c" >
+				<td>
+					<label for="info_<?=$row->id;?>"><input id="info_<?=$row->id;?>" type="checkbox" class="js_checkbox" data-type="child" value="<?=$row->id;?>"></label>
+				</td>
+				<td><?=$row->id;?></td>
+				<td><?=$row->title;?></td>
+				<td><?=$row->content;?></td>
+				<td><?=$row->real_name;?></td>
+				<td><?= date('Y-m-d H:i',strtotime($row->create_time)) ?></td>
+				<td>
+					<button data-url="<?= url('model_edit') ?>" data-id="<?= $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="编辑" title="编辑">
+						编辑</button>
+					<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
+						删除</button>
+				</td>
+			</tr>
+				<?php
+			}
+			?>
+			</tbody>
+		</table>
+		<?=widget('common/page/render',['page' => $page,'param'=>$param]);?>
+	</div>
+</div>
+</div>
+
+
+{/block}

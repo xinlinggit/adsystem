@@ -1,3 +1,4 @@
+<!--信息流添加弹出层-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">信息流选中尺寸:</label>
+            <label class="layui-form-label">选中尺寸:</label>
             <div class="">
                 <label class="">&nbsp;宽&nbsp;</label>
                 <input type="number" class="my_input" name="width" id ="info_width" lay-verify="required|number" autocomplete="off" placeholder="" value="{$width}" readonly />
@@ -42,14 +43,14 @@
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="image_url" id="info_pop_url" lay-verify="required|url" />
+                    <input type="text" class="layui-input" name="image_url" id="info_pop_url" lay-verify="required|url" placeholder="素材大小建议不超过 100k " />
                 </div>
             </div>
         </div>
         <div class="layui-form-item" id="info_pic_desc_box" style="display: block">
-            <label class="layui-form-label">文案:</label>
+            <label class="layui-form-label">标题:</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="info_desc" name="image_description" lay-verify = "required" autocomplete="off" placeholder="" />
+                <input type="text" class="layui-input" id="info_desc" name="image_description" lay-verify = "required" autocomplete="off" placeholder="16 字以内" />
             </div>
         </div>
         <div class="layui-form-item">
@@ -90,8 +91,7 @@
                     parent.layer.closeAll();
                     parent.layer.msg('添加成功', {icon:1});
                 }else{
-                    parent.layer.closeAll();
-                    parent.layer.msg('添加失败', {icon:5});
+                    parent.layer.msg(data.msg, {icon:5});
                 }
             });
         })

@@ -10,7 +10,7 @@ widget('common/filter/input', ['账号', 'username'])
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
             <button class="btn btn-success js_operate" title="添加广告主" data-title="添加广告主" data-callback="layer_model" data-url="<?= url('model_add'); ?>"><i class="Hui-iconfont Hui-iconfont-add"></i> 添加广告主</button>
-			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+			<!-- <button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button> -->
 		</span>
 	</div>
 <div class="mt-20">
@@ -23,9 +23,11 @@ widget('common/filter/input', ['账号', 'username'])
 					<label for="Ca"><input type="checkbox" id="Ca" class="js_checkbox" data-type="parent" value="0"/></label>
 				</th>
 				<th>广告主ID</th>
-				<th>账号</th>
-				<th>广告主昵称</th>	
+				<th>账户</th>
+				<th>广告主名</th>
+				<th>所属代理商</th>
 				<th>账户余额</th>
+				<th>消耗金额</th>
 				<th>账户状态</th>
 				<th>账户类型</th>
 				<th>认证状态</th>
@@ -43,7 +45,9 @@ widget('common/filter/input', ['账号', 'username'])
 				<td>{$row['id']}</td>
 				<td>{$row['username']|default=''}</td>
 				<td>{$row['nick']|default=''}</td>
+				<td>{$row['agent_nickname']|default=''}</td>
 				<td>{$row['account']}</td>
+				<td>{$row['spendding']}</td>
 				{if condition="$row['status'] == 1"}
 				<td>启用</td>
 				{elseif condition="$row['status'] == 0"}
@@ -60,14 +64,24 @@ widget('common/filter/input', ['账号', 'username'])
 				{else}
 				<td>其他</td>
 				{/if}
-				{if condition="isset($license_auth[$row['id']]['status']) && $license_auth[$row['id']]['status'] == 1"}
+				<!-- {if condition="isset($license_auth[$row['id']]['status']) && $license_auth[$row['id']]['status'] == 1"}
 				<td>通过</td>
 				{elseif condition="isset($license_auth[$row['id']]['status']) && $license_auth[$row['id']]['status'] == 2"}
 				<td>等待审核</td>
 				{elseif condition="isset($license_auth[$row['id']]['status']) && $license_auth[$row['id']]['status'] == -1"/}
 				<td>未通过</td>
-                {else}
-                <td>没有提交</td>
+				{else}
+				<td>没有提交</td>
+				{/if} -->
+				<!-- <td>{$row['statuss']}</td> -->
+				{if condition="isset($row['statuss']) && $row['statuss'] == 1"}
+				<td>通过</td>
+				{elseif condition="isset($row['statuss']) && $row['statuss'] == 2"/}
+				<td>等待审核</td>
+				{elseif condition="isset($row['statuss']) && $row['statuss'] == -1"/}
+				<td>未通过</td>
+				{else/}
+				<td>没有提交</td>
 				{/if}
 				<td>
 					{if condition="$row['status'] == 1"}
@@ -77,11 +91,12 @@ widget('common/filter/input', ['账号', 'username'])
 					{/if}
 						编辑
 					</button>
-					<button data-url="<?= url('charge?id=') .$row['id'] ?>" data-id="<?php echo $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="充值" title="充值">
+					<!-- <button data-url="<?= url('charge?id=') .$row['id'] ?>" data-id="<?php echo $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="充值" title="充值">
 						充值
-					</button>
+					</button> -->
 					<!-- 管理员（目前是 role = 2 - 系统管理员 = 5 管理员的角色）不用显示认证的按钮-->
-					{if condition="$row['role_id'] != 2 AND  $row['role_id'] != 5  AND !empty($license_auth[$row['id']]['status'])"}
+					
+					{if condition="$row['role_id'] != 2 AND  $row['role_id'] != 5  AND !empty($row['statuss'])"}
 					<button data-url="<?= url('auth_view') ?>" data-id="<?php echo $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="认证资料" title="认证资料">
 						认证资料
 					</button>
@@ -97,9 +112,9 @@ widget('common/filter/input', ['账号', 'username'])
 					</button>
 					{/if}
 
-					<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
+					<!-- <button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
 						删除
-					</button>
+					</button> -->
 				</td>
 			</tr>
 				<?php

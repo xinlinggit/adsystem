@@ -15,7 +15,7 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 	<div class="cl pd-5 bg-1 bk-gray mt-20" style="display: none;">
 		<span class="l">
             <button class="btn btn-success js_operate" title="添加广告" data-title="添加广告" data-callback="layer_model" data-url="<?= url('model_add'); ?>"><i class="Hui-iconfont Hui-iconfont-add"></i> 添加广告</button>
-			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+			<!--<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>-->
 		</span>
 	</div>
 <div class="mt-20">
@@ -29,6 +29,7 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 				</th>
 				<th>广告ID</th>
 				<th>广告名称</th>
+				<th>投放形式</th>
 				<th>所属广告位</th>
 				<th>所属站点</th>
 				<th>所属广告主</th>
@@ -37,6 +38,7 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 				<th>预算方式</th>
 				<th>投放状态</th>
 				<th>启停状态</th>
+				<th>投放时段</th>
 				<th>创建时间</th>
 				<th width="">操作</th>
 			</tr>
@@ -51,15 +53,28 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 				</td>
 				<td>{$row['id']}</td>
 				<td>{$row['title']|default=''}</td>
-				<td>{$row['sensename']|default=''}</td>
+				<td>
+					{switch name="$row.project_type"}
+					{case value="1"}文字{/case}
+					{case value="2"}图片{/case}
+					{case value="3"}图文{/case}
+					{/switch}
+				</td>
+				{if condition="$row.sensename neq ''"}
+				<td>{$row['sensename']}</td>
+				{else/}
+				<td>无固定广告位</td>
+				{/if}
 				<td>{$row['sitename']}</td>
 				<td>{$row['username']}</td>
 				<td>{$row['materialid']}</td>
 				<td>{$row['width']}*{$row['height']}</td>
 				{if condition="$row['spending'] eq 1"}
-				<td>包时段</td>
+					<td>包时段</td>
+				{elseif condition="$row['spending'] eq 2"}
+					<td>竞价：￥ {$row['price'] / 100} / CPM</td>
 				{else/}
-				<td>竞价：￥ {$row['price'] / 100} / CPM</td>
+					<td>竞价：￥ {$row['price'] / 100 / 1000} / CPC</td>
 				{/if}
 				{if condition="$row['status'] == 1"}
 				<td>暂停</td>
@@ -68,7 +83,7 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 				{elseif condition="$row['status'] == 3"}
 				<td>投放中</td>
 				{else if condition="$row['status'] eq 4"}
-				<td>已投完</td>
+				<td>已结束</td>
 				{/if}
 
 				{if condition="$row['running_status'] == 1"}
@@ -76,7 +91,10 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 				{else if condition="$row['running_status'] eq 2"}
 					<td>停止</td>
 				{/if}
-
+				{php}
+				$show_time = str_replace(',', ' <br />至<br /> ', $row['time']);
+				{/php}
+				<td style="text-align: center;">{$show_time}</td>
 				<td>{$row['create_time']}</td>
 				<td>
 					<a class="btn size-MINI radius btn-secondary-outline" title="预览" href="{$preview . $row['materialid']}" target="_blank">
@@ -84,16 +102,18 @@ widget('common/filter/select', ['投放状态', 'status', $statuses]),
 					</a>
 					{if condition="$row['running_status'] == 1"}
 					<button data-url="<?= url('change_status?running_status=2') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="停用" title="停用">
-						<i class="Hui-iconfont Hui-iconfont-close"></i>
+						<!--<i class="Hui-iconfont Hui-iconfont-close"></i>-->
+						停用
 					</button>
 					{else/}
 					<button data-url="<?= url('change_status?running_status=1') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="启用" title="启用">
-						<i class="Hui-iconfont Hui-iconfont-xuanze"></i>
+						<!--<i class="Hui-iconfont Hui-iconfont-xuanze"></i>-->
+						启用
 					</button>
 					{/if}
-					<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
-						<i class="Hui-iconfont Hui-iconfont-del3"></i>
-					</button>
+					<!--<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">-->
+						<!--<i class="Hui-iconfont Hui-iconfont-del3"></i>-->
+					<!--</button>-->
 				</td>
 			</tr>
 				<?php

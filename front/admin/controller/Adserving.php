@@ -8,6 +8,7 @@
 
 namespace app\admin\controller;
 use think\db;
+
 /**
  * 广告投放
  * @package app\admin\controller
@@ -41,7 +42,6 @@ class Adserving extends Admin
 			if($status) {
 				$where['status'] = $status;
 			}
-
 			$where = ['a.status' => ['neq', -1]];
 			if($ad_qstring) {
 				$where['a.id|title'] = [ "like", "%$ad_qstring%" ];
@@ -70,12 +70,71 @@ class Adserving extends Admin
 		               ->join("adserver.adsense sense", "a.adsenseid = sense.id", 'LEFT')
 		               ->where($where)
 					   ->order('a.id desc')
-		               ->paginate(15, false, ['query' => $this->request->param()]);
+		               ->paginate(8, false, ['query' => $this->request->param()]);
 		$pages = $data_list->render();
+		$raw_data = $data_list->items();
+		foreach ($raw_data as $k => $v)
+		{
+			if($v['spending'] == 3)
+			{
+				// 数据库里面存的是千次价格，这里进行还原
+				$raw_data[$k]['price'] /= 1000;
+				$raw_data[$k]['pricelimit'] /= 1000;
+			}
+			// 只有当广告为停用状态的时候需要判断素材的审核状态，依赖素材审核都通过才能启用广告
+			// 远程分支关联测试
+			if($v['running_status'] == 2)
+			{
+				$flag = 0;
+				$material_status = $this->_get_material_status($v['id']);
+				$statu_num = count($material_status);
+				/**
+				 * flag 1: 手动启用 3：待审核 4：未通过
+				 */
+				if($statu_num == 1 && array_keys($material_status)[0] == 3)
+				{
+					$flag = 1;
+				} else if(in_array(4, array_keys($material_status))){
+					$flag = 4;
+				} else{
+					// 其他情况 部分审核通过，其他待审核
+					$flag = 3;
+				}
+				if($flag !== 0)
+				{
+					$raw_data[$k]['fake_running_status'] = $flag;
+				}
+			}
+		}
 		$this->assign('review_url', \think\Config::get('review'));
 		$this->assign('pages', $pages);
-		$this->assign('data_list', $data_list);
+		$this->assign('data_list', $raw_data);
 		return $this->fetch();
+	}
+
+	// 根据广告获取素材审核状态
+	protected function _get_material_status($id)
+	{
+		$materialid_str = Db::table('advertisement')->where('id = ' . $id)->value('materialid');
+		$materialid_ids = explode('|', $materialid_str);
+		$status = Db::table('material_main')->where(['id' => ['in', $materialid_ids]])->field('id, status')->select();
+		/**
+		 * ['状态' => [当前素材id 的一维或多维数组]]
+		 */
+		$status_merge = [];
+		foreach($status as $k => $v)
+		{
+			$current_status = $v['status'];
+			$current_id = $v['id'];
+			if( ! isset($status_merge[$current_status])) {
+				$status_merge[ $current_status ] = $current_id;
+			} else {
+				$new_id[] = $status_merge[$current_status];
+				$new_id[] = $current_id;
+				$status_merge[$current_status] = $new_id;
+			}
+		}
+		return $status_merge;
 	}
 
 	/**
@@ -100,11 +159,17 @@ class Adserving extends Admin
 	public function getAdPositionSize()
 	{
 		$adsiteid = input('adsiteid');
+		$project_type = input('project_type');
 		$where = ['status' => 1, 'adsite' => $adsiteid];
 		// 竞价
 		$where['sensemodel'] = 2;
 		// 信息流
-		$where['materialmodel'] = 3;
+		if($project_type == 3){
+			$where['materialmodel'] = 3;
+		} else if($project_type == 2)
+		{
+			$where['materialmodel'] = 2;
+		}
 		$row = Db::table('adsense')->field('width, height')
 		                           ->group('width, height')
 		                           ->where($where)->select();
@@ -209,6 +274,43 @@ class Adserving extends Admin
 	}
 
 	/**
+	 * 获取代理商设置的 CPM 最低限价
+	 */
+	protected function _get_mini_baseprice()
+	{
+		// 所属代理商
+		$pid = Db::name('admin_user')->where('id = ' . ADMIN_ID)->value('pid');
+		if($pid > 0)
+		{
+			// 获取该经销商的最低限价
+			$baseprice = Db::name('admin_user_agent')->where('id = ' . $pid)->value('current_price');
+		} else if($pid == 0)
+		{
+			// 获取运营后台设置的最低限价
+			$baseprice = Db::name('admin_config')->where('id = 53')->value('value');
+		}
+		return $baseprice;
+	}
+
+	/**
+	 * 获取 cpc 最低限价
+	 */
+	protected function _get_current_cpc(){
+		// 所属代理商
+		$pid = Db::name('admin_user')->where('id = ' . ADMIN_ID)->value('pid');
+		if($pid > 0)
+		{
+			// 获取该经销商的最低限价
+			$current_cpc = Db::name('admin_user_agent')->where('id = ' . $pid)->value('current_cpc');
+		} else if($pid == 0)
+		{
+			// 获取运营后台设置的最低限价
+			$current_cpc = Db::name('admin_config')->where('id = 57')->value('value');
+		}
+		return $current_cpc;
+	}
+
+	/**
 	 * 添加信息流
 	 * @return mixed|void
 	 */
@@ -217,12 +319,21 @@ class Adserving extends Admin
 		if($this->request->isPost())
 		{
 			$param = $this->request->param();
-
+			$price = input('price');
+			if($this->_check_balance($price) == -1){
+				return $this->error('余额不足，请充值');
+			}
+			$btime = $param['time']['t1']['btime'];
+			$etime = $param['time']['t1']['etime'];
+			if(strtotime($etime) < strtotime($btime))
+			{
+				$this->error('结束时间不能早于开始时间');
+			}
 			if(! input('materialid'))
 			{
 				$this->error('没有选择素材, 添加失败', 'admin/adserving/addinfo');
 			}
-			$matrial_update = $this->_updateInfoMaterialStatus($param['materialid']);
+			$this->_updateInfoMaterialStatus($param['materialid']);
 			$param_arr = $this->_loadAddUpdateDataInfo($param);
 			$param_arr['userid'] = ADMIN_ID;
 			$param_arr['update_time'] = date('Y-m-d H:i:s', time());
@@ -239,8 +350,11 @@ class Adserving extends Admin
 				return $this->error('添加失败');
 			}
 		}
-
+		$baseprice = $this->_get_mini_baseprice();
+		$cpcprice = $this->_get_current_cpc();
 		$this->getSitesInfo();
+		$this->assign('baseprice', $baseprice);
+		$this->assign('cpcprice', $cpcprice);
 		$this->assign('edit', 0);
 		$this->assign('role_id', ADMIN_ROLE);
 		$this->assign('action', url('admin/Adserving/addinfo'));
@@ -269,9 +383,18 @@ class Adserving extends Admin
 		$time = $this->joinTime($time);
 		$param_arr['time'] = $time;
 		$param_arr['status'] = 2; // 状态: 即将投放
-		$param_arr['price'] = yuan2fen($param_arr['price']);
-		$param_arr['pricelimit'] = yuan2fen($param_arr['pricelimit']);
-		$param_arr['numlimit'] = $param_arr['pricelimit'] ? (($param_arr['pricelimit'] / $param_arr['price'] ) * 1000) : 0;
+		if($param_arr['spending'] == 3)
+		{// CPC
+			// 和 cpm 千次价格保持一致，方便投放时处理
+			$param_arr['price'] = yuan2fen($param_arr['price']) * 1000;
+			$param_arr['pricelimit'] = yuan2fen($param_arr['pricelimit'] * 1000);
+			$param_arr['numlimit'] = $param_arr['pricelimit'] ? (($param_arr['pricelimit'] / $param_arr['price'] )) : 0;
+		} else if($param_arr['spending'] == 2){
+		// CPM
+			$param_arr['price'] = yuan2fen($param_arr['price']);
+			$param_arr['pricelimit'] = yuan2fen($param_arr['pricelimit']);
+			$param_arr['numlimit'] = $param_arr['pricelimit'] ? (($param_arr['pricelimit'] / $param_arr['price'] ) * 1000) : 0;
+		}
 		unset($param_arr['sensetype']);
 		return $param_arr;
 	}
@@ -373,8 +496,17 @@ class Adserving extends Admin
 		$this->_check_ads_finish($id);
 		if($this->request->isPost())
 		{
+			$price = input('price');
+			if($this->_check_balance($price) == -1){
+				return $this->error('余额不足，请充值');
+			}
 			$param = $this->request->param();
-			$matrial_update = $this->_updateInfoMaterialStatus($param['materialid']);
+			$btime = $param['time']['t1']['btime'];
+			$etime = $param['time']['t1']['etime'];
+			if(strtotime($etime) < strtotime($btime))
+			{
+				$this->error('结束时间不能早于开始时间');
+			}
 			$param_arr = $this->_loadAddUpdateDataInfo($param);
 			$param_arr['userid'] = ADMIN_ID;
 			unset($param_arr['adid']);
@@ -392,7 +524,9 @@ class Adserving extends Admin
 			}
 		}
 
+		$baseprice = $this->_get_mini_baseprice();
 		$this->getSitesInfo();
+		$this->assign('baseprice', $baseprice);
 		$map['a.id'] = $id;
 		$map['a.userid'] = ADMIN_ID;
 		$row = Db::table('advertisement')
@@ -403,11 +537,18 @@ class Adserving extends Admin
 		$this->_isObjExist($row);
 		$row['adPositions'] = $this->_getAdPosition($adsiteid);
 		$time_arr = explode(',', $row['time']);
-		$row['price'] = fen2yuan($row['price']);
-		$row['pricelimit'] = fen2yuan($row['pricelimit']);
+		if($row['spending'] == 3)
+		{
+			// 数据库中记录的是千次价格，这里除 1000 进行还原
+			$row['price'] = fen2yuan($row['price']) / 1000;
+			$row['pricelimit'] = fen2yuan($row['pricelimit']) / 1000;
+		} else if($row['spending'] == 2)
+		{
+			$row['price'] = fen2yuan($row['price']);
+			$row['pricelimit'] = fen2yuan($row['pricelimit']);
+		}
 		$row['btime'] = $time_arr[0];
-		$row['etime'] = end($time_arr);
-		// 拼接选中的素材列表信息
+		$row['etime'] = end($time_arr);// 拼接选中的素材列表信息
 		$choosed_material_data = '';
 		// 数据库中 materialid 字段是以 |（竖线）分隔的素材id
 		$mids = explode('|', $row['materialid']);
@@ -422,6 +563,8 @@ class Adserving extends Admin
 			$choosed_material_data .= '|' . $span;
 		}
 		$choosed_material_data = trim($choosed_material_data, '|');
+		$cpcprice = $this->_get_current_cpc();
+		$this->assign('cpcprice', $cpcprice);
 		$this->assign('choosed_material_data', $choosed_material_data);
 		$this->assign('role_id', ADMIN_ROLE);
 		$this->assign('action', url('admin/Adserving/editinfo'));
@@ -536,12 +679,9 @@ class Adserving extends Admin
 		$this->_check_ads_finish($id);
 		$running_status = ($running_status == 1) ? 2 : 1;
 
-		// 暂时没有使用到事务，注释
-//		Db::startTrans();
 		$res = Db::table('advertisement')->where(['id' => $id])->update(['running_status' => $running_status]);
 		if(($res !== false))
 		{
-//			Db::commit();
 			if($running_status == 1)
 			{
 				return $this->success('修改成功, 将在十分钟左右生效');
@@ -549,9 +689,15 @@ class Adserving extends Admin
 				return $this->success('修改成功');
 			}
 		} else {
-//			Db::rollback();
 			return $this->error('修改失败');
 		}
+	}
+
+	protected function _check_balance($price){
+		$row = Db::table('userinfo')->where('uid =' . ADMIN_ID)->find();
+		$account = $row['account'] / 100;
+		$res = adv_bccomp($price, $account);
+		return $res;
 	}
 
 	/**

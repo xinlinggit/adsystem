@@ -139,3 +139,26 @@
             }
         }
 </script>
+
+
+    var formData = <?php echo json_encode($info) ?>;
+        /* 修改模式下表单自动赋值 */
+        if (formData) {
+            for (var i in formData) {
+                switch ($('.field-' + i).attr('type')) {
+                    case 'select':
+                        if (i == 'adsenseid') {
+                            var options = '';
+                            $.each(formData.adPositions, function (ii, item) {
+                                var option = $("<option>").val(item.id).text(item.sensename);
+                                $('#adsenseid').append(option);
+                                // form.render('select');
+                            })
+                        }
+                        input = $('.field-' + i).find('option[value="' + formData[i] + '"]');
+                        input.prop("selected", true);
+                        break;
+                }
+            }
+        }
+</script>

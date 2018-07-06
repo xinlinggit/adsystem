@@ -1,5 +1,9 @@
 .idea
-*/config.php
-front/config.php
-runtime
-public/upload/
+runtime/*
+!runtime/.gitkeep
+public/upload/*
+!public/upload/.gitkeep
+cms/database.php
+front/database.php
+config.php
+vendor/phpunit

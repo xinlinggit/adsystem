@@ -4,7 +4,6 @@ use think\db;
 
 /**
  * 统计管理
- * Class statistics
  * @package app\admin\controller
  */
 class statistics extends Admin{
@@ -56,7 +55,6 @@ class statistics extends Admin{
 	{
 		if($this->request->isGet()) {
 			$where = '1 ';
-			$para = $this->request->param();
 			$platform = [];
 			$param_platform = input('param.platform/a');
 			if($param_platform)
@@ -88,19 +86,25 @@ class statistics extends Admin{
 		$chart_data = $this->_getChartsDataGeneral($where);
 		$x_data_temp = '';
 		$y_data_temp ='';
+		$y_data_temp_click ='';
 		foreach($chart_data as $k => $v)
 		{
 			$x_data_temp .= "," . "'" . $v['time'] . "'";
 			$y_data_temp .= "," . $v['my_sum'];
+			$click_sum = $v['click_sum'] ?: 0;
+			$y_data_temp_click .= "," . $click_sum;
 		}
 		$x_data = '[' . trim($x_data_temp,',');
 		$y_data = '[' . trim($y_data_temp,',');
+		$y_data_click = '[' . trim($y_data_temp_click,',');
 		$x_data .= ']';
 		$y_data .= ']';
+		$y_data_click .= ']';
 
 		$this->assign('platform', $param_platform ?: []);
 		$this->assign('x_data', $x_data);
 		$this->assign('y_data', $y_data);
+		$this->assign('y_data_click', $y_data_click);
 		return $this->fetch('general');
 	}
 
@@ -112,9 +116,9 @@ class statistics extends Admin{
 		if($this->request->isGet()) {
 			$where = '1 ';
 			$para = $this->request->param();
-			if(!empty($para['adsenseid']))
+			if(!empty($para['platform']))
 			{
-				$where .= ' AND adsystemid = ' . $para['adsenseid'];
+				$where .= ' AND r.platform = ' . $para['platform'];
 			}
 			if(!empty($para['adv']))
 			{
@@ -123,28 +127,31 @@ class statistics extends Admin{
 		} else {
 			$where = '';
 		}
-		$this->assign('materials', $this->_getMaterials());
-		$this->assign('ad_site', $this->_getSite());
-		$this->assign('ad_position', $this->_getPosition());
 		$data = $this->_getAds($where);
 		$this->assign('data_list', $data['row']);
 		$this->assign('pages', $data['pages']);
 		$chart_data = $this->_getChartsData($where);
 		$x_data_temp = '';
 		$y_data_temp ='';
+		$y_data_temp_click ='';
 		foreach($chart_data as $k => $v)
 		{
 			$x_data_temp .= "," . "'" . $v['time'] . "'";
 			$y_data_temp .= "," . $v['my_sum'];
+			$click_sum = $v['click_sum']?:0;
+			$y_data_temp_click .= "," . $click_sum;
 		}
 		$x_data = '[' . trim($x_data_temp,',');
 		$y_data = '[' . trim($y_data_temp,',');
+		$y_data_click = '[' . trim($y_data_temp_click,',');
 		$x_data .= ']';
 		$y_data .= ']';
-		$this->assign('selected_adsenseid', input('adsenseid') ?: 0);
+		$y_data_click .= ']';
+		$this->assign('selected_platform', input('platform') ?: 0);
 		$this->assign('selected_adv', input('adv') ?: 0);
 		$this->assign('x_data', $x_data);
 		$this->assign('y_data', $y_data);
+		$this->assign('y_data_click', $y_data_click);
 		return $this->fetch('show');
 	}
 
@@ -166,13 +173,31 @@ class statistics extends Admin{
 			$having_where = '';
 		}
 		$where .= ' AND userid = '. ADMIN_ID;
-		$row = Db::table('record_day')
-		         ->field('adsystemid,userid, advertisementid, materialid, time, sum(`sum`) as my_sum')
+		$row = Db::table('view_statistics')
+			->alias('r')
+		         ->field('adsystemid,userid, advertisementid, materialid, time,sum(`click_sum`) as click_sum, sum(`record_sum`) as my_sum')
 				 ->where($where)
 		         ->group('time')
 		         ->having($having_where)
 		         ->select();
 		return $row;
+	}
+
+	/**
+	 * 获取指定站点(PC, app, 或者 web 下，当前用户的所有广告)
+	 */
+	public function getMyAdsAjax(){
+		$platform_id = input('platform');
+		if($platform_id)
+		{
+			$row = Db::table('advertisement')
+				   ->alias('adv')
+				   ->join('adserver.adsite ads', 'adv.adsiteid = ads.id', 'left')
+				   ->where(['ads.platform' => $platform_id])->field('adv.id, adv.title')->where('userid = ' . ADMIN_ID)->select();
+			return json_encode($row);
+		} else {
+			return [];
+		}
 	}
 
 	// 获取绘图数据 - 基本统计
@@ -188,23 +213,16 @@ class statistics extends Admin{
 			$having_where = '';
 		}
 		$where .= ' AND userid = '. ADMIN_ID;
-		$row = Db::table('record_day')
-		         ->field('adsystemid,userid, advertisementid, materialid, time, sum(`sum`) as my_sum, round(sum(`cost`) / 100 , 2) as cost_sum')
+		$row = Db::table('view_statistics')
+		         ->field('adsystemid,userid, advertisementid, materialid, time, sum(`record_sum`) as my_sum, sum(`click_sum`) as click_sum, round(sum(`record_cost`) / 100 , 2) as cost_sum')
 		         ->where($where)
 		         ->group('time')
 		         ->having($having_where)
 		         ->select();
-//		$sql = Db::table('record_day')
-//		         ->field('adsystemid,userid, advertisementid, materialid, time, sum(`sum`) as my_sum')
-//		         ->where($where)
-//		         ->group('time')
-//		         ->having($having_where)
-//		         ->select(false);
-//		dump($sql);
 		return $row;
 	}
 
-	// 获取列表数据
+	// 广告统计 - 获取列表数据
 	protected function _getAds($where){
 		$materialid = input('materialid');
 		$btime = input('btime');
@@ -218,19 +236,21 @@ class statistics extends Admin{
 			$where .= " AND `r`.`time` between '$btime' AND '$etime'";
 		}
 		$where .= ' AND `r`.`userid`=' . ADMIN_ID;
-		$row = Db::table('record_day')
+		$row = Db::table('view_statistics')
 		         ->alias('r')
-		         ->field("`r`.`id`,
+		         ->field("`r`.`platform`,`r`.`advertisementid`,
     `r`.`adsystemid`,
     `r`.`advertisementid`,
     `r`.`materialid`,
     `r`.`time`, title,`adv`.`time` as `adv_time`, sitename,
-    `sum`,
-    ROUND(cost / 100, 2) AS cost")
+    sum(`record_sum`) as my_sum,sum(`click_sum`) as click_sum,
+    round(sum(`record_click_cost`) / 100 , 2) as cost_sum_click,
+    ROUND(sum(record_cost) / 100, 2) AS cost")
 		         ->join('adserver.advertisement adv', 'r.advertisementid = adv.id', 'LEFT')
 		         ->join('adserver.adsite as', 'adv.adsiteid = as.id')
 		         ->where($where)
-		         ->order('adv.id desc')
+			->order('time desc')
+			->group('r.advertisementid, r.time')
 		         ->paginate(10, false, ['query' => $this->request->param()]);
 		$pages = $row->render();
 		return ['row' => $row, 'pages' => $pages];
@@ -248,8 +268,8 @@ class statistics extends Admin{
 			$having_where = '';
 		}
 		$where .= ' AND userid = '. ADMIN_ID;
-		$row = Db::table('record_day')
-		         ->field('adsystemid,userid, advertisementid, materialid, time, sum(`sum`) as my_sum, round(sum(`cost`) / 100 , 2) as cost_sum')
+		$row = Db::table('view_statistics')
+		         ->field('platform,adsystemid,userid, advertisementid, materialid, time, sum(`record_sum`) as my_sum, round(sum(`record_click_cost`) / 100 , 2) as cost_sum_click, round(sum(`record_cost`) / 100 , 2) as cost_sum, sum(`click_sum`) as click_sum')
 		         ->where($where)
 			     ->order('time desc')
 		         ->group('time')
@@ -260,31 +280,15 @@ class statistics extends Admin{
 	}
 
 	/**
-	 * 获取广告对应的广告 - 被前台 ajax 调用
+	 * 获取广告广告 - 被前台 ajax 调用
 	 */
 	public function getAd()
 	{
 		// 根据站点，获取对应的广告位
-		$adsenseid = input('adsenseid');
-		$adsense = $this->_getAd($adsenseid);
-		return json_encode($adsense);
-	}
-
-	protected function _getAd($adsenseid = 0)
-	{
-		return Db::table('advertisement')->field('id, title')->where(['adsenseid' => $adsenseid, 'userid' => ADMIN_ID])->select();
-	}
-
-	/**
-	 * 获取广告位 - ajax
-	 */
-	public function getPosition()
-	{
-		$adsiteid = input('adsiteid');
-		if($adsiteid)
-		{
-			$row = Db::table('adsense')->field('id, sensename')->where(['adsite' => $adsiteid])->select();
-			return json_encode($row);
-		}
+		$platform = input('platform');
+		$where['platform'] = $platform;
+		$where['userid'] = ADMIN_ID;
+		$row = Db::table('record_day')->field('advertisementid')->where($where)->group('advertisementid')->select();
+		return json_encode($row);
 	}
 }

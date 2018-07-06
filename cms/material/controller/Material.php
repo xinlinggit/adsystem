@@ -27,7 +27,7 @@ class Material extends Base
 	    $this->get_thead(isset($set['thead'])?$set['thead']:[$order], $order, $by);
 
         $this->view->assign('status',ArrayUnit::array_to_options([0=>'等待提交审核',3=>'审核已通过',4=>'审核未通过',5=>'待审核'],$this->request->param('status')));
-        $this->view->assign('material_type',ArrayUnit::array_to_options([1=>'文字广告',2=>'图片广告',3=>'flash广告'],$this->request->param('material_type')));
+        $this->view->assign('material_type',ArrayUnit::array_to_options([1=>'文字广告',2=>'图片广告',3=>'flash广告',4=>'信息流广告'],$this->request->param('material_type')));
         return $this->fetch_base($set);
     }
 

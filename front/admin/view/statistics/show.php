@@ -1,3 +1,4 @@
+<!--广告统计-->
 <link href="__STATIC__/myCommon.css?v=0.1" rel="stylesheet">
 <script src="__STATIC__/js/echarts.min.js"></script>
 <style>
@@ -8,52 +9,31 @@
         <div class="layui-form-item">
             <label class="layui-form-label">选择站点:</label>
             <div class="layui-input-inline" style="width:300px;">
-                <select name="adsiteid" class="field-adsiteid" type="select" lay-filter="adsiteid" id="adsiteid">
+                <select name="platform" class="field-platform" type="select" lay-filter="platform" id="platform">
                     <option value="">请选择</option>
-                    {volist name="ad_site" id = "as"}
-                    <option value="{$as['adsiteid']}" {if condition="input('get.adsiteid') eq $as['adsiteid']"} selected {/if}>{$as.sitename}</option>
-                    {/volist}
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">选择广告位:</label>
-            <div class="layui-input-inline" style="width:300px;">
-                <select name="adsenseid" class="" type="select" lay-filter="adsenseid" id="adsenseid">
-                <option></option>
+                    <option value="1" {if condition="$selected_platform eq 1"} selected {/if} >PC</option>
+                    <option value="2" {if condition="$selected_platform eq 2"} selected {/if}>APP</option>
+                    <option value="3" {if condition="$selected_platform eq 3"} selected {/if}>移动 web</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">选择广告:</label>
             <div class="layui-input-inline" style="width:300px;">
-                <select name="adv" class="field-adv" class="" type="select" lay-filter="adv" id="adv">
+                <select name="adv" class="field-adv" class="" type="select" lay-filter="adv" id="statistics_adv">
                     <option value=""></option>
                 </select>
             </div>
         </div>
-<!--        <div class="layui-form-item">-->
-<!--            <label class="layui-form-label">选择素材:</label>-->
-<!--            <div class="layui-input-inline" style="width:300px;">-->
-<!--                <select name="materialid" class="" class="" type="select" lay-filter="" id="">-->
-<!--                    <option value=""></option>-->
-<!--                    {volist name="materials" id = 'm'}-->
-<!--                    <option value="{$m['id']}" {if condition="input('get.materialid') eq $m['id']"} selected {/if}>{$m.material_title}</option>-->
-<!--                    {/volist}-->
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="layui-form-item">
             <div class="">
-                <input type="text"   name="btime" id="serving_time_begin_1" class="my_input my_c field-btime" placeholder="开始时间" /> -
-                <input type="text"    name="etime" id="serving_time_end_1" class="my_input my_c field-etime" placeholder="结束时间" />
+                <input type="text"   name="btime" id="serving_time_begin_1" class="my_input my_c field-btime" placeholder="开始时间"  value="{:input('btime')}" /> -
+                <input type="text"    name="etime" id="serving_time_end_1" class="my_input my_c field-etime" placeholder="结束时间" value="{:input('etime')}"  />
             </div>
         </div>
         <div class="layui-form-item">
-            <a href="{:url()}" class="layui-btn layui-btn-primary">重置</a>
             <input lay-filter = "nextStep" type="submit" class="layui-btn" lay-submit="" value="查询" />
-            <input type="hidden" value="{$selected_adsenseid}" id="selected_adsenseid" />
-            <input type="hidden" value="{$selected_adv}" id="selected_adv" />
+            <a href="{:url()}" class="layui-btn layui-btn-primary">重置</a>
         </div>
     </div>
 </form>
@@ -70,18 +50,22 @@
                 <th  style="text-align: center;" class="">站点</th>
                 <th  style="text-align: center;" class="">广告名称</th>
                 <th  style="text-align: center;" clas="w100">曝光量</th>
-                <th  style="text-align: center;" class="w100">消耗</th>
+                <th  style="text-align: center;" class="w100">CPM消耗</th>
+                <th  style="text-align: center;" clas="w100">总点击量</th>
+                <th  style="text-align: center;" class="w100">CPC消耗</th>
                 <th style="text-align: center">创建时间</th>
             </tr>
             </thead>
             <tbody>
             {volist name="data_list" id="vo"}
             <tr>
-                <td style="text-align: center;" >{$vo['id']}</td>
+                <td style="text-align: center;" >{$vo['advertisementid']}</td>
                 <td style="text-align:center">{$vo['sitename']}</td>
                 <td style="text-align: center;" >{$vo['title']}</td>
-                <td style="text-align: center;" >{$vo['sum']}</td>
+                <td style="text-align: center;" >{$vo['my_sum']}</td>
                 <td style="text-align: center;" >{$vo['cost']}</td>
+                <td style="text-align: center;" >{$vo['click_sum']?:0}</td>
+                <td style="text-align: center;" >{$vo['cost_sum_click']?:0}</td>
                 <td style="text-align: center;">{$vo['time']}</td>
             </tr>
             {/volist}
@@ -99,17 +83,25 @@
 
     // 指定图表的配置项和数据
     var option = {
+        legend: {
+            data:['曝光量', '点击量']
+        },
         xAxis: {
             type: 'category',
             data: {$x_data},
             name : '日期',
+            axisLabel :{
+                interval:0,
+                rotate:40,
+            }
         },
         yAxis: {
             type: 'value',
-            name : '曝光量',
+            name : '曝光/点击量',
         },
         series: [{
             // data: [820, 932, 901, 934, 1290, 1330, 1320],
+            name:"曝光量",
             data: {$y_data},
             type: 'line',
             label: {
@@ -118,7 +110,20 @@
                     position: 'top'
                 }
             },
-        }]
+        },
+            {
+                name:"点击量",
+                // data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: {$y_data_click},
+                type: 'line',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+            }
+        ],
     };
 
     // 使用刚指定的配置项和数据显示图表。
@@ -138,91 +143,54 @@
             elem: '#serving_time_end_1' //指定元素
         });
     });
-
-    // 加载广告
-    function loadAdv()
-    {
-        var $ = layui.jquery, form = layui.form;
-        var adsenseid = $("#adsenseid").val();
-        $('#adv option').html("");
-        form.render('select');
-        $.ajax({
-            method: "POST",
-            url: "{:url('admin/statistics/getAd')}",
-            data: {adsenseid: adsenseid}
-        }).done(function(data){
-            eval("var data=" + data + "");
-            var selected_adv = $("#selected_adv").val()
-            $.each(data, function(i, item){
-                var option = '';
-                if(item.id == selected_adv)
-                {
-                    option = $("<option selected='selected'>").val(item.id).text(item.title);
-                } else {
-                    option = $("<option>").val(item.id).text(item.title);
-                }
-                $('#adv').append(option);
-            })
-            form.render('select');
-        })
-    }
-
-    // 加载广告位
-    function loadSense()
-    {
-        var $ = layui.jquery, form = layui.form;
-        var adsiteid = $("#adsiteid").val();
-        $('#adsenseid option').html("");
-        form.render('select');
-        $.ajax({
-            method: "POST",
-            url: "{:url('admin/statistics/getPosition')}",
-            data: {adsiteid: adsiteid}
-        }).done(function(data){
-            var selected_adsenseid = $("#selected_adsenseid").val();
-            eval("var data=" + data + "");
-            var option = '';
-            $.each(data, function(i, item){
-                if(item.id == selected_adsenseid)
-                {
-                    option = $("<option selected>").val(item.id).text(item.sensename);
-                } else {
-                    option = $("<option>").val(item.id).text(item.sensename);
-                }
-                $('#adsenseid').append(option);
-            })
-            form.render('select');
-            loadAdv();
-        })
-    }
-
-    function selected_adsense()
-    {
-        var $ = layui.jquery, form = layui.form;
-        var selected_adsenseid = $("#adsenseid").find('option[value="{$selected_adsenseid}"]');
-        selected_adsenseid.attr("selected", "selected");
-        form.render();
-    }
-
-    function selected_adv()
-    {
-        var $ = layui.jquery, form = layui.form;
-        var selected_adv = $("#adv").find('option[value="{$selected_adv}"]');
-        selected_adv.prop("selected", true);
-        form.render('select');
-    }
-
     layui.use(['form'], function() {
         var $ = layui.jquery, form = layui.form;
-        form.on('select(adsenseid)', function(data) {
-            loadAdv();
-        });
-        form.on('select(adsiteid)', function(data){
-           loadSense();
-        });
-        loadSense();
-        selected_adsense();
-        selected_adv();
-    });
 
+        var btime = layui.jquery("#serving_time_begin_1").val();
+        var etime = layui.jquery("#serving_time_end_1").val();
+        if(btime > etime)
+        {
+            layer.msg("结束时间不能晚于开始时间", {icon:5});
+            return false;
+        }
+
+        form.on('select(platform)', function(data) { // 事件监听
+            var platform = data.value;
+            $('#statistics_adv option').html("");
+            form.render('select');
+            $.ajax({
+                method: "POST",
+                url: "{:url('admin/statistics/getMyAdsAjax')}",
+                data: {platform: platform}
+            }).done(function(data){
+                eval("var data=" + data + "");
+                $.each(data, function(i, item){
+                    var option = $("<option>").val(item.id).text(item.title);
+                    $('#statistics_adv').append(option);
+                    form.render('select');
+                })
+            })
+        });
+        var platform = $("#platform").val();
+        if(platform){
+            $.ajax({
+                method: "POST",
+                url: "{:url('admin/statistics/getMyAdsAjax')}",
+                data: {platform: platform}
+            }).done(function(data){
+                eval("var data=" + data + "");
+                $.each(data, function(i, item){
+                    var option = $("<option>").val(item.id).text(item.title);
+                    $('#statistics_adv').append(option);
+                })
+                var selected_adv = {:input('adv') ?: 0};
+                if(selected_adv)
+                {
+                    input = $('.field-adv').find('option[value="'+ selected_adv +'"]');
+                    input.prop("selected", true);
+                }
+                form.render('select');
+            })
+        }
+    });
 </script>

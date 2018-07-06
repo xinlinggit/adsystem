@@ -18,7 +18,7 @@
 	<div class="page-filter9 fr">
 		<form class="layui-form layui-form-pane" action="{:url()}" method="get">
 			<div class="layui-inline">
-				<label class="layui-form-label" style="width:100px;">审核状态:</label>
+				<label class="layui-form-label" style="width:100px;">转账类型:</label>
 				<select name="type">
 					<option value="" >所有</option>
 					<option value="1"  {if condition="$selected_type eq 1"}selected{/if}>充值</option>
@@ -26,7 +26,7 @@
 				</select>
 			</div>
 			<div class="layui-inline" style="overflow: hidden;width:500px;">
-				<label class="layui-form-label fl" style="display:inline-block;float:left;margin-top:5px;width:100px;">操作时间</label>
+				<label class="layui-form-label fl" style="display:inline-block;float:left;width:100px;">操作时间</label>
 				<input type="text" name="time" value="{:input('time')}" class="layui-input" id="time">
 			</div>
 			<div class="layui-inline" style="overflow: hidden;width:500px;">
@@ -54,12 +54,12 @@
 			<tbody>
 			{volist name="data" id="d"}
 			<tr>
-				<td>{$d.id}</td>
-				<td>{$d.operate_time}</td>
-				<td>{if condition="$d.type eq 1"}充值{else /}转账{/if}</td>
-				<td>{:round($d.money / 100, 2)}</td>
-				<td>{$d.blance}</td>
-				<td>{$d.remark}</td>
+				<td style="text-align: center">{$d.id}</td>
+				<td style="text-align: center">{$d.operate_time}</td>
+				<td style="text-align: center">{if condition="$d.type eq 1"}充值{else /}退款{/if}</td>
+				<td style="text-align: center">{:round($d.money / 100, 2)}</td>
+				<td style="text-align: center">{:round($d.blance / 100, 2)}</td>
+				<td style="text-align: center">{$d.remark}</td>
 			</tr>
 			{/volist}
 			</tbody>

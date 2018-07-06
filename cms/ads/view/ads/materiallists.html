@@ -51,7 +51,7 @@
                     <td>待审核</td>
                     {/if}
                     <td>
-                        <a class="btn size-MINI radius btn-secondary-outline" title="预览" href="http://ad.api.dev.cnfol.wh/index/index/preview?material_id=<?= $row['id'] ?>" target="_blank">
+                        <a class="btn size-MINI radius btn-secondary-outline" title="预览" href="{:config('review') . $row['id']}" target="_blank">
                             预览
                         </a>
                     </td>

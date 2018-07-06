@@ -1,12 +1,13 @@
 <?php
+require_once "/home/httpd/adsystem/create/config.php";
 require_once "/home/httpd/adsystem/vendor/autoload.php";
 use Predis\Client;
 $redis = new Client([
     'scheme' => 'tcp',
-    'host'   => '172.30.2.132',
-    'port'   => 6379,
+    'host'   => $createconfig['redis']['host'],
+    'port'   => $createconfig['redis']['port'],
 ]);
-$con = mysqli_connect("172.30.2.82","adserver","|lcnfodCuxl8diFx6","adserver");
+$con = mysqli_connect($createconfig['hostname'],$createconfig['username'],$createconfig['password'],$createconfig['database']);
 if (!$con){
   die('Could not connect: ' . mysql_error());
 }

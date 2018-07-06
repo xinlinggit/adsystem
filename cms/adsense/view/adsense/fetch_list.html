@@ -12,7 +12,7 @@ widget('common/filter/select', ['广告位类型', 'sensetype', $sensetype]),
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
 			<button class="btn btn-success js_operate" title="新增广告位" data-title="新增广告位" data-callback="layer_model" data-url="<?= url('model_add'); ?>"><i class="Hui-iconfont Hui-iconfont-add"></i> 新增广告位</button>
-			<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>
+			<!--<button class="btn btn-danger js_operate" data-ids=".js_super_table .js_checkbox:checked" data-confirm="1" title="批量删除" data-title="批量删除" data-url="<?= url('operate_status_11') ?>"><i class="Hui-iconfont Hui-iconfont-suoding"></i> 批量删除</button>-->
 		</span>
 	</div>
 <div class="mt-20">
@@ -27,12 +27,13 @@ widget('common/filter/select', ['广告位类型', 'sensetype', $sensetype]),
 				<th class="th_id <?=$thead['id']['class'];?>" data-url="<?=$thead['id']['url'];?>">编号</th>
 				<th>广告位名称</th>
 				<th>所属站点</th>
-				<th>广告位模式</th>
-				<th>投放形式</th>
-				<th>尺寸</th>
 				<th>所属平台</th>
+				<th>投放形式</th>
+				<th>尺寸</th>		
 <!-- 				<th>广告投放平台所在网址</th> -->
 				<th>广告位类型</th>
+				<th>对外竞价</th>
+				<th>广告位等级</th>
 				<th>广告数量</th>
 				<th>状态</th>
 				<th>操作</th>
@@ -49,27 +50,6 @@ widget('common/filter/select', ['广告位类型', 'sensetype', $sensetype]),
 				<td><?=$row->id;?></td>
 				<td><?=$row->sensename;?></td>
 				<td><?=$row->sitename;?></td>
-				{if condition="$row['sensemodel'] == 1"}
-					<td>包时段</td>
-				{elseif condition="$row['sensemodel'] == 2"}
-					<td>竞价</td>
-				{elseif condition="$row['sensemodel'] == 3"}
-					<td>广告联盟 </td>
-				{elseif condition="$row['sensemodel'] == 4"}
-					<td>内部广告</td>
-				{else/}
-					<td>暂无</td>
-				{/if}
-				{if condition="$row['materialmodel'] == 1"}
-					<td>文字</td>
-				{elseif condition="$row['materialmodel'] == 2"}
-					<td>图片(或flash)</td>
-				{elseif condition="$row['materialmodel'] == 3"}
-					<td>信息流</td>	
-				{else/}
-					<td>暂无</td>
-				{/if}
-				<td><?=$row->width;?>*<?=$row->height;?></td>
 				{if condition="$row['platform'] == 1"}
 				<td>PC</td>
 				{elseif condition="$row['platform'] == 2"}
@@ -77,6 +57,16 @@ widget('common/filter/select', ['广告位类型', 'sensetype', $sensetype]),
 				{else/}
 				<td>移动Web</td>
 				{/if}
+				{if condition="$row['materialmodel'] == 1"}
+					<td>文字</td>
+				{elseif condition="$row['materialmodel'] == 2"}
+					<td>图片(或flash)</td>
+				{elseif condition="$row['materialmodel'] == 3"}
+					<td>图文</td>	
+				{else/}
+					<td>暂无</td>
+				{/if}
+				<td><?=$row->width;?>*<?=$row->height;?></td>
 <!-- 				<td><?=$row->targetsite?></td> -->
 				{if condition="$row['sensetype'] == 1"}
 					<td>固定</td>
@@ -93,32 +83,37 @@ widget('common/filter/select', ['广告位类型', 'sensetype', $sensetype]),
 				{else/}
 					<td>视频</td>
 				{/if}
+				{if condition="$row['sensemodel'] == 1"}
+					<td>关闭</td>
+				{elseif condition="$row['sensemodel'] == 2"}
+					<td>开启</td>
+				{/if}
+				<td><?=$row->grade;?></td>
 				<td><?=$sense_ids_cnt[$row->id];?></td>
 				<td><?php echo $row->status == 1 ? '启用':'停用'; ?></td>
 				<td>
-					<button data-url="<?= url('model_view'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI radius btn-secondary-outline js_operate" data-callback="layer_model" data-title="获取代码" title="获取代码">
-						<i class=" Hui-iconfont Hui-iconfont-yanjing"></i>
-					</button>
 					{if condition="$row['status'] == 1"}
 					<button data-url="<?= url('model_edit') ?>" data-id="<?= $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="编辑" title="编辑">
 					{else/}
 					<button data-url="<?= url('model_edit') ?>" data-id="<?= $row['id'] ?>" data-callback="layer_model" class="btn size-MINI radius btn-secondary-outline js_operate disabled" data-title="编辑" title="编辑">
 					{/if}
-						<i class=" Hui-iconfont Hui-iconfont-edit disabled"></i>
+						编辑
 					</button>
 
 					{if condition="$row['status'] == 1"}
 					<button data-url="<?= url('operate_status_0') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="停用" title="停用">
-						<i class="Hui-iconfont Hui-iconfont-close"></i>
+						停用
 					</button>
 					{else/}
-					<button data-url="<?= url('operate_status_1') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="启用" title="启用">
-						<i class="Hui-iconfont Hui-iconfont-xuanze"></i>
+					<button data-url="<?= url('operate_status_1') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-secondary-outline js_operate" data-title="启用" title="启用">
+						启用
 					</button>
 					{/if}
-
-					<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">
-						<i class="Hui-iconfont Hui-iconfont-del3"></i>
+					<!--<button data-url="<?= url('operate_status_11') ?>" data-id="<?= $row['id'] ?>" data-confirm="1" class="btn size-MINI radius btn-danger-outline js_operate" data-title="删除" title="删除">-->
+						<!--删除-->
+					<!--</button>-->
+					<button data-url="<?= url('model_view'); ?>" data-id="<?= $row['id']; ?>" class="btn size-MINI radius btn-secondary-outline js_operate" data-callback="layer_model" data-title="获取代码" title="获取代码">
+						获取代码
 					</button>
 				</td>
 			</tr>

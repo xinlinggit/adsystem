@@ -32,21 +32,21 @@
 				<select name="materialmodel" id="materialmodel" class="select" title="素材类型" onChange="SiteSlt2(this)">
 					<option value="1" <?=$info['materialmodel'] == '1' || !$info['sensetype']?'selected':'';?>>文字</option>
 					<option value="2" <?=$info['materialmodel'] == '2'?'selected':'';?>>图片(或flash)</option>
-					<option value="3" <?=$info['materialmodel'] == '3'?'selected':'';?>>信息流</option>
+					<option value="3" <?=$info['materialmodel'] == '3'?'selected':'';?>>图文</option>
 				</select>
 				</span>
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2 text-r">广告位模式：</label>
+			<label class="form-label col-xs-2 col-sm-2 text-r">对外竞价：</label>
 			<div class="col-xs-10 col-sm-5">
 				<div class="radio-box">
 					<input type="radio" id="radio-1" name="sensemodel" value="1" <?=$info['sensemodel'] == '1'?'checked="checked"':'';?> >
-					<label for="radio-1">包时段</label>
+					<label for="radio-1">关闭</label>
 				</div>
 				<div class="radio-box">
 					<input type="radio" id="radio-2" name="sensemodel" value="2" <?=$info['sensemodel'] == '2'|| !$info['sensemodel']?'checked="checked"':'';?> >
-					<label for="radio-2">竞价</label>(如果投放形式为信息流请选择竞价,不要选错)
+					<label for="radio-2">开启</label>
 
 				</div>
 				<!-- <div class="radio-box">
@@ -77,7 +77,7 @@
 			<!--</div>-->
 		<!--</div>-->
 
-		<div class="row cl SiteShow2">
+		<!-- <div class="row cl SiteShow2">
 			<label class="form-label col-xs-2 col-sm-2 text-r">广告位类型：</label>
 			<div class="col-xs-10 col-sm-5">
 				<div class="radio-box">
@@ -93,7 +93,7 @@
 					<label for="radio-7">视频</label>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 <!-- 		<div class="row cl SiteShow">
 	<label class="form-label col-xs-2 col-sm-2">广告位投放地址：</label>
@@ -101,7 +101,7 @@
 		<input type="text" class="input-text" value="<?=$info['targetsite']?>" placeholder=""  name="targetsite" required="true">
 	</div>
 </div> -->
-		<div class="row cl SiteShow">
+		<div class="row cl">
 				<label class="form-label col-xs-2 col-sm-2">广告位类型：</label>
 				<div class="formControls col-xs-5 col-sm-2">
 					<span class="select-box">
@@ -113,17 +113,29 @@
 					</select>
 					</span>
 				</div>
-				(如果投放形式为信息流请选择固定,不要选错)
 		</div>
-		<div class="row cl SiteShow">
-			<label class="form-label col-xs-2 col-sm-2">广告位尺寸：</label>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">尺寸：</label>
 			<div class="formControls col-xs-1 col-sm-1" style="width:120px;">
 				<input type="number" class="input-text" value="<?=$info['width']?>" placeholder=""  name="width" required="true" style="width:90px;">宽*
 			</div>
 			<div class="formControls col-xs-1 col-sm-1" style="width:140px;">
 				<input type="number" class="input-text" value="<?=$info['height']?>" placeholder=""  name="height" required="true" style="width:90px;">高 (px)
 			</div>
-			(如果投放形式为信息流,该尺寸对应图片尺寸)
+		</div>
+		<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">广告位等级：</label>
+				<div class="formControls col-xs-5 col-sm-2">
+					<span class="select-box">
+					<select name="grade" class="select" title="广告位等级：">
+						<option value="1" <?=$info['grade'] == '1' || !$info['grade']?'selected="selected"':'';?> >1</option>
+						<option value="2" <?=$info['grade'] == '2'?'selected="selected"':'';?> >2</option>
+						<option value="3" <?=$info['grade'] == '3'?'selected="selected"':'';?> >3</option>
+						<option value="3" <?=$info['grade'] == '4'?'selected="selected"':'';?> >4</option>
+						<option value="3" <?=$info['grade'] == '5'?'selected="selected"':'';?> >5</option>
+					</select>
+					</span>
+				</div>
 		</div>
 
 	<strong>广告位空闲设置</strong>
@@ -153,7 +165,6 @@
 					<label for="radio-9">显示空闲文字</label>
 						<span class="btn-upload form-group">
 						<input class="input-text upload-url radius" class = "radio_text" type="text" name="text" value="<?=$info['text']?>" >
-						(请保证占位文字符合该广告位)
 						</span>
 					</div>
 
@@ -163,6 +174,13 @@
 							<input class="input-text upload-url radius" class="radio_img" type="text" name="imgurl" value="<?=$info['imgurl']?>" id="uploadfile-1" readonly>
 							<input type="button" class="btn btn-success radius ml-20" name="file" id="file" value="选择图片">
 							(请保证占位图片符合该广告位)
+						</span>
+					</div>
+
+					<div id="my_url">
+					<label for="radio-13">显示空闲链接</label>
+						<span class="btn-upload form-group">
+							<input class="input-text upload-url radius" type="radio_text" name="linkurl" value="<?=$info['linkurl']?>">
 						</span>
 					</div>
 
@@ -177,7 +195,7 @@
 	</div>
 </form>
 <script>
-SiteSlt('select[name=adsite]');
+/*SiteSlt('select[name=adsite]');
 function SiteSlt(t){
 	var ts=$(t),res=ts.find('option:selected').attr('rel');
 	if(res==2){
@@ -187,7 +205,7 @@ function SiteSlt(t){
 		$('.SiteShow').show();
 		$('.SiteShow2').hide();
 	}
-}
+}*/
 
 // 广告位空闲设置区
 SiteSlt2();

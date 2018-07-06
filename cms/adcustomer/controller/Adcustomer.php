@@ -46,56 +46,71 @@ class Adcustomer extends Base
 
 		/*全局筛选条件*/
 		$map = $this->get_map();
-
 		unset($map['id']);
-
 		$this->get_map_like($map, 'username');
+
 		/*默认值回调处理*/
 		if (isset($set['map']) && is_callable($set['map'])) {
 			$set['map']($map);
 		};
-
-		/*分页查询*/
+		$username = trim($this->request->param('username'));
+		if( $username)
+		{
+			$map['a.username'] = $username;
+		}
+		unset($map['username']);
 		$page = Db::table('ad_admin_user')
 		  ->alias('a')
-		  ->field('a.*, round(ui.account / 100, 2) as account')
+		  ->field('ag.nick as agent_nickname,a.*,li.status as statuss, round(ui.account / 100, 2) as account')
+		  ->join('adserver.ad_admin_user_agent ag', 'a.pid = ag.id', 'left')
+		  ->join('adserver.license_auth li', 'a.id = li.uid', 'left')
 		  ->where('a.status != -1 and a.id > 1')
 		  ->where($map)
     	  ->join('adserver.userinfo ui', 'a.id = ui.uid', 'left')
-			->order($order . ' ' . $by)
+		  ->order($order . ' ' . $by)
 		  ->paginate($per_page);
-
-		$ids = [];
-		foreach($page->items() as $v)
+		$items = $page->items();
+		foreach($items as $k => $item)
 		{
-			$ids[] = $v['id'];
+			$blance = $this->_get_blance($item['id']);
+			$charge_sum = $this->_load_finance_index_data($item['id']);
+			if($charge_sum > 0)
+			{
+				$spendding = $charge_sum - $blance;
+			} elseif($charge_sum == 0) {
+				$spendding = 0;
+			}
+			$items[$k]['spendding'] = $spendding;
 		}
-		$license_auth = $this->_get_current_license_auth($ids);
-		$this->view->assign('license_auth', $license_auth);
 		$this->view->assign('page', $page);
-		$this->view->assign('list', $page->items());
+		$this->view->assign('list', $items);
 		return $this->fetch();
 	}
 
-	public function _get_current_license_auth($ids)
+	/**
+	 * 获取余额
+	 * $param $id 广告主id
+	 * @return mixed
+	 */
+	protected function _get_blance($id)
 	{
-		$map['uid'] = ['in', $ids];
-		$row = Db::table('license_auth_current')->field('uid, status')->where($map)->select();
-		$license_auth = [];
-		$license_data = [];
-		foreach($row as $k => $v)
-		{
-			$license_auth[$v['uid']] = $v;
-		}
-		foreach($ids as $kk => $vv)
-		{
-			$license_data[$vv] = isset($license_auth[$vv]) ? $license_auth[$vv] : ['uid' => '', 'status' => ''];
-		}
-
-		unset($row);
-		return $license_data;
+		$row = Db::table('userinfo')
+		         ->field('round(account/100, 2) account')
+		         ->where('uid = ' . $id)
+		         ->find();
+		return $row['account'];
 	}
 
+	/**
+	 * 获取历史充值/退款金额之和
+	 * $param $id 广告主id
+	 */
+	protected function _load_finance_index_data($id){
+		$charge_sum = Db::table('transaction_flow')->where(['user_id' => $id, 'type' => 1])->sum('money');
+		$withdraw_sum = Db::table('transaction_flow')->where(['user_id' => $id, 'type' => 2])->sum('money');
+		$merge_money = $charge_sum - $withdraw_sum;
+		return round(($merge_money) / 100, 2);
+	}
 
 	// 启用/停用
 	public function change_status()
@@ -137,7 +152,7 @@ class Adcustomer extends Base
 				return $this->api_error('请填写充值金额');
 			}
 			$url = Config::get('adv.add_money');
-			$res = Tools::curl_post($url, ['uid' => $uid, 'money' => $account]);
+			$res = Tools::curl_post($url, ['uid' => $uid, 'money' => $account, 'key' => config('pay_keys')]);
 			if($res == 1)
 			{
 				$this->_record_charge(['money' => $account, 'user_id' => $uid]);
@@ -158,7 +173,7 @@ class Adcustomer extends Base
 			$data['type'] = 1; // 充值
 			$data['no'] = get_transaction_no();
 			$data['backend_user_id'] = $this->backend['id'];
-			$datetime = date('Y-m-d H:m:i', time());
+			$datetime = date('Y-m-d H:i:s', time());
 			$data['operate_time'] = $datetime;
 			$data['update_time'] = $datetime;
 			$data['create_time'] = $datetime;
@@ -214,7 +229,7 @@ class Adcustomer extends Base
 		$id = input('id');
 		if(empty($id)){
 			if ( Db::table( 'ad_admin_user' )->where( [ 'username' => $param['username'] ] )->find() ) {
-				return $this->api_error( '用户名已经存在' );
+				return $this->api_error( '账户已经存在' );
 			}
 		}
 		$param['auth'] = '';

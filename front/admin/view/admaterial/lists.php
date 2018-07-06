@@ -47,7 +47,7 @@
     <form class="page-list-form">
         <div class="layui-btn-group fl">
 <!--            <a href="{:url('add')}" class="layui-btn layui-btn-primary"><i class="aicon ai-tianjia"></i>添加广告素材</a>-->
-            <a data-href="{:url('delall')}" refresh="yes" class="layui-btn layui-btn-primary  confirm j-page-btns"><i class="aicon ai-clear"></i>批量删除</a>
+<!--            <a data-href="{:url('delall')}" refresh="yes" class="layui-btn layui-btn-primary  confirm j-page-btns"><i class="aicon ai-clear"></i>批量删除</a>-->
         </div>
 </div>
 <!-- 工具栏 --end -->
@@ -59,7 +59,7 @@
 			</colgroup>
 			<thead>
 			<tr>
-				<th style="text-align: center;"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>
+<!--				<th style="text-align: center;"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>-->
 				<th style="text-align: center;">素材ID</th>
 				<th style="text-align: center;">广告素材名称</th>
 <!--				<th style="text-align: center;">状态</th>-->
@@ -72,7 +72,7 @@
 			<tbody>
 			{volist name="data_list" id="vo"}
 			<tr>
-				<td style="text-align: center;"><input type="checkbox" name="ids[]" class="layui-checkbox checkbox-ids" value="{$vo.id}" lay-skin="primary"></td>
+<!--				<td style="text-align: center;"><input type="checkbox" name="ids[]" class="layui-checkbox checkbox-ids" value="{$vo.id}" lay-skin="primary"></td>-->
 				<td style="text-align: center;">{$vo['id']}</td>
 				<td style="text-align: center;">{$vo['material_title']}</td>
 				<td style="text-align: center;">{$vo.width}*{$vo.height}</td>
@@ -81,7 +81,7 @@
                         {case value="1"}文字链广告{/case}
                         {case value="2"}图片广告{/case}
                         {case value="3"}Flash广告{/case}
-                        {case value="4"}信息流广告{/case}
+                        {case value="4"}图文广告{/case}
                     {/switch}
                 </td>
 				<td style="text-align: center;">
@@ -94,7 +94,7 @@
                 </td>
                 <td style="text-align: center;">
                     <a href="{$preview_url . $vo['id']}" target="_blank" class="layui-btn layui-btn-primary">预览</a>
-                    <a href="{:url($material_type_action[$vo['material_type']] . '/del?id='.$vo['id'].'&material_id='.$vo['material_id'])}" class="layui-btn layui-btn-primary j-tr-del" reresh="yes">删除</a>
+<!--                    <a href="{:url($material_type_action[$vo['material_type']] . '/del?id='.$vo['id'].'&material_id='.$vo['material_id'])}" class="layui-btn layui-btn-primary j-tr-del" reresh="yes">删除</a>-->
                 </td>
 			</tr>
 			{/volist}

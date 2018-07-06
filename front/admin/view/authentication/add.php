@@ -45,7 +45,7 @@
         <img class = "business_license_front_url" width="400px" height="400px"  />
     </div>
     <div class="layui-form-item">
-        <input type="submit" class="layui-btn" value="提交审核" />
+        <input type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit" value="提交审核" />
     </div>
 </form>
 {include file="block/layui" /}
